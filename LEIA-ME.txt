@@ -1,0 +1,16 @@
+GAMES @PHARMAMELO · ANTIMICROBIANOS  —  como instalar no celular
+
+1) Publique esta pasta (grátis) no GitHub Pages:
+   - Entre em github.com, crie um repositório público (ex.: atb-games).
+   - "Add file" > "Upload files" e envie TODO o conteúdo desta pasta
+     (index.html, manifest.webmanifest, sw.js e a pasta icons).
+   - Settings > Pages > Branch: main > / (root) > Save.
+   - Em 1-2 minutos o jogo fica em: https://SEU-USUARIO.github.io/atb-games/
+
+2) Abra esse link no celular:
+   - Android (Chrome): menu ⋮ > "Instalar app" ou "Adicionar à tela inicial".
+   - iPhone (Safari): botão Compartilhar > "Adicionar à Tela de Início".
+
+O ícone "ATB Games" aparece na tela inicial. O jogo abre em tela cheia,
+sem barra do navegador, e funciona offline depois da primeira abertura.
+Os recordes ficam salvos no próprio aparelho.

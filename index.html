@@ -1,0 +1,738 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Games @pharmamelo · Antimicrobianos</title>
+<meta name="description" content="Jogo de farmacologia dos antimicrobianos: batalha, quiz, memória e enciclopédia. @pharmamelo">
+<meta name="theme-color" content="#090c16">
+<meta name="application-name" content="ATB Games">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="ATB Games">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" type="image/png" sizes="32x32" href="icons/favicon-32.png">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;-webkit-tap-highlight-color:transparent;overscroll-behavior-y:none}[hidden]{display:none!important}img{max-width:100%}</style>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bungee&family=Chakra+Petch:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+:root{
+  color-scheme: dark;
+  --bg:#090c16; --bg2:#10162a; --panel:#141b30; --panel2:#1a2340; --line:#27325a;
+  --ink:#eaedf7; --mute:#93a0c4; --dim:#5d6a90;
+  --violet:#9d6cff; --pink:#ff5b92; --cyan:#35e6c1; --amber:#ffc24a; --red:#ff5d5d; --green:#4ef08f;
+  --display:'Bungee', 'Impact', system-ui, sans-serif;
+  --ui:'Chakra Petch', 'Segoe UI', system-ui, sans-serif;
+  --mono:'JetBrains Mono', ui-monospace, 'Courier New', monospace;
+}
+*{box-sizing:border-box}
+html,body{min-height:100%}
+body{background:var(--bg);color:var(--ink);font-family:var(--ui);font-size:16px;line-height:1.5;margin:0}
+#bg{position:fixed;inset:0;width:100%;height:100%;z-index:0;pointer-events:none}
+.wrap{position:relative;z-index:1;max-width:1060px;margin:0 auto;padding-inline:16px;padding-block:0 48px}
+button{font-family:inherit;color:inherit}
+button:focus-visible,input:focus-visible{outline:2px solid var(--cyan);outline-offset:2px}
+kbd{font-family:var(--mono);font-size:12px;font-weight:600;display:inline-grid;place-items:center;min-width:24px;height:24px;padding:0 6px;border-radius:6px;background:#0b1022;border:1px solid var(--line);border-bottom-width:3px;color:var(--amber)}
+
+/* top bar */
+.bar{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;display:flex;align-items:center;gap:12px;flex-wrap:wrap;padding-block:12px;background:linear-gradient(var(--bg) 70%,transparent)}
+.logo{font-family:var(--display);font-size:18px;letter-spacing:.02em;background:none;border:0;padding:0;cursor:pointer;display:flex;align-items:center;gap:8px}
+.logo i{width:14px;height:14px;border-radius:50%;background:var(--violet);box-shadow:10px 0 0 var(--pink);margin-right:10px;display:inline-block}
+.bar .sp{flex:1}
+.recs{font-family:var(--mono);font-size:12px;color:var(--mute);display:flex;gap:12px;flex-wrap:wrap}
+.recs b{color:var(--amber);font-weight:600}
+.iconbtn{background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:6px 10px;font-size:13px;cursor:pointer;display:flex;gap:6px;align-items:center}
+
+/* menu */
+.hero{padding-block:28px 12px;display:grid;gap:14px}
+.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--cyan)}
+h1{font-family:var(--display);font-weight:400;font-size:clamp(36px,8vw,76px);line-height:.95;margin:0;text-wrap:balance}
+h1 .p{color:var(--violet);text-shadow:0 0 28px rgba(157,108,255,.55)}
+h1 .n{color:var(--pink);text-shadow:0 0 28px rgba(255,91,146,.5)}
+.lede{max-width:60ch;color:var(--mute);margin:0;font-size:17px}
+.lede b{color:var(--ink)}
+.modes{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px;margin-top:18px}
+.mode{position:relative;text-align:left;background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:18px;cursor:pointer;display:grid;gap:8px;overflow:hidden;transition:transform .15s,border-color .15s}
+.mode:hover{transform:translateY(-3px);border-color:var(--c)}
+.mode::after{content:"";position:absolute;right:-40px;top:-40px;width:130px;height:130px;border-radius:50%;background:radial-gradient(circle,var(--c) 0,transparent 70%);opacity:.35}
+.mode h3{font-family:var(--display);font-weight:400;font-size:22px;margin:0;color:var(--c)}
+.mode p{margin:0;color:var(--mute);font-size:14px}
+.mode kbd{position:absolute;right:14px;bottom:14px}
+.fact{margin-top:18px;background:var(--bg2);border:1px dashed var(--line);border-radius:16px;padding:16px 18px;display:grid;gap:6px}
+.fact .t{font-family:var(--mono);font-size:12px;color:var(--amber);letter-spacing:.1em;text-transform:uppercase;display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.fact .who{font-weight:700;font-size:18px}
+.fact p{margin:0;max-width:70ch}
+.keys{margin-top:18px;display:flex;flex-wrap:wrap;gap:10px 18px;color:var(--mute);font-size:13px}
+.keys span{display:flex;gap:6px;align-items:center}
+
+/* game */
+.hud{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:6px}
+.stat{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:8px 12px}
+.stat .l{font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--dim)}
+.stat .v{font-family:var(--display);font-size:22px;line-height:1.1;font-variant-numeric:tabular-nums}
+.meter{height:8px;border-radius:9px;background:#0b1022;overflow:hidden;margin-top:6px}
+.meter i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--amber),var(--red));transition:width .4s}
+.stagebox{position:relative;margin-top:12px;border-radius:18px;overflow:hidden;border:1px solid var(--line);background:radial-gradient(ellipse at 50% 60%,#18214a 0,#0b0f1f 70%)}
+#stage{display:block;width:100%;height:230px}
+.plate{position:absolute;left:14px;right:14px;top:12px;display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;align-items:flex-start;pointer-events:none}
+.bname{font-family:var(--display);font-size:clamp(18px,4vw,26px);line-height:1.1;text-shadow:0 2px 12px #000;max-width:100%}
+.chip{font-family:var(--mono);font-size:11px;font-weight:600;padding:3px 8px;border-radius:99px;border:1px solid currentColor;white-space:nowrap;display:inline-block}
+.chip.pos{color:var(--violet)} .chip.neg{color:var(--pink)} .chip.acid{color:var(--amber)} .chip.none{color:var(--cyan)}
+.hint{position:absolute;left:14px;right:14px;bottom:10px;font-size:13px;color:var(--mute);text-shadow:0 1px 6px #000}
+.timer{height:6px;background:#0b1022;border-radius:9px;margin-top:10px;overflow:hidden}
+.timer i{display:block;height:100%;width:100%;background:var(--cyan);border-radius:9px}
+.timer.low i{background:var(--red)}
+.ask{margin:14px 0 8px;font-size:17px;font-weight:600}
+.opts{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.opt{display:grid;grid-template-columns:auto 1fr;gap:4px 12px;align-items:center;text-align:left;background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:12px 14px;cursor:pointer;min-height:64px;transition:transform .12s,border-color .12s,background .12s}
+.opt:hover:not(:disabled){border-color:var(--cyan);transform:translateY(-2px)}
+.opt kbd{grid-row:span 2}
+.opt .on{font-weight:700;font-size:16px;line-height:1.25}
+.opt .os{font-size:12px;color:var(--mute);line-height:1.3}
+.opt.ok{border-color:var(--green);background:rgba(78,240,143,.12)}
+.opt.bad{border-color:var(--red);background:rgba(255,93,93,.12);animation:shake .35s}
+.opt:disabled{cursor:default}
+.opt.fade{opacity:.45}
+@keyframes shake{25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+.qcard{margin-top:12px;background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:18px}
+.qcard .qt{font-family:var(--mono);font-size:12px;color:var(--cyan);letter-spacing:.1em;text-transform:uppercase}
+.qcard .qq{font-size:clamp(18px,3.4vw,23px);font-weight:600;margin:6px 0 0;text-wrap:balance}
+.qcard .qx{margin:10px 0 0;padding:12px 14px;border-left:3px solid var(--amber);background:var(--bg2);border-radius:0 10px 10px 0;color:var(--ink)}
+.opts.long .opt .on{font-size:14px;font-weight:600}
+.fb{margin-top:14px;border-radius:16px;padding:16px 18px;border:1px solid var(--line);background:var(--bg2);display:grid;gap:10px}
+.fb.good{border-color:var(--green)} .fb.bad{border-color:var(--red)}
+.fb h4{margin:0;font-family:var(--display);font-weight:400;font-size:20px}
+.fb.good h4{color:var(--green)} .fb.bad h4{color:var(--red)}
+.fb p{margin:0;max-width:75ch}
+.fb .lab{font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--amber);display:block;margin-bottom:2px}
+.fb .row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.btn{background:var(--cyan);color:#04211b;border:0;border-radius:10px;padding:10px 16px;font-weight:700;cursor:pointer;display:inline-flex;gap:8px;align-items:center;font-size:15px}
+.btn.ghost{background:transparent;color:var(--ink);border:1px solid var(--line)}
+.btn kbd{color:inherit;background:rgba(0,0,0,.18);border-color:rgba(0,0,0,.25)}
+.gtop{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;margin-top:8px}
+.gtop h2{font-family:var(--display);font-weight:400;font-size:22px;margin:0}
+.pauseveil{position:fixed;inset:0;z-index:20;background:rgba(6,8,16,.85);display:grid;place-items:center;text-align:center;padding:16px}
+.pauseveil h2{font-family:var(--display);font-weight:400;font-size:40px;margin:0 0 8px}
+.pop{position:absolute;left:50%;top:48%;transform:translate(-50%,-50%);font-family:var(--display);font-size:28px;pointer-events:none;opacity:0;white-space:nowrap}
+.pop.go{animation:pop 1s ease-out}
+@keyframes pop{0%{opacity:0;transform:translate(-50%,-20%) scale(.6)}20%{opacity:1;transform:translate(-50%,-50%) scale(1.1)}100%{opacity:0;transform:translate(-50%,-140%) scale(1)}}
+
+/* encyclopedia */
+.enc{display:grid;grid-template-columns:minmax(0,320px) minmax(0,1fr);gap:14px;margin-top:12px}
+.tabs{display:flex;gap:6px}
+.tab{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:8px 12px;cursor:pointer;font-weight:600}
+.tab[aria-selected="true"]{background:var(--violet);border-color:var(--violet);color:#fff}
+.search{width:100%;background:var(--bg2);border:1px solid var(--line);border-radius:10px;padding:10px 12px;color:var(--ink);font-family:inherit;font-size:15px;margin-top:10px}
+.list{margin-top:10px;max-height:62vh;overflow:auto;display:grid;gap:4px;padding-right:4px}
+.li{text-align:left;background:transparent;border:1px solid transparent;border-radius:10px;padding:8px 10px;cursor:pointer;display:grid;gap:0}
+.li:hover{background:var(--panel)}
+.li.sel{background:var(--panel2);border-color:var(--cyan)}
+.li b{font-size:15px}
+.li small{color:var(--mute);font-size:12px}
+.detail{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:20px;display:grid;gap:14px;align-content:start}
+.detail h2{font-family:var(--display);font-weight:400;font-size:clamp(22px,4vw,30px);margin:0;line-height:1.1}
+.detail .f .lab{font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--dim);display:block}
+.detail .f p{margin:2px 0 0}
+.detail .cur{background:var(--bg2);border-left:3px solid var(--amber);padding:12px 14px;border-radius:0 10px 10px 0}
+.tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:4px}
+.tag{font-size:13px;padding:3px 9px;border-radius:99px;background:var(--bg2);border:1px solid var(--line);cursor:pointer}
+.tag.ok{border-color:rgba(78,240,143,.5)} .tag.no{border-color:rgba(255,93,93,.5)}
+.over{margin-top:28px;background:var(--panel);border:1px solid var(--line);border-radius:20px;padding:24px;display:grid;gap:16px;max-width:640px}
+.over h2{font-family:var(--display);font-weight:400;font-size:clamp(28px,6vw,44px);margin:0;line-height:1}
+.big{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.small{font-size:13px;color:var(--mute)}
+/* memória */
+.mtabs{display:flex;gap:6px;flex-wrap:wrap}
+.mgrid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;margin-top:12px}
+.card{position:relative;height:108px;perspective:900px;background:none;border:0;padding:0;cursor:pointer;border-radius:12px}
+.card .in{position:absolute;inset:0;transition:transform .45s cubic-bezier(.3,1.4,.5,1);transform-style:preserve-3d}
+.card.up .in,.card.done .in{transform:rotateY(180deg)}
+.card .bk,.card .fc{position:absolute;inset:0;border-radius:12px;backface-visibility:hidden;-webkit-backface-visibility:hidden;display:grid;align-content:center;justify-items:center;gap:4px;padding:8px;text-align:center;overflow:hidden}
+.card .bk{background:radial-gradient(circle at 30% 30%,#232d57 0,#141b30 60%);border:1px solid var(--line)}
+.card .bk::before{content:"";width:34px;height:34px;border-radius:50%;border:2px solid rgba(157,108,255,.55);box-shadow:inset 0 0 0 6px rgba(255,91,146,.18),0 0 18px rgba(157,108,255,.35)}
+.card .fc{transform:rotateY(180deg);background:var(--panel2);border:1px solid var(--c,var(--cyan))}
+.card .fc small{font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--c,var(--cyan))}
+.card .fc span{font-size:14px;font-weight:600;line-height:1.2;overflow-wrap:anywhere}
+.card.done .fc{border-color:var(--green);box-shadow:0 0 18px rgba(78,240,143,.35);background:rgba(78,240,143,.08)}
+.card.miss .fc{border-color:var(--red)}
+.card.cur{outline:2px solid var(--amber);outline-offset:3px}
+.card:focus-visible{outline:2px solid var(--cyan);outline-offset:3px}
+.mhud{grid-template-columns:repeat(4,1fr)}
+@media (max-width:520px){.card{height:94px}.card .fc span{font-size:12px}.card .fc{padding:5px}.mgrid{gap:6px}}
+@media (max-width:680px){
+  .enc{grid-template-columns:1fr}
+  .list{max-height:34vh}
+  .hud{grid-template-columns:repeat(2,1fr)}
+}
+@media (max-width:520px){
+  .opts{grid-template-columns:1fr}
+  .opt{min-height:54px;padding:10px 12px}
+  #stage{height:190px}
+  .big{grid-template-columns:1fr 1fr}
+}
+@media (prefers-reduced-motion:reduce){
+  *{animation:none!important;transition:none!important}
+}
+</style>
+
+</head>
+<body>
+<canvas id="bg" aria-hidden="true"></canvas>
+<div class="wrap">
+  <header class="bar">
+    <button class="logo" id="home" aria-label="Voltar ao menu"><i></i>GAMES @PHARMAMELO</button>
+    <div class="sp"></div>
+    <div class="recs" id="recs"></div>
+    <button class="iconbtn" id="snd" aria-label="Ligar ou desligar som"><kbd>M</kbd><span id="sndl">Som: ligado</span></button>
+  </header>
+
+  <!-- MENU -->
+  <section id="menu">
+    <div class="hero">
+      <div class="eyebrow">Games @pharmamelo · farmacologia dos antimicrobianos</div>
+      <h1>Arsenal <span class="p">Anti</span><span class="n">micro</span>biano</h1>
+      <p class="lede">Escolha a arma certa antes que a colônia se divida. <b id="counts"></b> com mecanismo, espectro, efeitos adversos marcantes, resistência intrínseca e curiosidades.</p>
+    </div>
+    <div class="modes">
+      <button class="mode" style="--c:var(--pink)" data-go="battle"><h3>Batalha</h3><p>Uma bactéria aparece. Escolha um antimicrobiano ativo. Erros aumentam a pressão de resistência.</p><kbd>B</kbd></button>
+      <button class="mode" style="--c:var(--violet)" data-go="quiz"><h3>Quiz de farmacologia</h3><p>12 perguntas sobre classe, mecanismo, efeitos adversos e "quem sou eu?" pelas curiosidades.</p><kbd>Q</kbd></button>
+      <button class="mode" style="--c:var(--amber)" data-go="mem"><h3>Memória</h3><p>Vire as cartas e forme pares: fármaco e classe, fármaco e alvo, ou bactéria e antimicrobiano ativo.</p><kbd>J</kbd></button>
+      <button class="mode" style="--c:var(--cyan)" data-go="enc"><h3>Enciclopédia</h3><p>Consulte cada fármaco e cada bactéria: quem cobre quem, e por quê.</p><kbd>E</kbd></button>
+    </div>
+    <div class="fact" id="fact"></div>
+    <div class="keys">
+      <span><kbd>1</kbd><kbd>2</kbd><kbd>3</kbd><kbd>4</kbd> ou <kbd>A</kbd><kbd>S</kbd><kbd>D</kbd><kbd>F</kbd> responder</span>
+      <span><kbd>Enter</kbd> / <kbd>Espaço</kbd> continuar</span>
+      <span><kbd>←</kbd><kbd>↑</kbd><kbd>→</kbd><kbd>↓</kbd> mover na memória</span>
+      <span><kbd>P</kbd> pausar</span>
+      <span><kbd>Esc</kbd> menu</span>
+      <span><kbd>M</kbd> som</span>
+    </div>
+  </section>
+
+  <!-- BATTLE -->
+  <section id="battle" hidden>
+    <div class="hud">
+      <div class="stat"><div class="l">Pontos</div><div class="v" id="bScore">0</div></div>
+      <div class="stat"><div class="l">Combo</div><div class="v" id="bCombo" style="color:var(--amber)">x1</div></div>
+      <div class="stat"><div class="l">Nível</div><div class="v" id="bLevel" style="color:var(--cyan)">1</div></div>
+      <div class="stat"><div class="l">Resistência</div><div class="meter"><i id="bRes"></i></div></div>
+    </div>
+    <div class="stagebox">
+      <canvas id="stage"></canvas>
+      <div class="plate"><div class="bname" id="bName"></div><span class="chip" id="bGram"></span></div>
+      <div class="hint" id="bHint"></div>
+      <div class="pop" id="pop"></div>
+    </div>
+    <div class="timer" id="bTimerBox"><i id="bTimer"></i></div>
+    <div class="ask">Qual antimicrobiano é ativo contra esta bactéria?</div>
+    <div class="opts" id="bOpts"></div>
+    <div id="bFb"></div>
+  </section>
+
+  <!-- QUIZ -->
+  <section id="quiz" hidden>
+    <div class="hud">
+      <div class="stat"><div class="l">Pontos</div><div class="v" id="qScore">0</div></div>
+      <div class="stat"><div class="l">Sequência</div><div class="v" id="qStreak" style="color:var(--amber)">0</div></div>
+      <div class="stat"><div class="l">Pergunta</div><div class="v" id="qNum" style="color:var(--cyan)">1/12</div></div>
+      <div class="stat"><div class="l">Acertos</div><div class="v" id="qHits" style="color:var(--green)">0</div></div>
+    </div>
+    <div class="qcard" id="qCard"></div>
+    <div class="timer" id="qTimerBox"><i id="qTimer"></i></div>
+    <div class="opts" id="qOpts" style="margin-top:14px"></div>
+    <div id="qFb"></div>
+  </section>
+
+  <!-- MEMORY -->
+  <section id="mem" hidden>
+    <div class="gtop"><h2>Memória</h2>
+      <div class="mtabs" role="tablist">
+        <button class="tab" role="tab" data-theme="classe"><kbd>1</kbd> Fármaco · Classe</button>
+        <button class="tab" role="tab" data-theme="mec"><kbd>2</kbd> Fármaco · Alvo</button>
+        <button class="tab" role="tab" data-theme="bac"><kbd>3</kbd> Bactéria · Ativo</button>
+      </div>
+    </div>
+    <div class="hud mhud">
+      <div class="stat"><div class="l">Pares</div><div class="v" id="mPairs" style="color:var(--green)">0/8</div></div>
+      <div class="stat"><div class="l">Jogadas</div><div class="v" id="mMoves">0</div></div>
+      <div class="stat"><div class="l">Tempo</div><div class="v" id="mTime" style="color:var(--cyan)">0:00</div></div>
+      <div class="stat"><div class="l">Recorde</div><div class="v" id="mBest" style="color:var(--amber)">0</div></div>
+    </div>
+    <div class="mgrid" id="mGrid"></div>
+    <div id="mFb"></div>
+    <p class="small">Setas movem o cursor · <kbd>Enter</kbd>/<kbd>Espaço</kbd> vira a carta · <kbd>1</kbd><kbd>2</kbd><kbd>3</kbd> trocam o tema · <kbd>R</kbd> embaralha de novo · <kbd>Esc</kbd> menu</p>
+  </section>
+
+  <!-- ENCYCLOPEDIA -->
+  <section id="enc" hidden>
+    <div class="gtop"><h2>Enciclopédia</h2>
+      <div class="tabs" role="tablist">
+        <button class="tab" role="tab" id="tabD" aria-selected="true">Antimicrobianos</button>
+        <button class="tab" role="tab" id="tabB" aria-selected="false">Bactérias</button>
+      </div>
+    </div>
+    <div class="enc">
+      <div>
+        <input class="search" id="q" type="search" placeholder="Buscar (tecla /)" autocomplete="off">
+        <div class="list" id="list"></div>
+      </div>
+      <div class="detail" id="detail"></div>
+    </div>
+    <p class="small">Setas <kbd>↑</kbd><kbd>↓</kbd> navegam · <kbd>←</kbd><kbd>→</kbd> trocam a aba · <kbd>Esc</kbd> menu. Conteúdo didático: sempre confira antibiograma, protocolos locais e bulas.</p>
+  </section>
+
+  <!-- GAME OVER -->
+  <section id="over" hidden>
+    <div class="over" id="overBox"></div>
+  </section>
+</div>
+<div class="pauseveil" id="veil" hidden><div><h2>Pausa</h2><p class="small">Pressione <kbd>P</kbd> para voltar</p><button class="btn" id="unpause">Continuar</button></div></div>
+
+<script>
+/* ================= DADOS ================= */
+const MEC={
+PBP:'Inibe transpeptidases (PBPs) e bloqueia a síntese da parede celular',
+DALA:'Liga-se ao terminal D-Ala-D-Ala e impede a polimerização do peptidoglicano',
+MEMB:'Insere-se na membrana (dependente de cálcio) e causa despolarização',
+LPS:'Liga-se ao lipídio A do LPS e desorganiza a membrana externa',
+R30:'Liga-se à subunidade ribossomal 30S e inibe a síntese proteica',
+R50:'Liga-se à subunidade ribossomal 50S e inibe a síntese proteica',
+GIR:'Inibe a DNA girase e a topoisomerase IV',
+FOL:'Bloqueia etapas da síntese de folato',
+DNA:'Pró-fármaco reduzido em anaerobiose; gera radicais que lesam o DNA',
+RNAP:'Inibe a RNA polimerase bacteriana',
+MURA:'Inibe a enzima MurA, primeira etapa da síntese do peptidoglicano',
+MIC:'Inibe a síntese de ácidos micólicos (após ativação pela KatG)',
+ARAB:'Inibe arabinosiltransferases da parede micobacteriana',
+ATP:'Inibe a ATP sintase micobacteriana',
+PZA:'Convertida em ácido pirazinoico, ativo em pH ácido',
+TRNA:'Inibe a isoleucil-tRNA sintetase',
+EFG:'Impede a liberação do fator de elongação G do ribossomo',
+BAC:'Impede a reciclagem do bactoprenol, carreador de precursores da parede',
+FORM:'Libera formaldeído quando a urina está ácida',
+NITRO:'Reduzida a intermediários reativos que lesam ribossomos e DNA'
+};
+// [nome, classe, mecanismo, espectro, efeito adverso marcante, tag de toxicidade, curiosidade]
+const D=[
+['Penicilina G cristalina','Penicilinas naturais','PBP','Estreptococos, Treponema, meningococo, Leptospira, Clostridium','Convulsões em doses altas com disfunção renal','neuro','Fleming notou em 1928 um halo sem bactérias ao redor do fungo Penicillium. Em 1941, o primeiro paciente tratado com o produto purificado por Florey e Chain recebia penicilina recuperada da própria urina, de tão escassa que ela era.'],
+['Penicilina G benzatina','Penicilinas naturais','PBP','Sífilis, faringite estreptocócica, profilaxia de febre reumática','Dor local intensa; reação de Jarisch-Herxheimer na sífilis','local','É uma formulação de depósito exclusivamente intramuscular, que libera penicilina por semanas. A injeção intravascular acidental pode ser fatal.'],
+['Amoxicilina','Aminopenicilinas','PBP','Estreptococos, pneumococo, H. influenzae sem betalactamase, E. faecalis','Diarreia e exantema','gi','Absorve cerca de 80 a 90% por via oral, bem mais que a ampicilina, e por isso substituiu a ampicilina oral na prática clínica.'],
+['Ampicilina','Aminopenicilinas','PBP','Enterococcus faecalis, Listeria, estreptococos','Exantema maculopapular na mononucleose infecciosa','pele','Em pacientes com mononucleose (vírus Epstein-Barr), a ampicilina provoca exantema em grande parte dos casos. Isso não indica alergia verdadeira à penicilina.'],
+['Oxacilina','Penicilinas antiestafilocócicas','PBP','S. aureus sensível à meticilina (MSSA)','Hepatite colestática e flebite','hepato','A sigla MRSA vem da meticilina, que saiu do mercado. O laboratório usa oxacilina ou cefoxitina para detectar resistência mediada pelo gene mecA.'],
+['Amoxicilina-clavulanato','Penicilina + inibidor de betalactamase','PBP','Produtores de betalactamase, anaeróbios, mordeduras','Diarreia, pior que com amoxicilina isolada','gi','O ácido clavulânico quase não mata bactérias sozinho: liga-se à betalactamase como "inibidor suicida". É produzido pelo Streptomyces clavuligerus.'],
+['Ampicilina-sulbactam','Penicilina + inibidor de betalactamase','PBP','Anaeróbios, Acinetobacter baumannii (pelo sulbactam)','Diarreia e exantema','gi','O sulbactam tem atividade própria contra Acinetobacter por se ligar às PBPs dessa bactéria. Aqui o "inibidor" é quem trata a infecção.'],
+['Piperacilina-tazobactam','Penicilina antipseudomonas + inibidor','PBP','Gram-negativos incluindo Pseudomonas, anaeróbios, gram-positivos','Mais lesão renal aguda quando associada à vancomicina','nefro','Betalactâmicos dependem do tempo acima da CIM. A infusão estendida (por exemplo, 4 horas) aproveita isso para melhorar a exposição.'],
+['Cefalexina','Cefalosporinas 1ª geração','PBP','Estreptococos, MSSA, pele e partes moles','Diarreia e reações alérgicas','gi','Oral e barata, é a escolha clássica para celulite não purulenta. Como toda cefalosporina, não cobre Enterococcus.'],
+['Cefazolina','Cefalosporinas 1ª geração','PBP','MSSA, estreptococos, profilaxia cirúrgica','Reações alérgicas','alerg','É o antibiótico de profilaxia cirúrgica mais usado: dose 30 a 60 minutos antes da incisão, 3 g para pacientes com 120 kg ou mais.'],
+['Cefuroxima','Cefalosporinas 2ª geração','PBP','Pneumococo, H. influenzae, Moraxella','Diarreia','gi','Existe como cefuroxima axetil, pró-fármaco oral, e como cefuroxima sódica, intravenosa.'],
+['Cefoxitina','Cefamicinas (2ª geração)','PBP','Anaeróbios e Enterobacterales','Flebite no local de infusão','local','O disco de cefoxitina é o melhor marcador laboratorial de resistência por mecA em estafilococos. Ela também é forte indutora de AmpC.'],
+['Ceftriaxona','Cefalosporinas 3ª geração','PBP','Pneumococo, meningococo, gonococo, Enterobacterales, Salmonella','Pseudolitíase biliar; precipita com cálcio em neonatos','bile','Meia-vida de cerca de 8 horas e dupla eliminação (biliar e renal) permitem dose única diária sem ajuste renal.'],
+['Cefotaxima','Cefalosporinas 3ª geração','PBP','Pneumococo, meningococo, Enterobacterales','Neutropenia em uso prolongado','hema','É preferida à ceftriaxona em neonatos: não desloca bilirrubina da albumina nem precipita com cálcio.'],
+['Ceftazidima','Cefalosporinas 3ª geração antipseudomonas','PBP','Pseudomonas e gram-negativos; fraca contra gram-positivos','Neurotoxicidade na insuficiência renal','neuro','Quase não age em estafilococos. Compartilha a cadeia lateral com o aztreonam, o que explica alergia cruzada entre os dois.'],
+['Cefepima','Cefalosporinas 4ª geração','PBP','Pseudomonas, Enterobacterales com AmpC, gram-positivos','Encefalopatia e mioclonias com dose não ajustada','neuro','Por ser zwitteriônica, atravessa rápido a membrana externa e é mais estável frente à AmpC do que as de 3ª geração.'],
+['Ceftarolina','Cefalosporinas anti-MRSA','PBP','MRSA, pneumococo, gram-negativos sem ESBL','Neutropenia em uso prolongado','hema','Liga-se à PBP2a, a proteína codificada pelo mecA. Com o ceftobiprol, forma o pequeno grupo de betalactâmicos ativos contra MRSA.'],
+['Ceftazidima-avibactam','Cefalosporina + inibidor de nova geração','PBP','KPC, OXA-48, Pseudomonas; não inibe metalo-betalactamases','Náusea e diarreia','gi','O avibactam é um diazabiciclooctano, sem anel betalactâmico, e se liga de forma reversível à enzima. Contra NDM costuma ser associado ao aztreonam.'],
+['Ceftolozano-tazobactam','Cefalosporina + inibidor de betalactamase','PBP','Pseudomonas aeruginosa multirresistente','Cefaleia e náusea','gi','O ceftolozano foi desenhado para escapar das bombas de efluxo e da perda de porinas típicas da Pseudomonas.'],
+['Cefiderocol','Cefalosporinas sideróforas','PBP','Gram-negativos multirresistentes, incluindo metalo-betalactamases','Elevação de enzimas hepáticas','hepato','Funciona como cavalo de Troia: um grupo catecol se liga ao ferro, e a bactéria transporta o antibiótico para dentro achando que é nutriente.'],
+['Imipenem-cilastatina','Carbapenêmicos','PBP','Espectro muito amplo, anaeróbios, Pseudomonas','Convulsões, o maior risco da classe','neuro','A cilastatina não é antibiótico: inibe a desidropeptidase-I renal, que degradaria o imipenem nos túbulos.'],
+['Meropenem','Carbapenêmicos','PBP','Amplo: ESBL, Pseudomonas, anaeróbios','Derruba o nível sérico de ácido valproico','interac','A queda do valproato é rápida e não se corrige subindo a dose do anticonvulsivante; o recomendado é evitar a associação.'],
+['Ertapenem','Carbapenêmicos','PBP','ESBL e anaeróbios; não cobre Pseudomonas, Acinetobacter nem Enterococcus','Diarreia e cefaleia','gi','Alta ligação a proteínas e meia-vida longa permitem dose única diária, útil em antibioticoterapia ambulatorial.'],
+['Meropenem-vaborbactam','Carbapenêmico + inibidor de nova geração','PBP','Enterobacterales produtores de KPC','Cefaleia e flebite','local','O vaborbactam é um inibidor derivado de ácido borônico, desenhado especificamente contra a KPC.'],
+['Imipenem-relebactam','Carbapenêmico + inibidor de nova geração','PBP','KPC e Pseudomonas resistente a carbapenêmicos','Diarreia e náusea','gi','O relebactam pertence à mesma família química do avibactam (diazabiciclooctanos).'],
+['Aztreonam','Monobactâmicos','PBP','Somente gram-negativos aeróbios, incluindo Pseudomonas','Baixa alergia cruzada com penicilinas (exceto ceftazidima)','alerg','É estável às metalo-betalactamases (NDM, VIM), mas é destruído por ESBL e KPC. Por isso é combinado ao avibactam.'],
+['Aztreonam-avibactam','Monobactâmico + inibidor de nova geração','PBP','Enterobacterales com metalo-betalactamases (NDM, VIM)','Elevação de transaminases','hepato','Une a estabilidade do aztreonam frente às metalo-betalactamases à proteção do avibactam contra ESBL e KPC. Aprovado na União Europeia em 2024.'],
+['Sulbactam-durlobactam','Betalactâmico + inibidor de nova geração','PBP','Complexo Acinetobacter baumannii-calcoaceticus','Elevação de enzimas hepáticas','hepato','Aprovado nos EUA em 2023 especificamente para Acinetobacter: o durlobactam protege o sulbactam das betalactamases OXA.'],
+['Vancomicina','Glicopeptídeos','DALA','Gram-positivos, incluindo MRSA; oral para C. difficile','Nefrotoxicidade e reação infusional (antiga "síndrome do homem vermelho")','nefro','As primeiras preparações, marrons de impurezas, foram apelidadas de "lama do Mississippi". O nome vem do inglês "vanquish" (vencer). A meta atual de monitorização é AUC/CIM de 400 a 600.'],
+['Teicoplanina','Glicopeptídeos','DALA','Gram-positivos, incluindo MRSA','Febre e exantema','pele','Tem meia-vida muito longa, exige dose de ataque e pode ser aplicada por via intramuscular.'],
+['Dalbavancina','Lipoglicopeptídeos','DALA','MRSA em pele e partes moles','Náusea','gi','Meia-vida de mais de uma semana: o tratamento de uma infecção de pele pode ser uma dose única de 1.500 mg.'],
+['Daptomicina','Lipopeptídeos cíclicos','MEMB','Gram-positivos, MRSA, VRE','Miopatia com elevação de CPK','musc','É inativada pelo surfactante pulmonar e não serve para pneumonia. Vem do Streptomyces roseosporus, isolado de solo do Monte Ararat, na Turquia.'],
+['Linezolida','Oxazolidinonas','R50','MRSA, VRE e demais gram-positivos','Trombocitopenia após cerca de duas semanas','hema','É um inibidor fraco da MAO: com ISRS pode precipitar síndrome serotoninérgica. A biodisponibilidade oral é próxima de 100%.'],
+['Tedizolida','Oxazolidinonas','R50','MRSA em pele e partes moles','Náusea','gi','Dose única diária por 6 dias na pele, com menos mielotoxicidade que a linezolida.'],
+['Eritromicina','Macrolídeos','R50','Atípicos, estreptococos','Intolerância gastrointestinal intensa','gi','Isolada em 1952 de Saccharopolyspora erythraea de solo filipino. Por ser agonista da motilina, é usada como procinético antes de endoscopia digestiva alta.'],
+['Azitromicina','Macrolídeos (azalídeos)','R50','Atípicos, H. influenzae, Chlamydia, Campylobacter, Salmonella','Prolongamento do intervalo QT','qt','Foi desenvolvida na Croácia, pela Pliva, em 1980. Acumula-se em tecidos e fagócitos, o que permite cursos curtos de 3 a 5 dias.'],
+['Claritromicina','Macrolídeos','R50','H. pylori, atípicos, micobactérias não tuberculosas','Inibição potente do CYP3A4 e gosto metálico','interac','Pode elevar muito os níveis de estatinas, colchicina e tacrolimo. É base de esquemas contra H. pylori e complexo M. avium.'],
+['Clindamicina','Lincosamidas','R50','Gram-positivos, anaeróbios, MRSA comunitário se sensível','Colite por Clostridioides difficile','cdiff','Inibe a produção de toxinas estreptocócicas e estafilocócicas, por isso é associada na fasciíte necrosante. O teste D detecta resistência induzível.'],
+['Cloranfenicol','Anfenicóis','R50','Amplo, incluindo anaeróbios e Rickettsia','Síndrome do bebê cinzento; anemia aplástica','hema','Neonatos têm pouca glicuronidação hepática, acumulam o fármaco e desenvolvem colapso circulatório: a "síndrome do bebê cinzento".'],
+['Lefamulina','Pleuromutilinas','R50','Pneumonia adquirida na comunidade','Prolongamento do QT e diarreia','qt','As pleuromutilinas eram usadas apenas em veterinária. A lefamulina foi a primeira da classe aprovada para uso sistêmico em humanos, em 2019.'],
+['Doxiciclina','Tetraciclinas','R30','Atípicos, Rickettsia, Leptospira, Chlamydia, MRSA comunitário','Esofagite e fotossensibilidade','esof','Deve ser tomada com um copo de água, sentado ou em pé, para evitar úlcera esofágica. É a droga de escolha na febre maculosa, inclusive em crianças.'],
+['Minociclina','Tetraciclinas','R30','Acinetobacter, Stenotrophomonas, MRSA','Vertigem e pigmentação azul-acinzentada','pele','É a mais lipofílica da classe e atravessa melhor o SNC, o que explica a tontura. Uso prolongado pode pigmentar pele, dentes e escleras.'],
+['Tetraciclina','Tetraciclinas','R30','H. pylori (esquema quádruplo), atípicos','Coloração dentária em crianças','dente','Forma quelatos com cálcio, ferro, magnésio e alumínio: leite e antiácidos derrubam sua absorção.'],
+['Tigeciclina','Glicilciclinas','R30','Multirresistentes, incluindo Acinetobacter, VRE e MRSA','Náuseas e vômitos intensos','gi','Distribui-se muito nos tecidos e fica pouco no sangue, o que a torna fraca para bacteremia. Não age em Pseudomonas, Proteus, Providencia nem Morganella.'],
+['Gentamicina','Aminoglicosídeos','R30','Gram-negativos aeróbios; sinergia em endocardite','Nefrotoxicidade e ototoxicidade','oto','Em inglês se escreve gentamicin, com "i", porque vem do fungo-bactéria Micromonospora; os derivados de Streptomyces terminam em "-mycin".'],
+['Amicacina','Aminoglicosídeos','R30','Gram-negativos multirresistentes, micobactérias','Ototoxicidade coclear irreversível','oto','Derivada semissintética da canamicina, resiste a muitas enzimas modificadoras que inativam gentamicina e tobramicina.'],
+['Tobramicina','Aminoglicosídeos','R30','Pseudomonas; forma inalatória na fibrose cística','Nefrotoxicidade','nefro','A formulação inalatória atinge concentrações altas no escarro com pouca absorção sistêmica.'],
+['Estreptomicina','Aminoglicosídeos','R30','Tuberculose (2ª linha), peste, tularemia','Toxicidade vestibular','oto','Isolada em 1943 por Albert Schatz no laboratório de Selman Waksman, foi o primeiro fármaco eficaz contra a tuberculose. Waksman recebeu o Nobel em 1952.'],
+['Ciprofloxacino','Fluoroquinolonas','GIR','Gram-negativos incluindo Pseudomonas; fraco contra pneumococo','Tendinite e ruptura de tendão','musc','A absorção oral cai muito junto com cálcio, ferro, magnésio, zinco ou antiácidos. Separe as tomadas por algumas horas.'],
+['Levofloxacino','Fluoroquinolonas','GIR','Pneumococo, atípicos, gram-negativos, Stenotrophomonas','Prolongamento do QT e disglicemia','qt','É a "quinolona respiratória" mais usada. Corresponde ao isômero levógiro do ofloxacino, a metade ativa da molécula.'],
+['Moxifloxacino','Fluoroquinolonas','GIR','Respiratória, anaeróbios, tuberculose','Prolongamento do QT','qt','Tem eliminação predominantemente não renal, alcança pouca concentração urinária e não é indicado para infecção urinária.'],
+['Sulfametoxazol-trimetoprima','Sulfonamida + diaminopirimidina','FOL','Stenotrophomonas, Pneumocystis, Nocardia, Listeria, MRSA comunitário, ITU','Hipercalemia e Stevens-Johnson','pele','O trimetoprima bloqueia o canal ENaC como a amilorida (hipercalemia) e inibe a secreção tubular de creatinina, que sobe sem queda real da filtração.'],
+['Sulfadiazina','Sulfonamidas','FOL','Toxoplasmose (com pirimetamina), nocardiose','Cristalúria e nefrolitíase','nefro','As sulfas foram os primeiros antibacterianos sistêmicos: o prontosil, de Gerhard Domagk, rendeu a ele o Nobel de 1939.'],
+['Metronidazol','Nitroimidazóis','DNA','Anaeróbios, C. difficile, Giardia, Entamoeba, Trichomonas','Gosto metálico e neuropatia periférica em uso prolongado','neuro','Só age onde há anaerobiose, pois precisa ser reduzido para gerar radicais. A famosa reação tipo dissulfiram com álcool é questionada por estudos recentes.'],
+['Polimixina B','Polimixinas','LPS','Gram-negativos multirresistentes: KPC, Acinetobacter, Pseudomonas','Nefrotoxicidade e bloqueio neuromuscular','nefro','Descoberta em 1947 em Paenibacillus polymyxa, foi abandonada nos anos 1970 pela toxicidade e ressuscitada pelos gram-negativos pan-resistentes.'],
+['Colistina','Polimixinas','LPS','Gram-negativos multirresistentes','Nefrotoxicidade','nefro','É administrada como colistimetato, um pró-fármaco. Em 2015 foi descrito na China o gene mcr-1, a primeira resistência a polimixinas carregada em plasmídeo.'],
+['Fosfomicina','Derivados do ácido fosfônico','MURA','Cistite (dose única oral), incluindo E. coli ESBL','Diarreia','gi','Isolada na Espanha em 1969. Entra na bactéria pelos transportadores de glicerol-3-fosfato e glicose-6-fosfato, que ela "engana".'],
+['Nitrofurantoína','Nitrofuranos','NITRO','Cistite por E. coli e E. faecalis','Reação pulmonar e fibrose em uso crônico','pulm','Concentra-se quase só na urina e não tem nível sérico útil: não trata pielonefrite nem bacteremia. Proteus é intrinsecamente resistente.'],
+['Metenamina','Antissépticos urinários','FORM','Profilaxia de infecção urinária recorrente','Desconforto gástrico e disúria','gi','Só funciona em urina ácida, onde se decompõe em formaldeído. Não é antibiótico clássico e não seleciona resistência.'],
+['Rifampicina','Rifamicinas','RNAP','Tuberculose, hanseníase, infecção de prótese (sempre associada)','Urina, lágrima e suor alaranjados; forte indução do CYP','interac','Pode manchar lentes de contato. Nunca é usada sozinha, pois uma única mutação no gene rpoB basta para resistência.'],
+['Rifaximina','Rifamicinas não absorvíveis','RNAP','Diarreia do viajante; prevenção de encefalopatia hepática','Náusea e distensão','gi','Menos de 1% é absorvido: atua praticamente só dentro do intestino.'],
+['Fidaxomicina','Macrocíclicos','RNAP','Clostridioides difficile','Náusea','gi','Tem espectro estreito, preserva a microbiota e reduz a recorrência da infecção por C. difficile em comparação à vancomicina oral.'],
+['Isoniazida','Antituberculosos','MIC','Tuberculose (tratamento e infecção latente)','Neuropatia periférica e hepatite','hepato','Acetiladores lentos, definidos pelo gene NAT2, acumulam mais o fármaco. A piridoxina (vitamina B6) previne a neuropatia.'],
+['Pirazinamida','Antituberculosos','PZA','Tuberculose (bacilos em ambiente ácido)','Hiperuricemia e artralgia','urico','Age nos bacilos semidormentes dentro de macrófagos ácidos. Sua entrada no esquema encurtou o tratamento da tuberculose de 9 para 6 meses.'],
+['Etambutol','Antituberculosos','ARAB','Tuberculose, complexo M. avium','Neurite óptica com perda da visão de cores','olho','Alteração na discriminação verde-vermelho é um sinal precoce; o paciente deve relatar qualquer mudança visual.'],
+['Bedaquilina','Diarilquinolinas','ATP','Tuberculose multirresistente','Prolongamento do QT','qt','Aprovada em 2012, foi o primeiro antituberculoso de mecanismo novo em cerca de 40 anos. A meia-vida terminal chega a meses.'],
+['Mupirocina','Ácido pseudomônico (tópico)','TRNA','Descolonização nasal de S. aureus, impetigo','Irritação local','local','É produzida pela bactéria Pseudomonas fluorescens. Aplicada no nariz, descoloniza portadores de S. aureus antes de cirurgias.'],
+['Ácido fusídico','Fusidanos','EFG','S. aureus (tópico e oral em alguns países)','Hepatotoxicidade por via oral','hepato','Tem estrutura esteroide, sem ação hormonal, e foi isolado do fungo Fusidium coccineum.'],
+['Bacitracina','Polipeptídeos (tópico)','BAC','Gram-positivos em uso tópico','Dermatite de contato','pele','O nome homenageia Margaret Tracy, a menina de cuja ferida foi isolado, nos anos 1940, o Bacillus produtor.']
+];
+const DRUGS=D.map(a=>({n:a[0],c:a[1],m:a[2],e:a[3],a:a[4],t:a[5],k:a[6]}));
+const DBY=Object.fromEntries(DRUGS.map(d=>[d.n,d]));
+
+// [nome, gram, forma, rótulo, contexto, ativos, inativos/não indicados, por quê, curiosidade]
+const B=[
+['Staphylococcus aureus (MSSA)','pos','cachos','Gram +','Cocos em cachos · pele, bacteremia, endocardite',['Oxacilina','Cefazolina','Cefalexina','Vancomicina'],['Aztreonam','Polimixina B','Colistina','Metronidazol'],'Aztreonam e polimixinas não agem em gram-positivos; metronidazol só age em anaeróbios. Para MSSA, betalactâmicos antiestafilocócicos superam a vancomicina.','Cerca de 30% das pessoas carregam S. aureus nas narinas sem adoecer. A coagulase forma uma capa de fibrina que ajuda a bactéria a se esconder.'],
+['Staphylococcus aureus (MRSA)','pos','cachos','Gram +','Cocos em cachos · resistente à oxacilina',['Vancomicina','Linezolida','Daptomicina','Ceftarolina','Sulfametoxazol-trimetoprima'],['Oxacilina','Cefazolina','Ceftriaxona','Meropenem','Aztreonam'],'O gene mecA codifica a PBP2a, de baixa afinidade pelos betalactâmicos. As exceções são ceftarolina e ceftobiprol.','Foi descrito em 1961, apenas dois anos após a introdução da meticilina no Reino Unido.'],
+['Streptococcus pneumoniae','pos','diplo','Gram +','Diplococos lanceolados · pneumonia, meningite, otite',['Ceftriaxona','Amoxicilina','Levofloxacino','Penicilina G cristalina'],['Aztreonam','Polimixina B','Metronidazol','Gentamicina'],'Estreptococos têm resistência intrínseca de baixo nível aos aminoglicosídeos em monoterapia; aztreonam e polimixinas não agem em gram-positivos.','A cápsula polissacarídica define mais de 100 sorotipos e é o alvo das vacinas pneumocócicas conjugadas.'],
+['Streptococcus pyogenes','pos','cadeia','Gram +','Cocos em cadeia · faringite, erisipela, fasciíte',['Penicilina G benzatina','Amoxicilina','Cefalexina','Clindamicina'],['Aztreonam','Polimixina B','Metronidazol','Gentamicina'],'Gram-positivo aeróbio: aztreonam, polimixinas e metronidazol não têm alvo; aminoglicosídeos isolados não bastam.','Mesmo após mais de 80 anos de uso, nunca foi descrita resistência clínica à penicilina em S. pyogenes.'],
+['Enterococcus faecalis','pos','cadeia','Gram +','Cocos em pares e cadeias · ITU, endocardite',['Ampicilina','Amoxicilina','Vancomicina','Linezolida'],['Ceftriaxona','Cefazolina','Clindamicina','Aztreonam','Polimixina B'],'Enterococos são intrinsecamente resistentes a todas as cefalosporinas (PBPs de baixa afinidade), à clindamicina e, in vivo, ao SMX-TMP.','Cresce em 6,5% de NaCl e sobrevive a 60 °C por 30 minutos, testes clássicos de identificação.'],
+['Enterococcus faecium (VRE)','pos','cadeia','Gram +','Cocos em cadeia · resistente à vancomicina',['Linezolida','Daptomicina','Tigeciclina'],['Vancomicina','Ceftriaxona','Clindamicina','Aztreonam','Ampicilina'],'O operon vanA troca D-Ala-D-Ala por D-Ala-D-Lac e reduz cerca de 1.000 vezes a afinidade da vancomicina. E. faecium costuma resistir também à ampicilina.','Os primeiros VRE foram descritos na Europa no fim dos anos 1980; a avoparcina, glicopeptídeo usado como promotor de crescimento animal, ajudou a selecioná-los.'],
+['Listeria monocytogenes','pos','bacilo','Gram +','Bacilo · meningite em idosos, gestantes e imunossuprimidos',['Ampicilina','Penicilina G cristalina','Sulfametoxazol-trimetoprima'],['Ceftriaxona','Cefepima','Aztreonam','Polimixina B'],'Listeria é intrinsecamente resistente a todas as cefalosporinas. Por isso se acrescenta ampicilina ao esquema empírico de meningite nesses grupos.','Cresce em temperatura de geladeira e se move dentro das células do hospedeiro com "caudas de cometa" de actina.'],
+['Clostridioides difficile','pos','bacilo','Gram + anaeróbio','Bacilo esporulado · diarreia associada a antibióticos',['Vancomicina','Fidaxomicina'],['Aztreonam','Gentamicina','Polimixina B','Ceftriaxona'],'Aminoglicosídeos não agem em anaeróbios, e cefalosporinas de amplo espectro estão entre os gatilhos da infecção. A vancomicina precisa ser ORAL: a intravenosa não chega ao lúmen do cólon.','O gênero mudou de Clostridium para Clostridioides em 2016. Os esporos resistem ao álcool; a higiene das mãos exige água e sabão.'],
+['Clostridium perfringens','pos','bacilo','Gram + anaeróbio','Bacilo · gangrena gasosa, intoxicação alimentar',['Penicilina G cristalina','Clindamicina','Metronidazol','Piperacilina-tazobactam'],['Gentamicina','Amicacina','Aztreonam'],'Aminoglicosídeos dependem de transporte ligado ao oxigênio para entrar na célula; aztreonam não age em gram-positivos.','Tem um dos tempos de geração mais curtos conhecidos, perto de 10 minutos em condições ideais.'],
+['Bacteroides fragilis','neg','cocobacilo','Gram − anaeróbio','Bacilo · abscesso intra-abdominal',['Metronidazol','Piperacilina-tazobactam','Meropenem','Amoxicilina-clavulanato'],['Gentamicina','Amicacina','Aztreonam','Vancomicina'],'Aminoglicosídeos não entram em anaeróbios; aztreonam não tem atividade útil contra anaeróbios; a vancomicina não atravessa a membrana externa.','É o anaeróbio mais isolado em infecções intra-abdominais, embora seja uma fração pequena da microbiota do cólon.'],
+['Escherichia coli','neg','bacilo','Gram −','Bacilo · ITU, bacteremia, peritonite',['Ceftriaxona','Nitrofurantoína','Fosfomicina','Gentamicina','Ciprofloxacino'],['Vancomicina','Linezolida','Daptomicina','Clindamicina'],'A membrana externa barra glicopeptídeos e lipopeptídeos grandes; linezolida e clindamicina não têm atividade útil contra Enterobacterales.','É a principal causa de infecção urinária. Em condições ideais divide-se a cada 20 minutos.'],
+['Klebsiella pneumoniae','neg','bacilo','Gram −','Bacilo encapsulado · pneumonia, ITU, abscesso hepático',['Ceftriaxona','Meropenem','Gentamicina','Ciprofloxacino'],['Ampicilina','Amoxicilina','Vancomicina','Clindamicina','Daptomicina'],'Produz a betalactamase cromossômica SHV-1, que torna ampicilina e amoxicilina intrinsecamente inativas.','Forma colônias mucoides pela cápsula espessa. Cepas hipervirulentas causam abscesso hepático em pessoas previamente saudáveis.'],
+['Klebsiella pneumoniae KPC','neg','bacilo','Gram −','Bacilo · produtora de carbapenemase',['Ceftazidima-avibactam','Meropenem-vaborbactam','Imipenem-relebactam','Polimixina B'],['Meropenem','Ertapenem','Ceftriaxona','Piperacilina-tazobactam'],'A carbapenemase KPC hidrolisa quase todos os betalactâmicos; só inibidores novos (avibactam, vaborbactam, relebactam) a bloqueiam.','A KPC foi descrita em 2001 nos Estados Unidos e se espalhou por hospitais do mundo todo, inclusive no Brasil.'],
+['Pseudomonas aeruginosa','neg','bacilo','Gram − não fermentador','Bacilo · pneumonia associada à ventilação, queimados',['Piperacilina-tazobactam','Cefepima','Ceftazidima','Meropenem','Ciprofloxacino','Amicacina'],['Ceftriaxona','Ertapenem','Tigeciclina','Sulfametoxazol-trimetoprima','Amoxicilina-clavulanato'],'Baixa permeabilidade, AmpC cromossômica e bombas de efluxo tornam inativos ceftriaxona, ertapenem, tigeciclina e SMX-TMP.','Produz pigmento verde-azulado (piocianina) e tem cheiro adocicado de uva. Prolifera em pias, respiradores e soluções.'],
+['Acinetobacter baumannii','neg','cocobacilo','Gram −','Cocobacilo · UTI, ventilação mecânica',['Ampicilina-sulbactam','Sulbactam-durlobactam','Polimixina B','Minociclina'],['Ertapenem','Aztreonam','Vancomicina'],'Ertapenem e aztreonam não têm atividade útil; no Acinetobacter o componente ativo da ampicilina-sulbactam é o sulbactam.','Sobrevive semanas em superfícies secas. Ganhou o apelido "Iraquibacter" por infecções em soldados feridos no Iraque.'],
+['Stenotrophomonas maltophilia','neg','bacilo','Gram − não fermentador','Bacilo · paciente em uso de carbapenêmico',['Sulfametoxazol-trimetoprima','Levofloxacino','Minociclina'],['Meropenem','Imipenem-cilastatina','Gentamicina','Amicacina'],'Produz a metalo-betalactamase L1, que hidrolisa carbapenêmicos, e é intrinsecamente resistente a aminoglicosídeos.','Costuma emergir justamente em pacientes que recebem carbapenêmico, que a seleciona.'],
+['Proteus mirabilis','neg','bacilo','Gram −','Bacilo móvel · ITU, cálculos de estruvita',['Ampicilina','Ceftriaxona','Sulfametoxazol-trimetoprima','Ciprofloxacino'],['Nitrofurantoína','Polimixina B','Tigeciclina','Tetraciclina'],'Proteus é intrinsecamente resistente à nitrofurantoína, às polimixinas e às tetraciclinas, incluindo a tigeciclina.','Produz urease, alcaliniza a urina e favorece cálculos. Nas placas de ágar "enxameia" em ondas concêntricas.'],
+['Serratia marcescens','neg','bacilo','Gram −','Bacilo · infecções hospitalares',['Cefepima','Meropenem','Ciprofloxacino'],['Polimixina B','Colistina','Ampicilina','Cefazolina'],'Tem AmpC cromossômica e resistência intrínseca às polimixinas, além de ampicilina e cefalosporinas de 1ª geração.','Algumas cepas produzem prodigiosina, pigmento vermelho. Manchas vermelhas em pão e hóstias já foram tomadas por "sangue milagroso".'],
+['Enterobacter cloacae','neg','bacilo','Gram −','Bacilo · AmpC cromossômica induzível',['Cefepima','Meropenem','Ciprofloxacino','Sulfametoxazol-trimetoprima'],['Ampicilina','Amoxicilina-clavulanato','Cefazolina','Cefoxitina'],'A AmpC induzível torna ampicilina, amoxicilina-clavulanato, cefazolina e cefoxitina inativas; a ceftriaxona pode falhar durante o tratamento.','A resistência pode surgir no meio do tratamento com cefalosporina de 3ª geração, por desrepressão da AmpC.'],
+['Haemophilus influenzae','neg','cocobacilo','Gram −','Cocobacilo · otite, sinusite, DPOC',['Ceftriaxona','Amoxicilina-clavulanato','Azitromicina','Levofloxacino'],['Vancomicina','Clindamicina','Daptomicina'],'Gram-negativo: vancomicina e daptomicina não atravessam a membrana externa, e a clindamicina não tem atividade útil.','Não causa gripe: foi confundido com o agente da pandemia de 1889-1890. "Haemophilus" vem da necessidade dos fatores X e V do sangue.'],
+['Neisseria gonorrhoeae','neg','diplo','Gram −','Diplococos · uretrite, cervicite',['Ceftriaxona'],['Vancomicina','Daptomicina','Metronidazol'],'O meio seletivo Thayer-Martin contém vancomicina justamente porque a Neisseria resiste a ela.','Acumulou resistência a sulfas, penicilina, tetraciclinas e quinolonas; a ceftriaxona é a principal opção que resta.'],
+['Neisseria meningitidis','neg','diplo','Gram −','Diplococos · meningite, meningococcemia',['Ceftriaxona','Cefotaxima','Penicilina G cristalina'],['Vancomicina','Daptomicina','Metronidazol'],'Gram-negativo aeróbio: vancomicina e daptomicina não têm alvo acessível; metronidazol só age em anaeróbios.','Pode causar púrpura fulminante em poucas horas. Contatos próximos recebem quimioprofilaxia com rifampicina, ciprofloxacino ou ceftriaxona.'],
+['Mycoplasma pneumoniae','none','pleo','Sem parede','Pleomórfico · pneumonia atípica',['Azitromicina','Doxiciclina','Levofloxacino'],['Amoxicilina','Ceftriaxona','Vancomicina','Meropenem'],'Não tem parede celular: betalactâmicos e glicopeptídeos ficam sem alvo.','É um dos menores organismos de vida livre, e sua membrana incorpora esteróis captados do hospedeiro.'],
+['Chlamydia trachomatis','none','pleo','Intracelular obrigatória','Corpúsculos intracelulares · IST, tracoma',['Doxiciclina','Azitromicina'],['Ceftriaxona','Vancomicina','Gentamicina'],'Intracelular obrigatória com peptidoglicano mínimo; betalactâmicos, glicopeptídeos e aminoglicosídeos não resolvem a infecção.','Alterna entre corpúsculo elementar (infeccioso) e reticulado (replicativo). É a IST bacteriana mais notificada no mundo.'],
+['Legionella pneumophila','neg','bacilo','Gram − intracelular','Bacilo · pneumonia grave, água de resfriamento',['Azitromicina','Levofloxacino'],['Ceftriaxona','Amoxicilina','Gentamicina'],'Vive dentro de macrófagos: betalactâmicos e aminoglicosídeos não alcançam concentração intracelular útil.','O nome vem do surto de 1976 numa convenção da Legião Americana na Filadélfia. Prolifera em torres de resfriamento.'],
+['Treponema pallidum','neg','espiral','Espiroqueta','Espiral · sífilis',['Penicilina G benzatina','Penicilina G cristalina','Doxiciclina','Ceftriaxona'],['Nitrofurantoína','Fosfomicina','Polimixina B'],'Nitrofurantoína e fosfomicina oral só atingem concentração útil na urina; polimixinas não têm papel.','Por décadas não pôde ser cultivado em laboratório; o cultivo contínuo só foi obtido em 2018, em células de coelho. Resistência à penicilina nunca foi descrita.'],
+['Leptospira interrogans','neg','espiral','Espiroqueta','Espiral · leptospirose após enchentes',['Penicilina G cristalina','Ceftriaxona','Doxiciclina'],['Nitrofurantoína','Fosfomicina','Metenamina'],'Nitrofurantoína, fosfomicina oral e metenamina são agentes urinários sem nível sistêmico útil.','Transmitida pela urina de roedores na água de enchentes. A doxiciclina semanal é usada como profilaxia em exposições de alto risco.'],
+['Rickettsia rickettsii','none','cocobacilo','Intracelular obrigatória','Cocobacilo · febre maculosa',['Doxiciclina','Cloranfenicol'],['Ceftriaxona','Amoxicilina','Gentamicina','Sulfametoxazol-trimetoprima'],'Intracelular obrigatória: betalactâmicos e aminoglicosídeos não agem, e sulfas podem até piorar a doença.','Agente da febre maculosa brasileira, transmitida pelo carrapato-estrela (Amblyomma). Atrasar a doxiciclina aumenta muito a letalidade.'],
+['Mycobacterium tuberculosis','acid','bacilo','BAAR','Bacilo álcool-ácido resistente · tuberculose',['Rifampicina','Isoniazida','Pirazinamida','Etambutol'],['Vancomicina','Ampicilina','Clindamicina','Ceftriaxona'],'A parede rica em ácidos micólicos e o crescimento intracelular lento exigem esquema combinado específico (RIPE).','Divide-se a cada 15 a 20 horas, por isso a cultura leva semanas. Koch anunciou a descoberta em 24 de março de 1882, hoje Dia Mundial da Tuberculose.'],
+['Helicobacter pylori','neg','curvo','Gram −','Bacilo curvo · gastrite, úlcera, linfoma MALT',['Claritromicina','Amoxicilina','Metronidazol','Tetraciclina'],['Vancomicina','Aztreonam','Daptomicina'],'Gram-negativo microaerófilo: vancomicina e daptomicina não atravessam a membrana externa; aztreonam não tem papel.','Barry Marshall bebeu uma cultura da bactéria em 1984 para provar que ela causava gastrite. Recebeu o Nobel com Robin Warren em 2005.'],
+['Campylobacter jejuni','neg','curvo','Gram −','Bacilo curvo · diarreia, gatilho de Guillain-Barré',['Azitromicina','Ciprofloxacino'],['Sulfametoxazol-trimetoprima','Vancomicina','Cefalexina'],'É intrinsecamente resistente a trimetoprima, vancomicina e cefalosporinas de 1ª geração, usadas até em meios seletivos.','É o principal gatilho infeccioso da síndrome de Guillain-Barré, por mimetismo molecular entre sua parede e os gangliosídeos do nervo.'],
+['Salmonella Typhi','neg','bacilo','Gram −','Bacilo · febre tifoide',['Ceftriaxona','Azitromicina','Ciprofloxacino'],['Cefazolina','Gentamicina','Vancomicina'],'Por ser intracelular, cefalosporinas de 1ª e 2ª geração e aminoglicosídeos podem parecer ativos in vitro, mas falham na clínica.','Mary Mallon, a "Maria Tifoide", portadora assintomática, transmitiu a doença a dezenas de pessoas; a vesícula biliar é o reservatório crônico.'],
+['Burkholderia cepacia (complexo)','neg','bacilo','Gram − não fermentador','Bacilo · fibrose cística, soluções contaminadas',['Sulfametoxazol-trimetoprima','Meropenem','Ceftazidima'],['Polimixina B','Colistina','Gentamicina','Amicacina'],'Tem resistência intrínseca a polimixinas e aminoglicosídeos.','O complexo reúne mais de 20 espécies e já causou surtos por antissépticos e enxaguantes bucais contaminados.']
+];
+const BACS=B.map(a=>({n:a[0],gc:a[1],f:a[2],gl:a[3],h:a[4],ef:a[5].filter(x=>DBY[x]),in:a[6].filter(x=>DBY[x]),r:a[7],k:a[8]})).filter(b=>b.ef.length&&b.in.length>=3);
+
+/* ================= UTIL ================= */
+const $=s=>document.querySelector(s);
+const rnd=n=>Math.floor(Math.random()*n);
+const pick=a=>a[rnd(a.length)];
+const shuffle=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=rnd(i+1);[a[i],a[j]]=[a[j],a[i]]}return a};
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const GCOL={pos:'#9d6cff',neg:'#ff5b92',acid:'#ffc24a',none:'#35e6c1'};
+const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+function store(k,v){try{if(v===undefined)return JSON.parse(localStorage.getItem(k));localStorage.setItem(k,JSON.stringify(v))}catch(e){return null}}
+let best={b:store('arsenal.bestB')||0,q:store('arsenal.bestQ')||0,m:store('arsenal.bestM')||0};
+function renderRecs(){$('#recs').innerHTML=`<span>Batalha <b>${best.b}</b></span><span>Quiz <b>${best.q}</b></span><span>Memória <b>${best.m}</b></span>`}
+
+/* ================= SOM ================= */
+let actx=null,sound=store('arsenal.sound');if(sound===null)sound=true;
+function beep(f,d=.12,type='square',v=.05,slide=0){if(!sound)return;try{actx=actx||new (window.AudioContext||window.webkitAudioContext)();const o=actx.createOscillator(),g=actx.createGain();o.type=type;o.frequency.value=f;if(slide)o.frequency.exponentialRampToValueAtTime(Math.max(40,f+slide),actx.currentTime+d);g.gain.value=v;g.gain.exponentialRampToValueAtTime(.0001,actx.currentTime+d);o.connect(g).connect(actx.destination);o.start();o.stop(actx.currentTime+d)}catch(e){}}
+const sfx={ok(){beep(660,.09);setTimeout(()=>beep(990,.14),80)},bad(){beep(220,.25,'sawtooth',.05,-120)},tick(){beep(1200,.03,'square',.02)},lvl(){[523,659,784,1046].forEach((f,i)=>setTimeout(()=>beep(f,.12,'triangle',.06),i*90))},over(){[392,330,262,196].forEach((f,i)=>setTimeout(()=>beep(f,.2,'triangle',.06),i*140))}};
+function renderSnd(){$('#sndl').textContent='Som: '+(sound?'ligado':'desligado')}
+function toggleSound(){sound=!sound;store('arsenal.sound',sound);renderSnd();if(sound)beep(880,.08)}
+
+/* ================= DESENHO DE MICRÓBIOS ================= */
+function rr(ctx,x,y,w,h,r){ctx.beginPath();ctx.moveTo(x+r,y);ctx.arcTo(x+w,y,x+w,y+h,r);ctx.arcTo(x+w,y+h,x,y+h,r);ctx.arcTo(x,y+h,x,y,r);ctx.arcTo(x,y,x+w,y,r);ctx.closePath()}
+function drawMicrobe(ctx,f,col,s,t,glow=true){
+  ctx.fillStyle=col;ctx.strokeStyle=col;
+  if(glow){ctx.shadowColor=col;ctx.shadowBlur=s*.25}
+  const circ=(x,y,r)=>{ctx.beginPath();ctx.arc(x*s,y*s,r*s,0,7);ctx.fill()};
+  if(f==='cachos'){[[0,0],[.42,.06],[-.4,.1],[.2,.4],[-.22,.38],[.06,-.4],[-.36,-.3],[.4,-.32],[.02,.76]].forEach((p,i)=>circ(p[0]+Math.sin(t*2+i)*.02,p[1]+Math.cos(t*2+i)*.02,.22))}
+  else if(f==='cadeia'){for(let i=0;i<7;i++)circ((i-3)*.33,Math.sin(i*1.1+t*2)*.14,.16)}
+  else if(f==='diplo'){[[-.45,-.25,.3],[.4,.2,-.4],[-.05,.5,1.1]].forEach(p=>{ctx.save();ctx.translate(p[0]*s,p[1]*s);ctx.rotate(p[2]+Math.sin(t)*.1);[-.17,.17].forEach(dx=>{ctx.beginPath();ctx.ellipse(dx*s,0,.16*s,.12*s,0,0,7);ctx.fill()});ctx.restore()})}
+  else if(f==='bacilo'||f==='cocobacilo'){const L=f==='bacilo'?.72:.34;const pts=f==='bacilo'?[[-.3,-.15,.3],[.35,.25,-.5],[.05,-.5,1.2],[-.45,.45,-1]]:[[-.4,-.2,.2],[.3,.3,-.6],[.1,-.45,1],[-.35,.4,-.9],[.5,-.15,.6]];pts.forEach((p,i)=>{ctx.save();ctx.translate((p[0]+Math.sin(t+i)*.03)*s,(p[1]+Math.cos(t*1.3+i)*.03)*s);ctx.rotate(p[2]+Math.sin(t*.8+i)*.08);rr(ctx,-L/2*s,-.1*s,L*s,.2*s,.1*s);ctx.fill();ctx.restore()})}
+  else if(f==='espiral'){ctx.lineWidth=.06*s;ctx.lineCap='round';[[-.25,.12],[.2,-.3]].forEach((o,j)=>{ctx.beginPath();for(let x=-.8;x<=.8;x+=.02){const y=.12*Math.sin(x*16+t*5+j);x===-.8?ctx.moveTo((x+o[0]*.3)*s,(y+o[1])*s):ctx.lineTo((x+o[0]*.3)*s,(y+o[1])*s)}ctx.stroke()})}
+  else if(f==='curvo'){ctx.lineWidth=.13*s;ctx.lineCap='round';[[-.35,-.2,0],[.35,.1,2],[-.05,.45,4]].forEach((p,i)=>{ctx.beginPath();ctx.arc(p[0]*s,p[1]*s,.22*s,p[2]+Math.sin(t*2+i)*.2,p[2]+2.2+Math.sin(t*2+i)*.2);ctx.stroke()})}
+  else {[[-.3,-.15,.28],[.32,.12,.24],[-.02,.42,.2],[.2,-.4,.17]].forEach((p,i)=>{ctx.beginPath();for(let a=0;a<=6.3;a+=.3){const r=p[2]*(1+.18*Math.sin(a*3+t*2+i));const x=(p[0]+Math.cos(a)*r)*s,y=(p[1]+Math.sin(a)*r)*s;a===0?ctx.moveTo(x,y):ctx.lineTo(x,y)}ctx.closePath();ctx.fill()})}
+  ctx.shadowBlur=0;
+}
+
+/* fundo */
+const bg=$('#bg'),bgx=bg.getContext('2d');let bgItems=[];
+const SHAPES=['cachos','cadeia','diplo','bacilo','cocobacilo','espiral','curvo','pleo'];
+function sizeBg(){const dpr=Math.min(2,devicePixelRatio||1);bg.width=innerWidth*dpr;bg.height=innerHeight*dpr;bgx.setTransform(dpr,0,0,dpr,0,0);
+  bgItems=Array.from({length:Math.round(Math.min(22,innerWidth/55))},()=>({x:Math.random()*innerWidth,y:Math.random()*innerHeight,s:20+Math.random()*40,f:pick(SHAPES),c:pick(['#9d6cff','#ff5b92','#35e6c1','#ffc24a']),vx:(Math.random()-.5)*8,vy:(Math.random()-.5)*8,r:Math.random()*6,ph:Math.random()*9}))}
+function drawBg(t,dt){bgx.clearRect(0,0,innerWidth,innerHeight);
+  bgx.strokeStyle='rgba(120,140,220,.06)';bgx.lineWidth=1;const R=Math.max(innerWidth,innerHeight)*.55;
+  for(let i=1;i<5;i++){bgx.beginPath();bgx.arc(innerWidth*.78,innerHeight*.2,R*i/4,0,7);bgx.stroke()}
+  bgItems.forEach(b=>{if(!reduce){b.x+=b.vx*dt;b.y+=b.vy*dt;b.r+=dt*.05}
+    if(b.x<-60)b.x=innerWidth+60;if(b.x>innerWidth+60)b.x=-60;if(b.y<-60)b.y=innerHeight+60;if(b.y>innerHeight+60)b.y=-60;
+    bgx.save();bgx.globalAlpha=.11;bgx.translate(b.x,b.y);bgx.rotate(b.r);drawMicrobe(bgx,b.f,b.c,b.s,reduce?0:t+b.ph,false);bgx.restore()})}
+
+/* palco da batalha */
+const stg=$('#stage'),sx=stg.getContext('2d');let SW=0,SH=0;
+const anim={bac:null,state:'idle',t0:0,parts:[]};
+function sizeStage(){const r=stg.getBoundingClientRect();const dpr=Math.min(2,devicePixelRatio||1);SW=r.width;SH=r.height;stg.width=SW*dpr;stg.height=SH*dpr;sx.setTransform(dpr,0,0,dpr,0,0)}
+function drawStage(t){if(!SW)return;sx.clearRect(0,0,SW,SH);const b=anim.bac;if(!b)return;
+  const col=GCOL[b.gc],cx=SW/2,cy=SH*.58,s=Math.min(SW,SH)*.36,e=t-anim.t0;
+  // grade do campo do microscópio
+  sx.strokeStyle='rgba(255,255,255,.05)';sx.beginPath();sx.arc(cx,cy,s*1.55,0,7);sx.stroke();
+  if(anim.state==='idle'||anim.state==='enter'){const k=anim.state==='enter'?Math.min(1,e/.45):1;sx.save();sx.globalAlpha=k;sx.translate(cx,cy);sx.scale(.6+.4*k,.6+.4*k);sx.rotate(Math.sin(t*.5)*.05);drawMicrobe(sx,b.f,col,s,t);sx.restore();if(k>=1)anim.state='idle'}
+  else if(anim.state==='kill'){const k=Math.min(1,e/.9);
+    sx.save();sx.globalAlpha=Math.max(0,1-k*1.3);sx.translate(cx,cy);sx.scale(1-k*.4,1-k*.4);drawMicrobe(sx,b.f,col,s,t);sx.restore();
+    sx.strokeStyle='#35e6c1';sx.globalAlpha=1-k;sx.lineWidth=6*(1-k)+1;sx.beginPath();sx.arc(cx,cy,s*(.3+k*1.4),0,7);sx.stroke();
+    sx.fillStyle='rgba(53,230,193,'+(.12*(1-k))+')';sx.beginPath();sx.arc(cx,cy,s*(.3+k*1.4),0,7);sx.fill();sx.globalAlpha=1;
+    anim.parts.forEach(p=>{p.x+=p.vx;p.y+=p.vy;p.vy+=.05;p.a*=.96;sx.globalAlpha=p.a;sx.fillStyle=p.c;sx.beginPath();sx.arc(p.x,p.y,p.r,0,7);sx.fill()});sx.globalAlpha=1}
+  else if(anim.state==='split'){const k=Math.min(1,e/.8);const d=s*.55*k;
+    [-1,1].forEach(dir=>{sx.save();sx.translate(cx+dir*d,cy+Math.sin(t*3+dir)*4);sx.scale(.8,.8);drawMicrobe(sx,b.f,col,s,t+dir);sx.restore()});
+    if(k<.5){sx.fillStyle='rgba(255,93,93,'+(.25*(1-k*2))+')';sx.fillRect(0,0,SW,SH)}}
+}
+function burst(col){const cx=SW/2,cy=SH*.58;anim.parts=Array.from({length:reduce?0:40},()=>{const a=Math.random()*7,v=1+Math.random()*4;return{x:cx,y:cy,vx:Math.cos(a)*v,vy:Math.sin(a)*v-1,r:2+Math.random()*4,a:1,c:Math.random()<.5?col:'#35e6c1'}})}
+function popText(txt,col){const p=$('#pop');p.textContent=txt;p.style.color=col;p.classList.remove('go');void p.offsetWidth;p.classList.add('go')}
+
+/* ================= ESTADO ================= */
+let cur='menu';const SCREENS=['menu','battle','quiz','mem','enc','over'];
+function show(id){SCREENS.forEach(s=>$('#'+s).hidden=s!==id);cur=id;window.scrollTo(0,0);if(id==='battle')requestAnimationFrame(sizeStage)}
+let G=null;
+
+function setTimer(sec){G.tMax=sec;G.tLeft=sec;G.lastTick=Math.ceil(sec)}
+function renderTimer(){const box=$(G.mode==='battle'?'#bTimerBox':'#qTimerBox');const bar=box.firstElementChild;const k=Math.max(0,G.tLeft/G.tMax);bar.style.width=(k*100)+'%';box.classList.toggle('low',k<.3)}
+
+function optsHTML(list){return list.map((o,i)=>`<button class="opt" data-i="${i}"><kbd>${i+1}</kbd><span class="on">${esc(o.label)}</span>${o.sub?`<span class="os">${esc(o.sub)}</span>`:''}</button>`).join('')}
+function lockOpts(el,chosen,right){el.querySelectorAll('.opt').forEach((b,i)=>{b.disabled=true;if(i===right)b.classList.add('ok');else if(i===chosen)b.classList.add('bad');else b.classList.add('fade')})}
+const CONT=`<div class="row"><button class="btn" data-next>Continuar <kbd>Enter</kbd></button><button class="btn ghost" data-menu>Menu <kbd>Esc</kbd></button></div>`;
+
+/* ---------- BATALHA ---------- */
+function startBattle(){G={mode:'battle',score:0,combo:1,maxCombo:1,hits:0,total:0,res:0,level:1,answered:false,paused:false,last:null,seen:[]};show('battle');renderBattleHud();nextBattle()}
+function renderBattleHud(){$('#bScore').textContent=G.score;$('#bCombo').textContent='x'+G.combo;$('#bLevel').textContent=G.level;$('#bRes').style.width=Math.min(100,G.res)+'%'}
+function nextBattle(){
+  let pool=BACS.filter(b=>!G.seen.includes(b.n));if(!pool.length){G.seen=[];pool=BACS}
+  const b=pick(pool);G.seen.push(b.n);G.bac=b;
+  const right=pick(b.ef),wrong=shuffle(b.in).slice(0,3);
+  const opts=shuffle([right,...wrong]);G.opts=opts;G.right=opts.indexOf(right);G.answered=false;
+  $('#bName').textContent=b.n;const ch=$('#bGram');ch.textContent=b.gl;ch.className='chip '+b.gc;$('#bHint').textContent=b.h;
+  $('#bOpts').innerHTML=optsHTML(opts.map(n=>({label:n,sub:DBY[n].c})));$('#bFb').innerHTML='';
+  anim.bac=b;anim.state='enter';anim.t0=performance.now()/1000;
+  setTimer(Math.max(8,20-(G.level-1)*2));
+}
+function answerBattle(i){
+  if(G.answered)return;G.answered=true;G.total++;const b=G.bac,ok=i===G.right;lockOpts($('#bOpts'),i,G.right);
+  const now=performance.now()/1000;anim.t0=now;
+  const rd=DBY[G.opts[G.right]];
+  if(ok){const bonus=Math.round(G.tLeft*10);const gain=100*G.combo+bonus;G.score+=gain;G.hits++;G.combo=Math.min(5,G.combo+1);G.maxCombo=Math.max(G.maxCombo,G.combo);
+    anim.state='kill';burst(GCOL[b.gc]);popText('+'+gain,'#35e6c1');sfx.ok();
+    const nl=Math.floor(G.hits/5)+1;let lvup='';if(nl>G.level){G.level=nl;G.res=Math.max(0,G.res-20);lvup=`<p><b style="color:var(--cyan)">Nível ${nl}!</b> O tempo encurta e a resistência cai 20%.</p>`;setTimeout(sfx.lvl,250)}
+    $('#bFb').innerHTML=`<div class="fb good"><h4>Zona de inibição!</h4>${lvup}<p><b>${esc(rd.n)}</b> · ${esc(MEC[rd.m])}.</p><p><span class="lab">Por que as outras falham</span>${esc(b.r)}</p><p><span class="lab">Curiosidade · ${esc(rd.n)}</span>${esc(rd.k)}</p>${CONT}</div>`;
+  }else{G.combo=1;G.res+=34;anim.state='split';popText(i<0?'Tempo!':'Resistência!','#ff5d5d');sfx.bad();
+    const chosen=i>=0?`<p><b>${esc(G.opts[i])}</b> não é adequado aqui.</p>`:'<p>O tempo acabou e a colônia dobrou.</p>';
+    $('#bFb').innerHTML=`<div class="fb bad"><h4>${i<0?'Tempo esgotado':'A colônia se dividiu'}</h4>${chosen}<p><span class="lab">Por quê</span>${esc(b.r)}</p><p><span class="lab">Opções ativas</span>${b.ef.map(esc).join(' · ')}</p><p><span class="lab">Curiosidade · ${esc(b.n)}</span>${esc(b.k)}</p>${G.res>=100?`<div class="row"><button class="btn" data-next>Ver resultado <kbd>Enter</kbd></button></div>`:CONT}</div>`;
+  }
+  renderBattleHud();
+  const fb=$('#bFb .fb');if(fb&&innerWidth<700)setTimeout(()=>fb.scrollIntoView({behavior:reduce?'auto':'smooth',block:'nearest'}),150);
+}
+function nextFromBattle(){if(G.res>=100)return gameOver();nextBattle();window.scrollTo({top:0,behavior:reduce?'auto':'smooth'})}
+
+/* ---------- QUIZ ---------- */
+const QN=12;
+function redact(text,name){let out=text;name.split(/[-\s]+/).filter(w=>w.length>3&&!/^(de|da|do)$/i.test(w)).forEach(w=>{out=out.replace(new RegExp(w.replace(/[.*+?^${}()|[\]\\]/g,'\\$&'),'gi'),'█████')});return out}
+function makeQ(){
+  const type=pick(['classe','mec','ea','quem','quem']);const d=pick(DRUGS);
+  if(type==='classe'){const cls=shuffle([...new Set(DRUGS.map(x=>x.c))].filter(c=>c!==d.c)).slice(0,3);const opts=shuffle([d.c,...cls]);return{tag:'Classe',q:`A qual classe pertence ${d.n}?`,opts:opts.map(o=>({label:o})),right:opts.indexOf(d.c),d,long:false}}
+  if(type==='mec'){const ms=shuffle(Object.keys(MEC).filter(k=>k!==d.m)).slice(0,3);const keys=shuffle([d.m,...ms]);return{tag:'Mecanismo de ação',q:`Qual é o mecanismo de ação de ${d.n}?`,opts:keys.map(k=>({label:MEC[k]})),right:keys.indexOf(d.m),d,long:true}}
+  if(type==='ea'){const pool=shuffle(DRUGS.filter(x=>x.t!==d.t&&x.c!==d.c));const used=new Set([d.t]),ds=[];for(const x of pool){if(!used.has(x.t)){used.add(x.t);ds.push(x.a)}if(ds.length===3)break}const opts=shuffle([d.a,...ds]);return{tag:'Efeito adverso',q:`Qual efeito adverso é marcante de ${d.n}?`,opts:opts.map(o=>({label:o})),right:opts.indexOf(d.a),d,long:true}}
+  const others=shuffle(DRUGS.filter(x=>x.c!==d.c)).slice(0,3);const opts=shuffle([d,...others]);
+  return{tag:'Quem sou eu?',q:'Qual antimicrobiano tem esta curiosidade?',x:redact(d.k,d.n),opts:opts.map(o=>({label:o.n,sub:o.c})),right:opts.indexOf(d),d,long:false};
+}
+function startQuiz(){G={mode:'quiz',score:0,streak:0,maxStreak:0,hits:0,idx:0,answered:false,paused:false};show('quiz');nextQuiz()}
+function nextQuiz(){G.idx++;G.answered=false;let q;do{q=makeQ()}while(G.q&&q.d===G.q.d);G.q=q;
+  $('#qCard').innerHTML=`<div class="qt">${esc(q.tag)}</div><p class="qq">${esc(q.q)}</p>${q.x?`<p class="qx">${esc(q.x)}</p>`:''}`;
+  const el=$('#qOpts');el.className='opts'+(q.long?' long':'');el.innerHTML=optsHTML(q.opts);$('#qFb').innerHTML='';
+  renderQuizHud();setTimer(q.long||q.x?25:18);window.scrollTo({top:0,behavior:reduce?'auto':'smooth'})}
+function renderQuizHud(){$('#qScore').textContent=G.score;$('#qStreak').textContent=G.streak;$('#qNum').textContent=G.idx+'/'+QN;$('#qHits').textContent=G.hits}
+function answerQuiz(i){if(G.answered)return;G.answered=true;const q=G.q,d=q.d,ok=i===q.right;lockOpts($('#qOpts'),i,q.right);
+  if(ok){G.streak++;G.maxStreak=Math.max(G.maxStreak,G.streak);G.hits++;G.score+=100+Math.round(G.tLeft*8)+(G.streak>=3?50:0);sfx.ok()}else{G.streak=0;sfx.bad()}
+  renderQuizHud();
+  const last=G.idx>=QN;
+  $('#qFb').innerHTML=`<div class="fb ${ok?'good':'bad'}"><h4>${ok?'Correto':(i<0?'Tempo esgotado':'Não foi dessa vez')}</h4>
+  <p><b>${esc(d.n)}</b> · ${esc(d.c)}</p>
+  <p><span class="lab">Mecanismo</span>${esc(MEC[d.m])}</p>
+  <p><span class="lab">Espectro</span>${esc(d.e)}</p>
+  <p><span class="lab">Efeito adverso marcante</span>${esc(d.a)}</p>
+  <p><span class="lab">Curiosidade</span>${esc(d.k)}</p>
+  <div class="row"><button class="btn" data-next>${last?'Ver resultado':'Próxima'} <kbd>Enter</kbd></button><button class="btn ghost" data-menu>Menu <kbd>Esc</kbd></button></div></div>`;
+  const fb=$('#qFb .fb');if(fb&&innerWidth<700)setTimeout(()=>fb.scrollIntoView({behavior:reduce?'auto':'smooth',block:'nearest'}),150);
+}
+function nextFromQuiz(){if(G.idx>=QN)return gameOver();nextQuiz()}
+
+/* ---------- FIM ---------- */
+function gameOver(){const m=G.mode;let rec=false;
+  if(m==='battle'&&G.score>best.b){best.b=G.score;store('arsenal.bestB',best.b);rec=true}
+  if(m==='quiz'&&G.score>best.q){best.q=G.score;store('arsenal.bestQ',best.q);rec=true}
+  renderRecs();sfx.over();G.answered=true;
+  const acc=m==='battle'?(G.total?Math.round(G.hits/G.total*100):0):Math.round(G.hits/QN*100);
+  const msg=acc>=90?'Nível infectologista. O antibiograma tem medo de você.':acc>=70?'Muito bom. Revise as resistências intrínsecas que escaparam.':acc>=50?'Bom começo. A Enciclopédia ajuda a fechar as lacunas.':'A colônia venceu desta vez. Explore a Enciclopédia e volte.';
+  $('#overBox').innerHTML=`<div class="eyebrow">${m==='battle'?'Batalha encerrada':'Quiz concluído'}</div><h2>${m==='battle'?'Resistência 100%':G.hits+' de '+QN}</h2>
+  <div class="big"><div class="stat"><div class="l">Pontos</div><div class="v">${G.score}</div></div><div class="stat"><div class="l">Acerto</div><div class="v" style="color:var(--green)">${acc}%</div></div><div class="stat"><div class="l">${m==='battle'?'Nível':'Maior sequência'}</div><div class="v" style="color:var(--cyan)">${m==='battle'?G.level:G.maxStreak}</div></div></div>
+  ${rec?'<p style="color:var(--amber);font-weight:700;margin:0">Novo recorde!</p>':''}<p style="margin:0">${msg}</p>
+  <div class="row" style="display:flex;gap:10px;flex-wrap:wrap"><button class="btn" id="again">Jogar de novo <kbd>Enter</kbd></button><button class="btn ghost" data-menu>Menu <kbd>Esc</kbd></button></div>`;
+  G.overMode=m;show('over')}
+
+/* ---------- ENCICLOPÉDIA ---------- */
+let E={tab:'d',sel:0,items:[]};
+function openEnc(tab,name){show('enc');if(tab)E.tab=tab;$('#q').value='';buildList(name)}
+function buildList(selName){const term=$('#q').value.trim().toLowerCase();
+  $('#tabD').setAttribute('aria-selected',E.tab==='d');$('#tabB').setAttribute('aria-selected',E.tab==='b');
+  const src=E.tab==='d'?DRUGS:BACS;
+  E.items=src.filter(x=>!term||(x.n+' '+(x.c||x.gl)+' '+(x.e||x.h)).toLowerCase().includes(term));
+  if(selName){const j=E.items.findIndex(x=>x.n===selName);E.sel=j<0?0:j}else E.sel=0;
+  renderList();renderDetail()}
+function renderList(){const l=$('#list');l.innerHTML=E.items.length?E.items.map((x,i)=>`<button class="li${i===E.sel?' sel':''}" data-li="${i}"><b>${esc(x.n)}</b><small>${esc(x.c||x.gl+' · '+x.h.split(' · ')[0])}</small></button>`).join(''):'<p class="small">Nada encontrado.</p>';
+  const s=l.querySelector('.sel');if(s)s.scrollIntoView({block:'nearest'})}
+function renderDetail(){const x=E.items[E.sel],el=$('#detail');if(!x){el.innerHTML='<p class="small">Selecione um item.</p>';return}
+  if(E.tab==='d'){const vs=BACS.filter(b=>b.ef.includes(x.n)),no=BACS.filter(b=>b.in.includes(x.n));
+    el.innerHTML=`<div><span class="chip none">${esc(x.c)}</span></div><h2>${esc(x.n)}</h2>
+    <div class="f"><span class="lab">Mecanismo de ação</span><p>${esc(MEC[x.m])}</p></div>
+    <div class="f"><span class="lab">Espectro / usos</span><p>${esc(x.e)}</p></div>
+    <div class="f"><span class="lab">Efeito adverso marcante</span><p>${esc(x.a)}</p></div>
+    <div class="cur"><span class="lab" style="font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--amber)">Curiosidade</span><p style="margin:4px 0 0">${esc(x.k)}</p></div>
+    ${vs.length?`<div class="f"><span class="lab">Ativo contra (no jogo)</span><div class="tags">${vs.map(b=>`<button class="tag ok" data-jump="b" data-n="${esc(b.n)}">${esc(b.n)}</button>`).join('')}</div></div>`:''}
+    ${no.length?`<div class="f"><span class="lab">Não adequado para (no jogo)</span><div class="tags">${no.map(b=>`<button class="tag no" data-jump="b" data-n="${esc(b.n)}">${esc(b.n)}</button>`).join('')}</div></div>`:''}`}
+  else{el.innerHTML=`<div style="display:flex;gap:8px;flex-wrap:wrap"><span class="chip ${x.gc}">${esc(x.gl)}</span></div><h2>${esc(x.n)}</h2>
+    <canvas id="mini" style="width:100%;height:120px;display:block;border-radius:12px;background:#0b0f1f"></canvas>
+    <div class="f"><span class="lab">Morfologia e contexto</span><p>${esc(x.h)}</p></div>
+    <div class="f"><span class="lab">Antimicrobianos ativos</span><div class="tags">${x.ef.map(n=>`<button class="tag ok" data-jump="d" data-n="${esc(n)}">${esc(n)}</button>`).join('')}</div></div>
+    <div class="f"><span class="lab">Não usar</span><div class="tags">${x.in.map(n=>`<button class="tag no" data-jump="d" data-n="${esc(n)}">${esc(n)}</button>`).join('')}</div></div>
+    <div class="f"><span class="lab">Por quê</span><p>${esc(x.r)}</p></div>
+    <div class="cur"><span class="lab" style="font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--amber)">Curiosidade</span><p style="margin:4px 0 0">${esc(x.k)}</p></div>`;
+    miniBac=x;sizeMini()}}
+let miniBac=null,mini=null,mx=null,MW=0,MH=0;
+function sizeMini(){mini=$('#mini');if(!mini)return;mx=mini.getContext('2d');const r=mini.getBoundingClientRect(),dpr=Math.min(2,devicePixelRatio||1);MW=r.width;MH=r.height;mini.width=MW*dpr;mini.height=MH*dpr;mx.setTransform(dpr,0,0,dpr,0,0)}
+function drawMini(t){if(!mini||!mini.isConnected||!miniBac||cur!=='enc'||E.tab!=='b')return;mx.clearRect(0,0,MW,MH);mx.save();mx.translate(MW/2,MH/2);drawMicrobe(mx,miniBac.f,GCOL[miniBac.gc],MH*.38,reduce?0:t);mx.restore()}
+
+/* ---------- MEMÓRIA ---------- */
+const MSHORT={PBP:'PBPs (transpeptidases)',DALA:'Terminal D-Ala-D-Ala',MEMB:'Despolariza a membrana',LPS:'Lipídio A do LPS',R30:'Ribossomo 30S',R50:'Ribossomo 50S',GIR:'DNA girase / topo IV',FOL:'Via do folato',DNA:'Radicais no DNA (anaerobiose)',RNAP:'RNA polimerase',MURA:'Enzima MurA',MIC:'Ácidos micólicos',ARAB:'Arabinosiltransferases',ATP:'ATP sintase micobacteriana',PZA:'Ácido pirazinoico (pH ácido)',TRNA:'Isoleucil-tRNA sintetase',EFG:'Fator de elongação G',BAC:'Reciclagem do bactoprenol',FORM:'Formaldeído na urina',NITRO:'Intermediários nitro reativos'};
+const NP=8;let M={theme:'classe'};
+function buildPairs(th){
+  if(th==='classe'||th==='mec'){const seen={};shuffle(DRUGS).forEach(d=>{const k=th==='classe'?d.c:d.m;if(!seen[k])seen[k]=d});
+    return shuffle(Object.values(seen)).slice(0,NP).map(d=>({a:d.n,at:'Fármaco',b:th==='classe'?d.c:MSHORT[d.m],bt:th==='classe'?'Classe':'Alvo',info:`<b>${esc(d.n)}</b> · ${esc(MEC[d.m])}. ${esc(d.k)}`}))}
+  const out=[];
+  for(const b of shuffle(BACS)){if(out.length===NP)break;if(out.some(o=>b.ef.includes(o.drug)))continue;
+    const cand=shuffle(b.ef).filter(n=>!out.some(o=>o.bac.ef.includes(n)));if(!cand.length)continue;
+    const drug=cand[0];out.push({bac:b,drug,a:b.n,at:'Bactéria',b:drug,bt:'Ativo',info:`<b>${esc(drug)}</b> é ativo contra <b>${esc(b.n)}</b>. ${esc(b.k)}`})}
+  return out}
+function startMem(th){if(th)M.theme=th;const pairs=buildPairs(M.theme);
+  const cards=[];pairs.forEach((p,i)=>{cards.push({p:i,t:p.a,tag:p.at,c:p.at==='Bactéria'?'var(--pink)':'var(--cyan)'});cards.push({p:i,t:p.b,tag:p.bt,c:p.bt==='Classe'?'var(--violet)':p.bt==='Alvo'?'var(--amber)':'var(--cyan)'})});
+  G={mode:'mem',answered:true,paused:false};
+  M={theme:M.theme,pairs,cards:shuffle(cards),open:[],moves:0,found:0,started:false,t:0,lock:false,done:false,cursor:0};
+  show('mem');document.querySelectorAll('#mem [data-theme]').forEach(b=>b.setAttribute('aria-selected',b.dataset.theme===M.theme));
+  $('#mGrid').innerHTML=M.cards.map((c,i)=>`<button class="card" data-card="${i}" style="--c:${c.c}" aria-label="Carta ${i+1}, virada para baixo"><div class="in"><div class="bk"></div><div class="fc"><small>${esc(c.tag)}</small><span>${esc(c.t)}</span></div></div></button>`).join('');
+  $('#mFb').innerHTML='';renderMemHud();moveCursor(0)}
+function renderMemHud(){$('#mPairs').textContent=M.found+'/'+NP;$('#mMoves').textContent=M.moves;const s=Math.floor(M.t);$('#mTime').textContent=Math.floor(s/60)+':'+String(s%60).padStart(2,'0');$('#mBest').textContent=best.m}
+function cardEl(i){return $('#mGrid').children[i]}
+function moveCursor(i){const n=M.cards.length;M.cursor=(i+n)%n;[...$('#mGrid').children].forEach((el,j)=>el.classList.toggle('cur',j===M.cursor))}
+function flipCard(i){const c=M.cards[i],el=cardEl(i);if(M.lock||M.done||c.done||M.open.includes(i))return;
+  if(!M.started)M.started=true;
+  el.classList.add('up');el.setAttribute('aria-label',c.tag+': '+c.t);M.open.push(i);beep(520+M.open.length*120,.05,'triangle',.04);
+  if(M.open.length<2)return;
+  M.moves++;const [x,y]=M.open;
+  if(M.cards[x].p===M.cards[y].p){[x,y].forEach(j=>{M.cards[j].done=true;cardEl(j).classList.add('done')});M.open=[];M.found++;sfx.ok();
+    const p=M.pairs[M.cards[x].p];
+    if(M.found===NP)return finishMem();
+    $('#mFb').innerHTML=`<div class="fb good"><h4>Par encontrado</h4><p>${p.info}</p></div>`}
+  else{M.lock=true;[x,y].forEach(j=>cardEl(j).classList.add('miss'));beep(200,.15,'sawtooth',.03,-60);
+    setTimeout(()=>{[x,y].forEach(j=>{const e=cardEl(j);if(!e)return;e.classList.remove('up','miss');e.setAttribute('aria-label','Carta '+(j+1)+', virada para baixo')});M.open=[];M.lock=false},950)}
+  renderMemHud()}
+function finishMem(){M.done=true;renderMemHud();const s=Math.floor(M.t);const score=Math.max(100,2000-(M.moves-NP)*60-s*4);let rec=false;
+  if(score>best.m){best.m=score;store('arsenal.bestM',best.m);rec=true}renderRecs();renderMemHud();sfx.lvl();
+  const tn={classe:'Fármaco · Classe',mec:'Fármaco · Alvo',bac:'Bactéria · Ativo'}[M.theme];
+  $('#mFb').innerHTML=`<div class="fb good"><h4>Tabuleiro limpo!</h4><p><b>${score} pontos</b> · ${M.moves} jogadas em ${Math.floor(s/60)}:${String(s%60).padStart(2,'0')} (mínimo possível: ${NP} jogadas).${rec?' <b style="color:var(--amber)">Novo recorde!</b>':''}</p>
+  <p><span class="lab">Pares deste tabuleiro · ${tn}</span>${M.pairs.map(p=>`${esc(p.a)} ↔ ${esc(p.b)}`).join('<br>')}</p>
+  <div class="row"><button class="btn" id="memAgain">Nova partida <kbd>Enter</kbd></button><button class="btn ghost" data-menu>Menu <kbd>Esc</kbd></button></div></div>`;
+  setTimeout(()=>{const f=$('#mFb .fb');if(f)f.scrollIntoView({behavior:reduce?'auto':'smooth',block:'nearest'})},200)}
+
+/* ---------- MENU ---------- */
+function newFact(){const all=[...DRUGS.map(d=>({n:d.n,s:d.c,k:d.k,t:'d'})),...BACS.map(b=>({n:b.n,s:b.gl,k:b.k,t:'b'}))];const f=pick(all);
+  $('#fact').innerHTML=`<div class="t">Curiosidade relâmpago <kbd>C</kbd> outra</div><div class="who">${esc(f.n)} <span class="small" style="font-weight:400">· ${esc(f.s)}</span></div><p>${esc(f.k)}</p>`}
+function goMenu(){$('#veil').hidden=true;if(G)G.paused=false;show('menu');newFact()}
+function togglePause(){if(!G||G.answered)return;G.paused=!G.paused;$('#veil').hidden=!G.paused}
+
+/* ================= EVENTOS ================= */
+document.addEventListener('click',e=>{
+  const t=e.target.closest('button');if(!t)return;
+  if(t.dataset.go){const g=t.dataset.go;g==='battle'?startBattle():g==='quiz'?startQuiz():g==='mem'?startMem():openEnc('d')}
+  else if(t.dataset.card!==undefined){const i=+t.dataset.card;moveCursor(i);flipCard(i)}
+  else if(t.dataset.theme){startMem(t.dataset.theme)}
+  else if(t.id==='memAgain')startMem();
+  else if(t.classList.contains('opt')&&!t.disabled){const i=+t.dataset.i;cur==='battle'?answerBattle(i):answerQuiz(i)}
+  else if(t.hasAttribute('data-next')){cur==='battle'?nextFromBattle():nextFromQuiz()}
+  else if(t.hasAttribute('data-menu')||t.id==='home')goMenu();
+  else if(t.id==='again')G.overMode==='battle'?startBattle():startQuiz();
+  else if(t.id==='snd')toggleSound();
+  else if(t.id==='unpause')togglePause();
+  else if(t.id==='tabD'){E.tab='d';buildList()}else if(t.id==='tabB'){E.tab='b';buildList()}
+  else if(t.dataset.li!==undefined){E.sel=+t.dataset.li;renderList();renderDetail();if(innerWidth<680)$('#detail').scrollIntoView({behavior:reduce?'auto':'smooth',block:'start'})}
+  else if(t.dataset.jump){$('#q').value='';E.tab=t.dataset.jump;buildList(t.dataset.n);$('#detail').scrollIntoView({behavior:reduce?'auto':'smooth',block:'nearest'})}
+});
+$('#q').addEventListener('input',()=>buildList());
+document.addEventListener('keydown',e=>{
+  const k=e.key.length===1?e.key.toLowerCase():e.key;
+  if(e.target.matches('input')){if(k==='Escape'){e.target.blur()}else if(k==='ArrowDown'||k==='ArrowUp'){}else return}
+  if(e.ctrlKey||e.metaKey||e.altKey)return;
+  if(k==='m'){toggleSound();return}
+  if(cur==='menu'){if(k==='b')startBattle();else if(k==='q')startQuiz();else if(k==='j')startMem();else if(k==='e')openEnc('d');else if(k==='c')newFact();return}
+  if(cur==='mem'){
+    if(k==='Escape'){goMenu();return}
+    if(k==='1'||k==='2'||k==='3'){startMem(['classe','mec','bac'][+k-1]);return}
+    if(k==='r'){startMem();return}
+    const mv={ArrowLeft:-1,ArrowRight:1,ArrowUp:-4,ArrowDown:4}[k];
+    if(mv){e.preventDefault();moveCursor(M.cursor+mv);return}
+    if(k==='Enter'||k===' '){e.preventDefault();M.done?startMem():flipCard(M.cursor)}
+    return}
+  if(cur==='battle'||cur==='quiz'){
+    if(k==='Escape'){goMenu();return}
+    if(k==='p'){togglePause();return}
+    if(G.paused)return;
+    const map={'1':0,'2':1,'3':2,'4':3,'a':0,'s':1,'d':2,'f':3};
+    if(k in map&&!G.answered){e.preventDefault();cur==='battle'?answerBattle(map[k]):answerQuiz(map[k]);return}
+    if((k==='Enter'||k===' ')&&G.answered){e.preventDefault();cur==='battle'?nextFromBattle():nextFromQuiz()}
+    return}
+  if(cur==='enc'){
+    if(k==='Escape'){goMenu();return}
+    if(k==='/'){e.preventDefault();$('#q').focus();return}
+    if(k==='ArrowDown'||k==='ArrowUp'){e.preventDefault();E.sel=Math.max(0,Math.min(E.items.length-1,E.sel+(k==='ArrowDown'?1:-1)));renderList();renderDetail();return}
+    if(k==='ArrowLeft'||k==='ArrowRight'){E.tab=E.tab==='d'?'b':'d';buildList();return}
+    return}
+  if(cur==='over'){if(k==='Enter'){e.preventDefault();G.overMode==='battle'?startBattle():startQuiz()}else if(k==='Escape')goMenu()}
+});
+addEventListener('resize',()=>{sizeBg();if(cur==='battle')sizeStage();if(cur==='enc')sizeMini()});
+
+/* ================= LOOP ================= */
+let lastT=performance.now();
+function loop(now){const dt=Math.min(.05,(now-lastT)/1000);lastT=now;const t=now/1000;
+  drawBg(t,dt);
+  if(cur==='battle')drawStage(t);
+  if(cur==='enc')drawMini(t);
+  if(cur==='mem'&&M.started&&!M.done&&!document.hidden){const before=Math.floor(M.t);M.t+=dt;if(Math.floor(M.t)!==before)renderMemHud()}
+  if(G&&(cur==='battle'||cur==='quiz')&&!G.answered&&!G.paused&&!document.hidden){
+    G.tLeft-=dt;const c=Math.ceil(G.tLeft);if(c<G.lastTick&&c<=3&&c>0)sfx.tick();G.lastTick=c;
+    if(G.tLeft<=0){G.tLeft=0;renderTimer();cur==='battle'?answerBattle(-1):answerQuiz(-1)}else renderTimer()}
+  requestAnimationFrame(loop)}
+
+/* ================= INÍCIO ================= */
+$('#counts').textContent=`${DRUGS.length} antimicrobianos e ${BACS.length} bactérias`;
+renderRecs();renderSnd();newFact();sizeBg();requestAnimationFrame(loop);
+</script>
+
+<script>
+if('serviceWorker' in navigator){addEventListener('load',()=>navigator.serviceWorker.register('sw.js').catch(()=>{}))}
+</script>
+</body>
+</html>

@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Games @pharmamelo · Antimicrobianos</title>
-<meta name="description" content="Jogo de farmacologia dos antimicrobianos: batalha, quiz, memória e enciclopédia. @pharmamelo">
+<meta name="description" content="Jogo de farmacologia dos antimicrobianos: batalha, quiz, memória, fuga da colônia e enciclopédia. @pharmamelo">
 <meta name="theme-color" content="#090c16">
 <meta name="application-name" content="ATB Games">
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -15,7 +15,7 @@
 <link rel="icon" type="image/png" sizes="32x32" href="icons/favicon-32.png">
 <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
 <style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;-webkit-tap-highlight-color:transparent;overscroll-behavior-y:none}[hidden]{display:none!important}img{max-width:100%}</style>
-
+<title>Arsenal Antimicrobiano</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bungee&family=Chakra+Petch:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap">
@@ -163,6 +163,23 @@ h1 .n{color:var(--pink);text-shadow:0 0 28px rgba(255,91,146,.5)}
 .card:focus-visible{outline:2px solid var(--cyan);outline-offset:3px}
 .mhud{grid-template-columns:repeat(4,1fr)}
 @media (max-width:520px){.card{height:94px}.card .fc span{font-size:12px}.card .fc{padding:5px}.mgrid{gap:6px}}
+
+/* fuga */
+.fwrap{position:relative;margin-top:12px;border-radius:18px;overflow:hidden;border:1px solid var(--line);background:linear-gradient(180deg,#0d1330 0,#0a0e1e 100%);touch-action:none}
+#fstage{display:block;width:100%;height:260px}
+.ftouch{position:absolute;right:10px;top:50%;transform:translateY(-50%);display:flex;flex-direction:column;gap:10px;z-index:2}
+.ftouch button{width:50px;height:50px;border-radius:50%;background:rgba(20,27,48,.85);border:1px solid var(--line);color:var(--ink);font-size:19px;display:grid;place-items:center;cursor:pointer}
+.fbars{display:grid;gap:8px;margin-top:12px}
+.fbarrow{display:grid;gap:4px}
+.fbarrow .lbl{display:flex;justify-content:space-between;font-size:12px;color:var(--mute)}
+.fbar{height:10px;border-radius:9px;background:#0b1022;overflow:hidden}
+.fbar i{display:block;height:100%;width:0;border-radius:9px;transition:width .25s}
+.fbar.dist i{background:linear-gradient(90deg,var(--cyan),var(--violet))}
+.fbar.hp i{background:linear-gradient(90deg,var(--green),var(--amber))}
+.fbar.hp.low i{background:linear-gradient(90deg,var(--red),var(--pink))}
+#fLog{min-height:18px;font-size:13px;color:var(--mute)}
+@media (max-width:520px){#fstage{height:210px}.ftouch button{width:44px;height:44px;font-size:16px}}
+
 @media (max-width:680px){
   .enc{grid-template-columns:1fr}
   .list{max-height:34vh}
@@ -201,13 +218,14 @@ h1 .n{color:var(--pink);text-shadow:0 0 28px rgba(255,91,146,.5)}
       <button class="mode" style="--c:var(--pink)" data-go="battle"><h3>Batalha</h3><p>Uma bactéria aparece. Escolha um antimicrobiano ativo. Erros aumentam a pressão de resistência.</p><kbd>B</kbd></button>
       <button class="mode" style="--c:var(--violet)" data-go="quiz"><h3>Quiz de farmacologia</h3><p>12 perguntas sobre classe, mecanismo, efeitos adversos e "quem sou eu?" pelas curiosidades.</p><kbd>Q</kbd></button>
       <button class="mode" style="--c:var(--amber)" data-go="mem"><h3>Memória</h3><p>Vire as cartas e forme pares: fármaco e classe, fármaco e alvo, ou bactéria e antimicrobiano ativo.</p><kbd>J</kbd></button>
+      <button class="mode" style="--c:var(--red)" data-go="flee"><h3>Fuga da Colônia</h3><p>Guie a bactéria por um corredor de antimicrobianos. Passe ilesa pelos que ela resiste; os demais a eliminam.</p><kbd>F</kbd></button>
       <button class="mode" style="--c:var(--cyan)" data-go="enc"><h3>Enciclopédia</h3><p>Consulte cada fármaco e cada bactéria: quem cobre quem, e por quê.</p><kbd>E</kbd></button>
     </div>
     <div class="fact" id="fact"></div>
     <div class="keys">
       <span><kbd>1</kbd><kbd>2</kbd><kbd>3</kbd><kbd>4</kbd> ou <kbd>A</kbd><kbd>S</kbd><kbd>D</kbd><kbd>F</kbd> responder</span>
       <span><kbd>Enter</kbd> / <kbd>Espaço</kbd> continuar</span>
-      <span><kbd>←</kbd><kbd>↑</kbd><kbd>→</kbd><kbd>↓</kbd> mover na memória</span>
+      <span><kbd>↑</kbd><kbd>↓</kbd> mover (memória e fuga)</span>
       <span><kbd>P</kbd> pausar</span>
       <span><kbd>Esc</kbd> menu</span>
       <span><kbd>M</kbd> som</span>
@@ -266,6 +284,28 @@ h1 .n{color:var(--pink);text-shadow:0 0 28px rgba(255,91,146,.5)}
     <div class="mgrid" id="mGrid"></div>
     <div id="mFb"></div>
     <p class="small">Setas movem o cursor · <kbd>Enter</kbd>/<kbd>Espaço</kbd> vira a carta · <kbd>1</kbd><kbd>2</kbd><kbd>3</kbd> trocam o tema · <kbd>R</kbd> embaralha de novo · <kbd>Esc</kbd> menu</p>
+  </section>
+
+  <!-- FUGA -->
+  <section id="flee" hidden>
+    <div class="hud">
+      <div class="stat"><div class="l">Pontos</div><div class="v" id="fScore">0</div></div>
+      <div class="stat"><div class="l">Resistências</div><div class="v" id="fPasses" style="color:var(--cyan)">0</div></div>
+      <div class="stat"><div class="l">Impactos</div><div class="v" id="fHits" style="color:var(--red)">0</div></div>
+      <div class="stat"><div class="l">Recorde</div><div class="v" id="fBest" style="color:var(--amber)">0</div></div>
+    </div>
+    <div class="fwrap">
+      <canvas id="fstage"></canvas>
+      <div class="plate"><span class="bname" id="fName"></span><span class="chip" id="fGram"></span></div>
+      <div class="ftouch"><button id="fUp" aria-label="Subir de faixa">▲</button><button id="fDown" aria-label="Descer de faixa">▼</button></div>
+    </div>
+    <div class="fbars">
+      <div class="fbarrow"><div class="lbl"><span>Trajeto até o tecido são</span><span id="fDistLbl">0%</span></div><div class="fbar dist"><i id="fDistBar"></i></div></div>
+      <div class="fbarrow"><div class="lbl"><span>Integridade da colônia</span><span id="fHpLbl">100%</span></div><div class="fbar hp" id="fHpBox"><i id="fHpBar"></i></div></div>
+    </div>
+    <div id="fLog"></div>
+    <div id="fFb"></div>
+    <p class="small">Setas <kbd>↑</kbd><kbd>↓</kbd> ou <kbd>W</kbd><kbd>S</kbd> trocam de faixa · toque em ▲▼ ou deslize no celular · <kbd>P</kbd> pausa · <kbd>Esc</kbd> menu</p>
   </section>
 
   <!-- ENCYCLOPEDIA -->
@@ -439,8 +479,8 @@ const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;',
 const GCOL={pos:'#9d6cff',neg:'#ff5b92',acid:'#ffc24a',none:'#35e6c1'};
 const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
 function store(k,v){try{if(v===undefined)return JSON.parse(localStorage.getItem(k));localStorage.setItem(k,JSON.stringify(v))}catch(e){return null}}
-let best={b:store('arsenal.bestB')||0,q:store('arsenal.bestQ')||0,m:store('arsenal.bestM')||0};
-function renderRecs(){$('#recs').innerHTML=`<span>Batalha <b>${best.b}</b></span><span>Quiz <b>${best.q}</b></span><span>Memória <b>${best.m}</b></span>`}
+let best={b:store('arsenal.bestB')||0,q:store('arsenal.bestQ')||0,m:store('arsenal.bestM')||0,f:store('arsenal.bestF')||0};
+function renderRecs(){$('#recs').innerHTML=`<span>Batalha <b>${best.b}</b></span><span>Quiz <b>${best.q}</b></span><span>Memória <b>${best.m}</b></span><span>Fuga <b>${best.f}</b></span>`}
 
 /* ================= SOM ================= */
 let actx=null,sound=store('arsenal.sound');if(sound===null)sound=true;
@@ -499,8 +539,8 @@ function burst(col){const cx=SW/2,cy=SH*.58;anim.parts=Array.from({length:reduce
 function popText(txt,col){const p=$('#pop');p.textContent=txt;p.style.color=col;p.classList.remove('go');void p.offsetWidth;p.classList.add('go')}
 
 /* ================= ESTADO ================= */
-let cur='menu';const SCREENS=['menu','battle','quiz','mem','enc','over'];
-function show(id){SCREENS.forEach(s=>$('#'+s).hidden=s!==id);cur=id;window.scrollTo(0,0);if(id==='battle')requestAnimationFrame(sizeStage)}
+let cur='menu';const SCREENS=['menu','battle','quiz','mem','flee','enc','over'];
+function show(id){SCREENS.forEach(s=>$('#'+s).hidden=s!==id);cur=id;window.scrollTo(0,0);if(id==='battle')requestAnimationFrame(sizeStage);if(id==='flee')requestAnimationFrame(sizeFStage)}
 let G=null;
 
 function setTimer(sec){G.tMax=sec;G.tLeft=sec;G.lastTick=Math.ceil(sec)}
@@ -658,19 +698,94 @@ function finishMem(){M.done=true;renderMemHud();const s=Math.floor(M.t);const sc
   <div class="row"><button class="btn" id="memAgain">Nova partida <kbd>Enter</kbd></button><button class="btn ghost" data-menu>Menu <kbd>Esc</kbd></button></div></div>`;
   setTimeout(()=>{const f=$('#mFb .fb');if(f)f.scrollIntoView({behavior:reduce?'auto':'smooth',block:'nearest'})},200)}
 
+/* ---------- FUGA DA COLÔNIA ---------- */
+const LANES=4;let Fseen=[],F=null,FW=0,FH=0,fx=null;
+function sizeFStage(){const c=$('#fstage');if(!c)return;fx=c.getContext('2d');const r=c.getBoundingClientRect();const dpr=Math.min(2,devicePixelRatio||1);FW=r.width;FH=r.height;c.width=FW*dpr;c.height=FH*dpr;fx.setTransform(dpr,0,0,dpr,0,0)}
+function laneYF(lane){return FH/LANES*(lane+.5)}
+function logFlee(text,color){const el=$('#fLog');if(!el)return;el.textContent=text;el.style.color=color}
+function startFlee(){
+  let pool=BACS.filter(b=>!Fseen.includes(b.n));if(!pool.length){Fseen=[];pool=BACS}
+  const bac=pick(pool);Fseen.push(bac.n);
+  F={bac,lane:1,visY:null,obstacles:[],parts:[],t:0,dist:0,totalTime:52,spawnTimer:.8,health:100,score:0,passes:0,hits:0,invuln:0,done:false,paused:false};
+  show('flee');
+  $('#fName').textContent=bac.n;const ch=$('#fGram');ch.textContent=bac.gl;ch.className='chip '+bac.gc;
+  $('#fDistBar').style.width='0%';$('#fDistLbl').textContent='0%';
+  $('#fHpBar').style.width='100%';$('#fHpLbl').textContent='100%';$('#fHpBox').classList.remove('low');
+  logFlee('Guie a colônia. Antimicrobianos ativos ferem; os que ela resiste, ela atravessa.','var(--mute)');
+  $('#fFb').innerHTML='';renderFleeHud()}
+function renderFleeHud(){$('#fScore').textContent=F.score;$('#fPasses').textContent=F.passes;$('#fHits').textContent=F.hits;$('#fBest').textContent=best.f}
+function laneMove(dir){if(!F||F.paused||F.done)return;const n=Math.max(0,Math.min(LANES-1,F.lane+dir));if(n!==F.lane){F.lane=n;beep(700+F.lane*60,.05,'triangle',.03)}}
+function spawnObstacle(){const useSafe=Math.random()<.42;const drug=useSafe?pick(F.bac.in):pick(F.bac.ef);F.obstacles.push({lane:rnd(LANES),x:FW+40,drug,safe:useSafe,resolved:false})}
+function burstF(lane,color){const bx=FW*.18,by=laneYF(lane);for(let i=0;i<(reduce?0:20);i++){const a=Math.random()*7,v=1+Math.random()*3;F.parts.push({x:bx,y:by,vx:Math.cos(a)*v,vy:Math.sin(a)*v-1,r:2+Math.random()*3,a:1,c:color})}}
+function resolveHit(ob){if(F.done)return;ob.resolved=true;
+  if(ob.safe){F.passes++;F.score+=90;sfx.ok();burstF(ob.lane,'#4ef08f');logFlee(`Resistente: ${ob.drug} não faz efeito nesta colônia.`,'#4ef08f')}
+  else{if(F.invuln>0)return;F.hits++;F.invuln=1.2;F.health=Math.max(0,F.health-34);sfx.bad();burstF(ob.lane,'#ff5d5d');
+    $('#fHpBar').style.width=F.health+'%';$('#fHpLbl').textContent=Math.round(F.health)+'%';$('#fHpBox').classList.toggle('low',F.health<35);
+    logFlee(`Atingida por ${ob.drug}!`,'#ff5d5d');
+    if(F.health<=0)return endFlee('eliminada',ob.drug)}
+  renderFleeHud()}
+function updateFlee(dt){if(F.done||F.paused)return;
+  F.t+=dt;if(F.invuln>0)F.invuln=Math.max(0,F.invuln-dt);
+  const prevDist=F.dist;F.dist=Math.min(100,F.dist+dt/F.totalTime*100);
+  if(Math.floor(F.dist)!==Math.floor(prevDist)){$('#fDistBar').style.width=F.dist+'%';$('#fDistLbl').textContent=Math.floor(F.dist)+'%'}
+  F.spawnTimer-=dt;if(F.spawnTimer<=0){spawnObstacle();F.spawnTimer=Math.max(.5,1.5-F.dist/100*.9)+Math.random()*.4}
+  const speed=150+F.dist*1.6,bx=FW*.18;
+  for(let i=0;i<F.obstacles.length;i++){const ob=F.obstacles[i];
+    if(!ob.resolved&&ob.x<bx+34&&ob.x>bx-34&&ob.lane===F.lane){resolveHit(ob);if(F.done)break}
+    ob.x-=speed*dt}
+  F.obstacles=F.obstacles.filter(o=>o.x>-60);
+  F.parts.forEach(p=>{p.x+=p.vx;p.y+=p.vy;p.vy+=.04;p.a*=.95});F.parts=F.parts.filter(p=>p.a>.03);
+  if(F.done)return;if(F.dist>=100)return endFlee('escape')}
+function drawFlee(t){if(!fx||!F)return;fx.clearRect(0,0,FW,FH);
+  fx.strokeStyle='rgba(255,255,255,.06)';fx.lineWidth=1;
+  for(let i=1;i<LANES;i++){const y=FH/LANES*i;fx.beginPath();fx.moveTo(0,y);fx.lineTo(FW,y);fx.stroke()}
+  const bx=FW*.18;
+  if(F.visY==null)F.visY=laneYF(F.lane);const targetY=laneYF(F.lane);F.visY+=(targetY-F.visY)*.18;
+  F.obstacles.forEach(ob=>{const y=laneYF(ob.lane);
+    drawCapsule(fx,ob.x,y,52,22,ob.resolved?(ob.safe?'#4ef08f':'#ff5d5d'):'#ffc24a',t);
+    fx.font='600 11px "Chakra Petch",sans-serif';fx.textAlign='center';fx.fillStyle='rgba(234,237,247,.85)';
+    fx.fillText(ob.drug,ob.x,y-30<10?y+34:y-28)});
+  if(!(F.invuln>0&&Math.floor(t*10)%2===0)){fx.save();fx.translate(bx,F.visY);drawMicrobe(fx,F.bac.f,GCOL[F.bac.gc],FH*.11,t);fx.restore()}
+  F.parts.forEach(p=>{fx.globalAlpha=p.a;fx.fillStyle=p.c;fx.beginPath();fx.arc(p.x,p.y,p.r,0,7);fx.fill();fx.globalAlpha=1})}
+function drawCapsule(ctx,x,y,w,h,tint,t){ctx.save();ctx.translate(x,y);ctx.rotate(Math.sin(t*2+x*.01)*.06);const r=h/2;
+  ctx.fillStyle='#f0f4ff';rr(ctx,-w/2,-r,w,h,r);ctx.fill();
+  ctx.save();ctx.beginPath();rr(ctx,-w/2,-r,w/2,h,r);ctx.clip();ctx.fillStyle=tint;ctx.fillRect(-w/2,-r,w/2,h);ctx.restore();
+  ctx.strokeStyle='rgba(0,0,0,.25)';ctx.lineWidth=1;rr(ctx,-w/2,-r,w,h,r);ctx.stroke();ctx.restore()}
+function endFlee(kind,drugName){F.done=true;F.paused=false;F.score+=Math.round(F.dist*6);
+  let rec=false;if(F.score>best.f){best.f=F.score;store('arsenal.bestF',best.f);rec=true}
+  renderRecs();renderFleeHud();sfx.over();
+  if(kind==='eliminada'){const d=DBY[drugName];
+    $('#fFb').innerHTML=`<div class="fb bad"><h4>Colônia eliminada</h4>
+      <p>Foi neutralizada por <b>${esc(drugName)}</b>. ${esc(d?MEC[d.m]:'')}</p>
+      <p><span class="lab">Curiosidade</span>${esc(d?d.k:'')}</p>
+      <p>Percorreu ${Math.round(F.dist)}% do trajeto e passou ilesa por ${F.passes} antimicrobiano(s) aos quais era resistente.</p>
+      ${rec?'<p style="color:var(--amber);font-weight:700;margin:0">Novo recorde!</p>':''}
+      <div class="row"><button class="btn" id="fAgain">Jogar de novo <kbd>Enter</kbd></button><button class="btn ghost" data-menu>Menu <kbd>Esc</kbd></button></div></div>`}
+  else{$('#fFb').innerHTML=`<div class="fb good"><h4>Infecção estabelecida</h4>
+      <p><b>${esc(F.bac.n)}</b> atravessou todo o trajeto sem ser neutralizada.</p>
+      <p><span class="lab">O que teria funcionado</span>${F.bac.ef.map(esc).join(' · ')}</p>
+      <p>Na prática clínica, essa é a corrida que se quer vencer: identificar e iniciar um antimicrobiano ativo antes que a infecção se estabeleça.</p>
+      ${rec?'<p style="color:var(--amber);font-weight:700;margin:0">Novo recorde!</p>':''}
+      <div class="row"><button class="btn" id="fAgain">Jogar de novo <kbd>Enter</kbd></button><button class="btn ghost" data-menu>Menu <kbd>Esc</kbd></button></div></div>`}
+  const fb=$('#fFb .fb');if(fb&&innerWidth<700)setTimeout(()=>fb.scrollIntoView({behavior:reduce?'auto':'smooth',block:'nearest'}),150)}
+
 /* ---------- MENU ---------- */
 function newFact(){const all=[...DRUGS.map(d=>({n:d.n,s:d.c,k:d.k,t:'d'})),...BACS.map(b=>({n:b.n,s:b.gl,k:b.k,t:'b'}))];const f=pick(all);
   $('#fact').innerHTML=`<div class="t">Curiosidade relâmpago <kbd>C</kbd> outra</div><div class="who">${esc(f.n)} <span class="small" style="font-weight:400">· ${esc(f.s)}</span></div><p>${esc(f.k)}</p>`}
 function goMenu(){$('#veil').hidden=true;if(G)G.paused=false;show('menu');newFact()}
-function togglePause(){if(!G||G.answered)return;G.paused=!G.paused;$('#veil').hidden=!G.paused}
+function togglePause(){if(cur==='flee'){if(!F||F.done)return;F.paused=!F.paused;$('#veil').hidden=!F.paused;return}
+  if(!G||G.answered)return;G.paused=!G.paused;$('#veil').hidden=!G.paused}
 
 /* ================= EVENTOS ================= */
 document.addEventListener('click',e=>{
   const t=e.target.closest('button');if(!t)return;
-  if(t.dataset.go){const g=t.dataset.go;g==='battle'?startBattle():g==='quiz'?startQuiz():g==='mem'?startMem():openEnc('d')}
+  if(t.dataset.go){const g=t.dataset.go;g==='battle'?startBattle():g==='quiz'?startQuiz():g==='mem'?startMem():g==='flee'?startFlee():openEnc('d')}
   else if(t.dataset.card!==undefined){const i=+t.dataset.card;moveCursor(i);flipCard(i)}
   else if(t.dataset.theme){startMem(t.dataset.theme)}
   else if(t.id==='memAgain')startMem();
+  else if(t.id==='fUp')laneMove(-1);
+  else if(t.id==='fDown')laneMove(1);
+  else if(t.id==='fAgain')startFlee();
   else if(t.classList.contains('opt')&&!t.disabled){const i=+t.dataset.i;cur==='battle'?answerBattle(i):answerQuiz(i)}
   else if(t.hasAttribute('data-next')){cur==='battle'?nextFromBattle():nextFromQuiz()}
   else if(t.hasAttribute('data-menu')||t.id==='home')goMenu();
@@ -687,7 +802,7 @@ document.addEventListener('keydown',e=>{
   if(e.target.matches('input')){if(k==='Escape'){e.target.blur()}else if(k==='ArrowDown'||k==='ArrowUp'){}else return}
   if(e.ctrlKey||e.metaKey||e.altKey)return;
   if(k==='m'){toggleSound();return}
-  if(cur==='menu'){if(k==='b')startBattle();else if(k==='q')startQuiz();else if(k==='j')startMem();else if(k==='e')openEnc('d');else if(k==='c')newFact();return}
+  if(cur==='menu'){if(k==='b')startBattle();else if(k==='q')startQuiz();else if(k==='j')startMem();else if(k==='f')startFlee();else if(k==='e')openEnc('d');else if(k==='c')newFact();return}
   if(cur==='mem'){
     if(k==='Escape'){goMenu();return}
     if(k==='1'||k==='2'||k==='3'){startMem(['classe','mec','bac'][+k-1]);return}
@@ -712,7 +827,17 @@ document.addEventListener('keydown',e=>{
     return}
   if(cur==='over'){if(k==='Enter'){e.preventDefault();G.overMode==='battle'?startBattle():startQuiz()}else if(k==='Escape')goMenu()}
 });
-addEventListener('resize',()=>{sizeBg();if(cur==='battle')sizeStage();if(cur==='enc')sizeMini()});
+document.addEventListener('keydown',e=>{
+  if(cur!=='flee')return;const k=e.key.length===1?e.key.toLowerCase():e.key;
+  if(e.ctrlKey||e.metaKey||e.altKey)return;
+  if(k==='Escape'){goMenu();return}
+  if(k==='p'){togglePause();return}
+  if(F.paused)return;
+  if(k==='ArrowUp'||k==='w'){e.preventDefault();laneMove(-1);return}
+  if(k==='ArrowDown'||k==='s'){e.preventDefault();laneMove(1);return}
+  if(F.done&&(k==='Enter'||k===' ')){e.preventDefault();startFlee()}
+});
+addEventListener('resize',()=>{sizeBg();if(cur==='battle')sizeStage();if(cur==='enc')sizeMini();if(cur==='flee')sizeFStage()});
 
 /* ================= LOOP ================= */
 let lastT=performance.now();
@@ -720,6 +845,7 @@ function loop(now){const dt=Math.min(.05,(now-lastT)/1000);lastT=now;const t=now
   drawBg(t,dt);
   if(cur==='battle')drawStage(t);
   if(cur==='enc')drawMini(t);
+  if(cur==='flee'){if(!F.paused&&!F.done&&!document.hidden)updateFlee(dt);drawFlee(t)}
   if(cur==='mem'&&M.started&&!M.done&&!document.hidden){const before=Math.floor(M.t);M.t+=dt;if(Math.floor(M.t)!==before)renderMemHud()}
   if(G&&(cur==='battle'||cur==='quiz')&&!G.answered&&!G.paused&&!document.hidden){
     G.tLeft-=dt;const c=Math.ceil(G.tLeft);if(c<G.lastTick&&c<=3&&c>0)sfx.tick();G.lastTick=c;
@@ -729,6 +855,10 @@ function loop(now){const dt=Math.min(.05,(now-lastT)/1000);lastT=now;const t=now
 /* ================= INÍCIO ================= */
 $('#counts').textContent=`${DRUGS.length} antimicrobianos e ${BACS.length} bactérias`;
 renderRecs();renderSnd();newFact();sizeBg();requestAnimationFrame(loop);
+(()=>{const w=document.querySelector('.fwrap');if(!w)return;let ty=0;
+  w.addEventListener('touchstart',e=>{ty=e.touches[0].clientY},{passive:true});
+  w.addEventListener('touchend',e=>{const dy=e.changedTouches[0].clientY-ty;if(Math.abs(dy)>26)laneMove(dy<0?-1:1)},{passive:true});
+})();
 </script>
 
 <script>

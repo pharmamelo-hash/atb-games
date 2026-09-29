@@ -45,6 +45,10 @@ kbd{font-family:var(--mono);font-size:12px;font-weight:600;display:inline-grid;p
 .recs{font-family:var(--mono);font-size:12px;color:var(--mute);display:flex;gap:12px;flex-wrap:wrap}
 .recs b{color:var(--amber);font-weight:600}
 .iconbtn{background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:6px 10px;font-size:13px;cursor:pointer;display:flex;gap:6px;align-items:center}
+.igbtn{background:linear-gradient(135deg,#f9ce34 0,#ee2a7b 45%,#6228d7 100%);border:0;color:#fff;font-weight:700;text-decoration:none;box-shadow:0 4px 14px rgba(238,42,123,.35);transition:transform .12s,box-shadow .12s}
+.igbtn:hover{transform:translateY(-1px);box-shadow:0 6px 18px rgba(238,42,123,.45)}
+.igbtn svg{width:15px;height:15px;flex:none;display:block}
+@media(max-width:560px){.igbtn span{display:none}.igbtn{padding:8px}}
 
 /* menu */
 .hero{padding-block:28px 12px;display:grid;gap:14px}
@@ -236,6 +240,10 @@ h1 .n{color:var(--pink);text-shadow:0 0 28px rgba(255,91,146,.5)}
     <button class="logo" id="home" aria-label="Voltar ao menu"><i></i>GAMES @PHARMAMELO</button>
     <div class="sp"></div>
     <div class="recs" id="recs"></div>
+    <a class="iconbtn igbtn" href="https://instagram.com/pharmamelo" target="_blank" rel="noopener" aria-label="Seguir @pharmamelo no Instagram">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
+      <span>Siga no Instagram</span>
+    </a>
     <button class="iconbtn" id="snd" aria-label="Ligar ou desligar som"><kbd>M</kbd><span id="sndl">Som: ligado</span></button>
   </header>
 

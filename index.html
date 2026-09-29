@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Games @pharmamelo · Antimicrobianos</title>
-<meta name="description" content="Jogo de farmacologia dos antimicrobianos: batalha, quiz, memória, fuga da colônia e enciclopédia. @pharmamelo">
+<meta name="description" content="Jogo de farmacologia dos antimicrobianos: batalha, quiz, memória, fuga da colônia, encaixe de classes e enciclopédia. @pharmamelo">
 <meta name="theme-color" content="#090c16">
 <meta name="application-name" content="ATB Games">
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -180,6 +180,27 @@ h1 .n{color:var(--pink);text-shadow:0 0 28px rgba(255,91,146,.5)}
 #fLog{min-height:18px;font-size:13px;color:var(--mute)}
 @media (max-width:520px){#fstage{height:210px}.ftouch button{width:44px;height:44px;font-size:16px}}
 
+/* encaixe de classes */
+.xstage{margin-top:14px;height:150px;border-radius:16px;border:1px solid var(--line);background:radial-gradient(ellipse at 50% 30%,#182047 0,#0b0f1f 75%);display:flex;align-items:center;justify-content:center;position:relative;touch-action:none;overflow:visible}
+.xcap{position:relative;display:flex;align-items:center;justify-content:center;min-width:150px;max-width:88%;height:54px;border-radius:27px;background:linear-gradient(90deg,#ffc24a 50%,#f0f4ff 50%);box-shadow:0 10px 26px rgba(0,0,0,.4),0 0 22px rgba(255,194,74,.25);cursor:grab;user-select:none;touch-action:none;transition:transform .35s cubic-bezier(.3,1.4,.5,1);will-change:transform}
+.xcap.dragging{transition:none;cursor:grabbing;box-shadow:0 14px 30px rgba(0,0,0,.5),0 0 26px rgba(255,194,74,.4)}
+.xcap span{font-family:var(--ui);font-weight:700;font-size:clamp(13px,3.4vw,16px);color:#151428;padding:0 16px;text-align:center;text-shadow:0 1px 0 rgba(255,255,255,.35)}
+.xcap.shake{animation:xshake .4s}
+@keyframes xshake{20%{transform:translateX(-10px) rotate(-3deg)}40%{transform:translateX(9px) rotate(3deg)}60%{transform:translateX(-6px) rotate(-2deg)}80%{transform:translateX(4px) rotate(1deg)}}
+.xcap.good{animation:xgood .5s forwards}
+@keyframes xgood{0%{transform:scale(1);opacity:1}55%{transform:scale(1.15);opacity:1}100%{transform:scale(.35);opacity:0}}
+.xbubble{position:absolute;left:50%;top:-4px;transform:translate(-50%,-90%) scale(.4);background:#fdf6e6;color:#151428;font-family:'Bungee',sans-serif;font-size:13px;line-height:1.2;padding:9px 15px;border-radius:16px;border:3px solid #151428;box-shadow:0 5px 0 #151428;opacity:0;pointer-events:none;white-space:nowrap;z-index:5}
+.xbubble::after{content:"";position:absolute;left:28px;bottom:-13px;border:8px solid transparent;border-top-color:#151428}
+.xbubble::before{content:"";position:absolute;left:31px;bottom:-8px;border:6px solid transparent;border-top-color:#fdf6e6;z-index:1}
+.xbubble.bad{border-color:#ff5d5d;box-shadow:0 5px 0 #ff5d5d}
+.xbubble.bad::after{border-top-color:#ff5d5d}
+.xbubble.pop{animation:xbubblepop 1.15s ease-out forwards}
+@keyframes xbubblepop{0%{opacity:0;transform:translate(-50%,-70%) scale(.4) rotate(-8deg)}14%{opacity:1;transform:translate(-50%,-118%) scale(1.2) rotate(4deg)}26%{transform:translate(-50%,-110%) scale(1) rotate(-1deg)}78%{opacity:1;transform:translate(-50%,-110%) scale(1) rotate(0)}100%{opacity:0;transform:translate(-50%,-128%) scale(.9)}}
+.opt.slot{position:relative;padding-top:22px;border-radius:8px 8px 14px 14px;background:linear-gradient(180deg,var(--panel2) 0,var(--panel) 100%)}
+.opt.slot::before{content:"";position:absolute;left:50%;top:9px;transform:translateX(-50%);width:34px;height:5px;border-radius:4px;background:var(--dim)}
+.opt.slot.dragover{border-color:var(--cyan);box-shadow:0 0 0 2px rgba(53,230,193,.35) inset}
+@media (max-width:520px){.xstage{height:130px}}
+
 @media (max-width:680px){
   .enc{grid-template-columns:1fr}
   .list{max-height:34vh}
@@ -219,6 +240,7 @@ h1 .n{color:var(--pink);text-shadow:0 0 28px rgba(255,91,146,.5)}
       <button class="mode" style="--c:var(--violet)" data-go="quiz"><h3>Quiz de farmacologia</h3><p>12 perguntas sobre classe, mecanismo, efeitos adversos e "quem sou eu?" pelas curiosidades.</p><kbd>Q</kbd></button>
       <button class="mode" style="--c:var(--amber)" data-go="mem"><h3>Memória</h3><p>Vire as cartas e forme pares: fármaco e classe, fármaco e alvo, ou bactéria e antimicrobiano ativo.</p><kbd>J</kbd></button>
       <button class="mode" style="--c:var(--red)" data-go="flee"><h3>Fuga da Colônia</h3><p>Guie a bactéria por um corredor de antimicrobianos. Passe ilesa pelos que ela resiste; os demais a eliminam.</p><kbd>F</kbd></button>
+      <button class="mode" style="--c:var(--green)" data-go="fit"><h3>Encaixe de Classes</h3><p>Arraste ou encaixe cada antimicrobiano na classe farmacológica certa, entre distratores cada vez mais parecidos.</p><kbd>X</kbd></button>
       <button class="mode" style="--c:var(--cyan)" data-go="enc"><h3>Enciclopédia</h3><p>Consulte cada fármaco e cada bactéria: quem cobre quem, e por quê.</p><kbd>E</kbd></button>
     </div>
     <div class="fact" id="fact"></div>
@@ -226,6 +248,7 @@ h1 .n{color:var(--pink);text-shadow:0 0 28px rgba(255,91,146,.5)}
       <span><kbd>1</kbd><kbd>2</kbd><kbd>3</kbd><kbd>4</kbd> ou <kbd>A</kbd><kbd>S</kbd><kbd>D</kbd><kbd>F</kbd> responder</span>
       <span><kbd>Enter</kbd> / <kbd>Espaço</kbd> continuar</span>
       <span><kbd>↑</kbd><kbd>↓</kbd> mover (memória e fuga)</span>
+      <span>Arraste a cápsula na Encaixe</span>
       <span><kbd>P</kbd> pausar</span>
       <span><kbd>Esc</kbd> menu</span>
       <span><kbd>M</kbd> som</span>
@@ -306,6 +329,24 @@ h1 .n{color:var(--pink);text-shadow:0 0 28px rgba(255,91,146,.5)}
     <div id="fLog"></div>
     <div id="fFb"></div>
     <p class="small">Setas <kbd>↑</kbd><kbd>↓</kbd> ou <kbd>W</kbd><kbd>S</kbd> trocam de faixa · toque em ▲▼ ou deslize no celular · <kbd>P</kbd> pausa · <kbd>Esc</kbd> menu</p>
+  </section>
+
+  <!-- ENCAIXE -->
+  <section id="fit" hidden>
+    <div class="hud">
+      <div class="stat"><div class="l">Pontos</div><div class="v" id="xScore">0</div></div>
+      <div class="stat"><div class="l">Combo</div><div class="v" id="xCombo" style="color:var(--amber)">x1</div></div>
+      <div class="stat"><div class="l">Nível</div><div class="v" id="xLevel" style="color:var(--green)">1</div></div>
+      <div class="stat"><div class="l">Gavetas emperradas</div><div class="meter"><i id="xJam"></i></div></div>
+    </div>
+    <div class="xstage">
+      <div class="xcap" id="xCap"><span id="xCapName"></span><div class="xbubble" id="xBubble"></div></div>
+    </div>
+    <div class="timer" id="xTimerBox"><i id="xTimer"></i></div>
+    <div class="ask">Encaixe o antimicrobiano na classe correta</div>
+    <div class="opts xslots" id="xSlots"></div>
+    <div id="xFb"></div>
+    <p class="small"><kbd>1</kbd><kbd>2</kbd><kbd>3</kbd><kbd>4</kbd>/<kbd>A</kbd><kbd>S</kbd><kbd>D</kbd><kbd>F</kbd> escolhem a gaveta, ou arraste a cápsula até ela · <kbd>P</kbd> pausa · <kbd>Esc</kbd> menu</p>
   </section>
 
   <!-- ENCYCLOPEDIA -->
@@ -479,13 +520,13 @@ const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;',
 const GCOL={pos:'#9d6cff',neg:'#ff5b92',acid:'#ffc24a',none:'#35e6c1'};
 const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
 function store(k,v){try{if(v===undefined)return JSON.parse(localStorage.getItem(k));localStorage.setItem(k,JSON.stringify(v))}catch(e){return null}}
-let best={b:store('arsenal.bestB')||0,q:store('arsenal.bestQ')||0,m:store('arsenal.bestM')||0,f:store('arsenal.bestF')||0};
-function renderRecs(){$('#recs').innerHTML=`<span>Batalha <b>${best.b}</b></span><span>Quiz <b>${best.q}</b></span><span>Memória <b>${best.m}</b></span><span>Fuga <b>${best.f}</b></span>`}
+let best={b:store('arsenal.bestB')||0,q:store('arsenal.bestQ')||0,m:store('arsenal.bestM')||0,f:store('arsenal.bestF')||0,x:store('arsenal.bestX')||0};
+function renderRecs(){$('#recs').innerHTML=`<span>Batalha <b>${best.b}</b></span><span>Quiz <b>${best.q}</b></span><span>Memória <b>${best.m}</b></span><span>Fuga <b>${best.f}</b></span><span>Encaixe <b>${best.x}</b></span>`}
 
 /* ================= SOM ================= */
 let actx=null,sound=store('arsenal.sound');if(sound===null)sound=true;
 function beep(f,d=.12,type='square',v=.05,slide=0){if(!sound)return;try{actx=actx||new (window.AudioContext||window.webkitAudioContext)();const o=actx.createOscillator(),g=actx.createGain();o.type=type;o.frequency.value=f;if(slide)o.frequency.exponentialRampToValueAtTime(Math.max(40,f+slide),actx.currentTime+d);g.gain.value=v;g.gain.exponentialRampToValueAtTime(.0001,actx.currentTime+d);o.connect(g).connect(actx.destination);o.start();o.stop(actx.currentTime+d)}catch(e){}}
-const sfx={ok(){beep(660,.09);setTimeout(()=>beep(990,.14),80)},bad(){beep(220,.25,'sawtooth',.05,-120)},tick(){beep(1200,.03,'square',.02)},lvl(){[523,659,784,1046].forEach((f,i)=>setTimeout(()=>beep(f,.12,'triangle',.06),i*90))},over(){[392,330,262,196].forEach((f,i)=>setTimeout(()=>beep(f,.2,'triangle',.06),i*140))}};
+const sfx={ok(){beep(660,.09);setTimeout(()=>beep(990,.14),80)},bad(){beep(220,.25,'sawtooth',.05,-120)},tick(){beep(1200,.03,'square',.02)},lvl(){[523,659,784,1046].forEach((f,i)=>setTimeout(()=>beep(f,.12,'triangle',.06),i*90))},over(){[392,330,262,196].forEach((f,i)=>setTimeout(()=>beep(f,.2,'triangle',.06),i*140))},pop(){beep(880,.05,'square',.035);setTimeout(()=>beep(1320,.06,'square',.025),45)},boing(){beep(300,.05,'sawtooth',.04);setTimeout(()=>beep(180,.14,'sawtooth',.035,-40),50)}};
 function renderSnd(){$('#sndl').textContent='Som: '+(sound?'ligado':'desligado')}
 function toggleSound(){sound=!sound;store('arsenal.sound',sound);renderSnd();if(sound)beep(880,.08)}
 
@@ -539,12 +580,12 @@ function burst(col){const cx=SW/2,cy=SH*.58;anim.parts=Array.from({length:reduce
 function popText(txt,col){const p=$('#pop');p.textContent=txt;p.style.color=col;p.classList.remove('go');void p.offsetWidth;p.classList.add('go')}
 
 /* ================= ESTADO ================= */
-let cur='menu';const SCREENS=['menu','battle','quiz','mem','flee','enc','over'];
+let cur='menu';const SCREENS=['menu','battle','quiz','mem','flee','fit','enc','over'];
 function show(id){SCREENS.forEach(s=>$('#'+s).hidden=s!==id);cur=id;window.scrollTo(0,0);if(id==='battle')requestAnimationFrame(sizeStage);if(id==='flee')requestAnimationFrame(sizeFStage)}
 let G=null;
 
 function setTimer(sec){G.tMax=sec;G.tLeft=sec;G.lastTick=Math.ceil(sec)}
-function renderTimer(){const box=$(G.mode==='battle'?'#bTimerBox':'#qTimerBox');const bar=box.firstElementChild;const k=Math.max(0,G.tLeft/G.tMax);bar.style.width=(k*100)+'%';box.classList.toggle('low',k<.3)}
+function renderTimer(){const box=$(G.mode==='battle'?'#bTimerBox':G.mode==='fit'?'#xTimerBox':'#qTimerBox');const bar=box.firstElementChild;const k=Math.max(0,G.tLeft/G.tMax);bar.style.width=(k*100)+'%';box.classList.toggle('low',k<.3)}
 
 function optsHTML(list){return list.map((o,i)=>`<button class="opt" data-i="${i}"><kbd>${i+1}</kbd><span class="on">${esc(o.label)}</span>${o.sub?`<span class="os">${esc(o.sub)}</span>`:''}</button>`).join('')}
 function lockOpts(el,chosen,right){el.querySelectorAll('.opt').forEach((b,i)=>{b.disabled=true;if(i===right)b.classList.add('ok');else if(i===chosen)b.classList.add('bad');else b.classList.add('fade')})}
@@ -616,11 +657,16 @@ function nextFromQuiz(){if(G.idx>=QN)return gameOver();nextQuiz()}
 function gameOver(){const m=G.mode;let rec=false;
   if(m==='battle'&&G.score>best.b){best.b=G.score;store('arsenal.bestB',best.b);rec=true}
   if(m==='quiz'&&G.score>best.q){best.q=G.score;store('arsenal.bestQ',best.q);rec=true}
+  if(m==='fit'&&G.score>best.x){best.x=G.score;store('arsenal.bestX',best.x);rec=true}
   renderRecs();sfx.over();G.answered=true;
-  const acc=m==='battle'?(G.total?Math.round(G.hits/G.total*100):0):Math.round(G.hits/QN*100);
+  const acc=m==='quiz'?Math.round(G.hits/QN*100):(G.total?Math.round(G.hits/G.total*100):0);
   const msg=acc>=90?'Nível infectologista. O antibiograma tem medo de você.':acc>=70?'Muito bom. Revise as resistências intrínsecas que escaparam.':acc>=50?'Bom começo. A Enciclopédia ajuda a fechar as lacunas.':'A colônia venceu desta vez. Explore a Enciclopédia e volte.';
-  $('#overBox').innerHTML=`<div class="eyebrow">${m==='battle'?'Batalha encerrada':'Quiz concluído'}</div><h2>${m==='battle'?'Resistência 100%':G.hits+' de '+QN}</h2>
-  <div class="big"><div class="stat"><div class="l">Pontos</div><div class="v">${G.score}</div></div><div class="stat"><div class="l">Acerto</div><div class="v" style="color:var(--green)">${acc}%</div></div><div class="stat"><div class="l">${m==='battle'?'Nível':'Maior sequência'}</div><div class="v" style="color:var(--cyan)">${m==='battle'?G.level:G.maxStreak}</div></div></div>
+  const title=m==='battle'?'Batalha encerrada':m==='fit'?'Gavetas emperradas':'Quiz concluído';
+  const h2=m==='battle'?'Resistência 100%':m==='fit'?'3 encaixes errados':G.hits+' de '+QN;
+  const thirdLabel=m==='quiz'?'Maior sequência':'Nível';
+  const thirdVal=m==='quiz'?G.maxStreak:G.level;
+  $('#overBox').innerHTML=`<div class="eyebrow">${title}</div><h2>${h2}</h2>
+  <div class="big"><div class="stat"><div class="l">Pontos</div><div class="v">${G.score}</div></div><div class="stat"><div class="l">Acerto</div><div class="v" style="color:var(--green)">${acc}%</div></div><div class="stat"><div class="l">${thirdLabel}</div><div class="v" style="color:var(--cyan)">${thirdVal}</div></div></div>
   ${rec?'<p style="color:var(--amber);font-weight:700;margin:0">Novo recorde!</p>':''}<p style="margin:0">${msg}</p>
   <div class="row" style="display:flex;gap:10px;flex-wrap:wrap"><button class="btn" id="again">Jogar de novo <kbd>Enter</kbd></button><button class="btn ghost" data-menu>Menu <kbd>Esc</kbd></button></div>`;
   G.overMode=m;show('over')}
@@ -769,6 +815,67 @@ function endFlee(kind,drugName){F.done=true;F.paused=false;F.score+=Math.round(F
       <div class="row"><button class="btn" id="fAgain">Jogar de novo <kbd>Enter</kbd></button><button class="btn ghost" data-menu>Menu <kbd>Esc</kbd></button></div></div>`}
   const fb=$('#fFb .fb');if(fb&&innerWidth<700)setTimeout(()=>fb.scrollIntoView({behavior:reduce?'auto':'smooth',block:'nearest'}),150)}
 
+/* ---------- ENCAIXE DE CLASSES ---------- */
+const GOOD_QUIPS=['Isso aí!','Encaixou!','Mandou bem!','Na mosca!','Perfeito!','Boa!'];
+const BAD_QUIPS=['Ops!','Essa não!','Quase!','Não é essa...','Xi!','Errou a gaveta!'];
+const FAMILY_PATTERNS=[
+  [/cefalospor|cefamicin/i,'cefalosporinas'],[/penicilin/i,'penicilinas'],[/carbapen/i,'carbapenemicos'],
+  [/monobact/i,'monobactamicos'],[/betalactâmico \+/i,'betalact-outros'],[/glicopeptíd/i,'glicopeptideos'],
+  [/lipopeptíd/i,'lipopeptideos'],[/aminoglicos/i,'aminoglicosideos'],[/tetraciclina|glicilciclina/i,'tetraciclinas'],
+  [/macrolíd/i,'macrolideos'],[/lincosam/i,'lincosamidas'],[/fluoroquinolon/i,'fluoroquinolonas'],
+  [/sulfonamid|sulfametoxazol/i,'sulfas'],[/rifamicin/i,'rifamicinas'],[/antituberculos/i,'antituberculosos'],
+  [/polimixin/i,'polimixinas'],[/oxazolidinon/i,'oxazolidinonas'],[/nitroimidazol/i,'nitroimidazois'],
+  [/nitrofuran/i,'nitrofuranos'],[/macrocíclic/i,'macrociclicos'],[/anfenic/i,'anfenicois'],
+  [/pleuromutilin/i,'pleuromutilinas'],[/diarilquinolon/i,'diarilquinolonas']];
+function familyKey(cls){for(const[re,key]of FAMILY_PATTERNS)if(re.test(cls))return key;return cls.toLowerCase()}
+function tierForCombo(c){return c>=4?'hard':c>=2?'medium':'easy'}
+function pickDistractors(drug,n){
+  const tier=tierForCombo(G.combo);
+  const allClasses=[...new Set(DRUGS.map(d=>d.c))].filter(c=>c!==drug.c);
+  const fam=familyKey(drug.c);
+  const sameFamily=shuffle(allClasses.filter(c=>familyKey(c)===fam));
+  const sameMech=shuffle(allClasses.filter(c=>!sameFamily.includes(c)&&DRUGS.some(d=>d.c===c&&d.m===drug.m)));
+  const rest=shuffle(allClasses.filter(c=>!sameFamily.includes(c)&&!sameMech.includes(c)));
+  let pool;
+  if(tier==='hard')pool=[...sameFamily,...sameMech,...rest];
+  else if(tier==='medium')pool=[...sameMech,...sameFamily,...rest];
+  else pool=[...rest,...sameMech,...sameFamily];
+  return[...new Set(pool)].slice(0,n)}
+function bubble(text,bad){const b=$('#xBubble');if(!b)return;b.textContent=text;b.classList.remove('pop');void b.offsetWidth;b.classList.toggle('bad',!!bad);b.classList.add('pop');sfx.pop()}
+function initXDrag(){const cap=$('#xCap');if(!cap||cap._xInit)return;cap._xInit=true;
+  let sx=0,sy=0,dragging=false;
+  cap.addEventListener('pointerdown',e=>{if(!G||G.mode!=='fit'||G.answered||G.paused)return;dragging=true;try{cap.setPointerCapture(e.pointerId)}catch(err){}cap.classList.add('dragging');sx=e.clientX;sy=e.clientY});
+  cap.addEventListener('pointermove',e=>{if(!dragging)return;const ox=e.clientX-sx,oy=e.clientY-sy;cap.style.transform=`translate(${ox}px,${oy}px)`;
+    document.querySelectorAll('#xSlots .slot').forEach(s=>{const r=s.getBoundingClientRect();const hit=e.clientX>=r.left&&e.clientX<=r.right&&e.clientY>=r.top&&e.clientY<=r.bottom;s.classList.toggle('dragover',hit)})});
+  cap.addEventListener('pointerup',e=>{if(!dragging)return;dragging=false;cap.classList.remove('dragging');let hitI=-1;
+    document.querySelectorAll('#xSlots .slot').forEach((s,i)=>{const r=s.getBoundingClientRect();if(e.clientX>=r.left&&e.clientX<=r.right&&e.clientY>=r.top&&e.clientY<=r.bottom)hitI=i;s.classList.remove('dragover')});
+    if(hitI>=0)answerFit(hitI);else cap.style.transform='translate(0,0)'});
+  cap.addEventListener('pointercancel',()=>{dragging=false;cap.classList.remove('dragging');cap.style.transform='translate(0,0)'})}
+function startFit(){G={mode:'fit',score:0,combo:1,maxCombo:1,hits:0,total:0,misses:0,jam:0,level:1,answered:false,paused:false,seen:[]};
+  show('fit');initXDrag();renderFitHud();nextFit()}
+function renderFitHud(){$('#xScore').textContent=G.score;$('#xCombo').textContent='x'+G.combo;$('#xLevel').textContent=G.level;$('#xJam').style.width=Math.min(100,G.jam)+'%'}
+function nextFit(){
+  let pool=DRUGS.filter(d=>!G.seen.includes(d.n));if(!pool.length){G.seen=[];pool=DRUGS}
+  const drug=pick(pool);G.seen.push(drug.n);G.drug=drug;
+  const wrong=pickDistractors(drug,3);const opts=shuffle([drug.c,...wrong]);G.opts=opts;G.right=opts.indexOf(drug.c);G.answered=false;
+  $('#xCapName').textContent=drug.n;const cap=$('#xCap');cap.style.transform='translate(0,0)';cap.classList.remove('shake','good');
+  $('#xSlots').innerHTML=opts.map((c,i)=>`<button class="opt slot" data-i="${i}"><kbd>${i+1}</kbd><span class="on">${esc(c)}</span></button>`).join('');
+  $('#xFb').innerHTML='';setTimer(Math.max(6,14-G.combo))}
+function answerFit(i){if(G.answered)return;G.answered=true;G.total++;const drug=G.drug,ok=i===G.right;
+  lockOpts($('#xSlots'),i,G.right);
+  const cap=$('#xCap');
+  if(ok){const bonus=Math.round(G.tLeft*8);const gain=100*G.combo+bonus;G.score+=gain;G.hits++;G.combo=Math.min(5,G.combo+1);G.maxCombo=Math.max(G.maxCombo,G.combo);
+    const nl=Math.floor(G.hits/6)+1;let lvup='';if(nl>G.level){G.level=nl;G.jam=Math.max(0,G.jam-25);lvup=`<p><b style="color:var(--cyan)">Nível ${nl}!</b> Distratores mais parecidos e menos tempo por cápsula.</p>`;setTimeout(sfx.lvl,250)}
+    cap.classList.add('good');sfx.ok();bubble(pick(GOOD_QUIPS),false);
+    $('#xFb').innerHTML=`<div class="fb good"><h4>Encaixou!</h4>${lvup}<p><b>${esc(drug.n)}</b> · ${esc(drug.c)} — ${esc(MEC[drug.m])}.</p><p><span class="lab">Curiosidade</span>${esc(drug.k)}</p>${CONT}</div>`;
+  }else{G.combo=1;G.misses++;G.jam+=34;cap.classList.add('shake');sfx.boing();bubble(pick(BAD_QUIPS),true);
+    const chosen=i>=0?`<p><b>${esc(G.opts[i])}</b> não é a classe de ${esc(drug.n)}.</p>`:'<p>O tempo acabou antes do encaixe.</p>';
+    $('#xFb').innerHTML=`<div class="fb bad"><h4>${i<0?'Tempo esgotado':'Gaveta errada'}</h4>${chosen}<p><b>${esc(drug.n)}</b> é da classe <b>${esc(drug.c)}</b> — ${esc(MEC[drug.m])}.</p><p><span class="lab">Curiosidade</span>${esc(drug.k)}</p>${G.jam>=100?`<div class="row"><button class="btn" data-next>Ver resultado <kbd>Enter</kbd></button></div>`:CONT}</div>`;
+  }
+  renderFitHud();
+  const fb=$('#xFb .fb');if(fb&&innerWidth<700)setTimeout(()=>fb.scrollIntoView({behavior:reduce?'auto':'smooth',block:'nearest'}),150)}
+function nextFromFit(){if(G.jam>=100)return gameOver();nextFit();window.scrollTo({top:0,behavior:reduce?'auto':'smooth'})}
+
 /* ---------- MENU ---------- */
 function newFact(){const all=[...DRUGS.map(d=>({n:d.n,s:d.c,k:d.k,t:'d'})),...BACS.map(b=>({n:b.n,s:b.gl,k:b.k,t:'b'}))];const f=pick(all);
   $('#fact').innerHTML=`<div class="t">Curiosidade relâmpago <kbd>C</kbd> outra</div><div class="who">${esc(f.n)} <span class="small" style="font-weight:400">· ${esc(f.s)}</span></div><p>${esc(f.k)}</p>`}
@@ -779,17 +886,17 @@ function togglePause(){if(cur==='flee'){if(!F||F.done)return;F.paused=!F.paused;
 /* ================= EVENTOS ================= */
 document.addEventListener('click',e=>{
   const t=e.target.closest('button');if(!t)return;
-  if(t.dataset.go){const g=t.dataset.go;g==='battle'?startBattle():g==='quiz'?startQuiz():g==='mem'?startMem():g==='flee'?startFlee():openEnc('d')}
+  if(t.dataset.go){const g=t.dataset.go;g==='battle'?startBattle():g==='quiz'?startQuiz():g==='mem'?startMem():g==='flee'?startFlee():g==='fit'?startFit():openEnc('d')}
   else if(t.dataset.card!==undefined){const i=+t.dataset.card;moveCursor(i);flipCard(i)}
   else if(t.dataset.theme){startMem(t.dataset.theme)}
   else if(t.id==='memAgain')startMem();
   else if(t.id==='fUp')laneMove(-1);
   else if(t.id==='fDown')laneMove(1);
   else if(t.id==='fAgain')startFlee();
-  else if(t.classList.contains('opt')&&!t.disabled){const i=+t.dataset.i;cur==='battle'?answerBattle(i):answerQuiz(i)}
+  else if(t.classList.contains('opt')&&!t.disabled){const i=+t.dataset.i;cur==='battle'?answerBattle(i):cur==='fit'?answerFit(i):answerQuiz(i)}
   else if(t.hasAttribute('data-next')){cur==='battle'?nextFromBattle():nextFromQuiz()}
   else if(t.hasAttribute('data-menu')||t.id==='home')goMenu();
-  else if(t.id==='again')G.overMode==='battle'?startBattle():startQuiz();
+  else if(t.id==='again')G.overMode==='battle'?startBattle():G.overMode==='fit'?startFit():startQuiz();
   else if(t.id==='snd')toggleSound();
   else if(t.id==='unpause')togglePause();
   else if(t.id==='tabD'){E.tab='d';buildList()}else if(t.id==='tabB'){E.tab='b';buildList()}
@@ -811,13 +918,13 @@ document.addEventListener('keydown',e=>{
     if(mv){e.preventDefault();moveCursor(M.cursor+mv);return}
     if(k==='Enter'||k===' '){e.preventDefault();M.done?startMem():flipCard(M.cursor)}
     return}
-  if(cur==='battle'||cur==='quiz'){
+  if(cur==='battle'||cur==='quiz'||cur==='fit'){
     if(k==='Escape'){goMenu();return}
     if(k==='p'){togglePause();return}
     if(G.paused)return;
     const map={'1':0,'2':1,'3':2,'4':3,'a':0,'s':1,'d':2,'f':3};
-    if(k in map&&!G.answered){e.preventDefault();cur==='battle'?answerBattle(map[k]):answerQuiz(map[k]);return}
-    if((k==='Enter'||k===' ')&&G.answered){e.preventDefault();cur==='battle'?nextFromBattle():nextFromQuiz()}
+    if(k in map&&!G.answered){e.preventDefault();cur==='battle'?answerBattle(map[k]):cur==='fit'?answerFit(map[k]):answerQuiz(map[k]);return}
+    if((k==='Enter'||k===' ')&&G.answered){e.preventDefault();cur==='battle'?nextFromBattle():cur==='fit'?nextFromFit():nextFromQuiz()}
     return}
   if(cur==='enc'){
     if(k==='Escape'){goMenu();return}
@@ -825,7 +932,7 @@ document.addEventListener('keydown',e=>{
     if(k==='ArrowDown'||k==='ArrowUp'){e.preventDefault();E.sel=Math.max(0,Math.min(E.items.length-1,E.sel+(k==='ArrowDown'?1:-1)));renderList();renderDetail();return}
     if(k==='ArrowLeft'||k==='ArrowRight'){E.tab=E.tab==='d'?'b':'d';buildList();return}
     return}
-  if(cur==='over'){if(k==='Enter'){e.preventDefault();G.overMode==='battle'?startBattle():startQuiz()}else if(k==='Escape')goMenu()}
+  if(cur==='over'){if(k==='Enter'){e.preventDefault();G.overMode==='battle'?startBattle():G.overMode==='fit'?startFit():startQuiz()}else if(k==='Escape')goMenu()}
 });
 document.addEventListener('keydown',e=>{
   if(cur!=='flee')return;const k=e.key.length===1?e.key.toLowerCase():e.key;
@@ -847,9 +954,9 @@ function loop(now){const dt=Math.min(.05,(now-lastT)/1000);lastT=now;const t=now
   if(cur==='enc')drawMini(t);
   if(cur==='flee'){if(!F.paused&&!F.done&&!document.hidden)updateFlee(dt);drawFlee(t)}
   if(cur==='mem'&&M.started&&!M.done&&!document.hidden){const before=Math.floor(M.t);M.t+=dt;if(Math.floor(M.t)!==before)renderMemHud()}
-  if(G&&(cur==='battle'||cur==='quiz')&&!G.answered&&!G.paused&&!document.hidden){
+  if(G&&(cur==='battle'||cur==='quiz'||cur==='fit')&&!G.answered&&!G.paused&&!document.hidden){
     G.tLeft-=dt;const c=Math.ceil(G.tLeft);if(c<G.lastTick&&c<=3&&c>0)sfx.tick();G.lastTick=c;
-    if(G.tLeft<=0){G.tLeft=0;renderTimer();cur==='battle'?answerBattle(-1):answerQuiz(-1)}else renderTimer()}
+    if(G.tLeft<=0){G.tLeft=0;renderTimer();cur==='battle'?answerBattle(-1):cur==='fit'?answerFit(-1):answerQuiz(-1)}else renderTimer()}
   requestAnimationFrame(loop)}
 
 /* ================= INÍCIO ================= */

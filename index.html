@@ -894,7 +894,7 @@ document.addEventListener('click',e=>{
   else if(t.id==='fDown')laneMove(1);
   else if(t.id==='fAgain')startFlee();
   else if(t.classList.contains('opt')&&!t.disabled){const i=+t.dataset.i;cur==='battle'?answerBattle(i):cur==='fit'?answerFit(i):answerQuiz(i)}
-  else if(t.hasAttribute('data-next')){cur==='battle'?nextFromBattle():nextFromQuiz()}
+  else if(t.hasAttribute('data-next')){cur==='battle'?nextFromBattle():cur==='fit'?nextFromFit():nextFromQuiz()}
   else if(t.hasAttribute('data-menu')||t.id==='home')goMenu();
   else if(t.id==='again')G.overMode==='battle'?startBattle():G.overMode==='fit'?startFit():startQuiz();
   else if(t.id==='snd')toggleSound();

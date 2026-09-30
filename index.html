@@ -216,6 +216,35 @@ h1 .n{color:var(--pink);text-shadow:0 0 28px rgba(255,91,146,.5)}
 .opt.slot.dragover{border-color:var(--cyan);box-shadow:0 0 0 2px rgba(53,230,193,.35) inset}
 @media (max-width:520px){.xstage{height:130px}}
 
+/* Modo Plantão */
+.pcase{margin-top:12px;background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:16px;display:grid;grid-template-columns:120px 1fr;gap:16px;align-items:start}
+.pcase img{width:120px;height:150px;object-fit:cover;border-radius:12px;border:2px solid var(--line);display:block}
+.pcase h3{font-family:var(--display);font-weight:400;font-size:clamp(17px,3.6vw,22px);line-height:1.15;margin:6px 0 2px}
+.pcase .ptags{display:flex;gap:6px;flex-wrap:wrap}
+.pcase .chip.fen{color:var(--amber)}
+.psite{font-weight:700;margin:8px 0 0}
+.pctx{color:var(--mute);font-size:14px;margin:2px 0 0}
+.abg{grid-column:1/-1;display:grid;gap:6px}
+.abg .lab{font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--cyan)}
+.abg .row{display:flex;flex-wrap:wrap;gap:6px}
+.abg .row span{font-family:var(--mono);font-size:12px;padding:4px 8px;border-radius:8px;border:1px solid var(--line);background:var(--bg2)}
+.abg .row span b{margin-left:6px}
+.abg .S b{color:var(--green)} .abg .R b{color:var(--red)} .abg .I b{color:var(--amber)}
+.opt.mid{border-color:var(--amber);background:rgba(255,194,74,.12)}
+.fb.mid{border-color:var(--amber)} .fb.mid h4{color:var(--amber)}
+.pverd{display:grid;gap:8px}
+.pverd div{display:grid;grid-template-columns:118px 1fr;gap:10px;font-size:14px;align-items:start}
+.pverd em{font-style:normal;font-family:var(--mono);font-size:11px;padding:3px 6px;border-radius:6px;border:1px solid currentColor;text-align:center}
+.pverd .v2{color:var(--green)} .pverd .v1{color:var(--amber)} .pverd .v0{color:var(--red)}
+.punlock{display:flex;gap:12px;align-items:center;padding:10px;border:1px dashed var(--amber);border-radius:12px}
+.punlock img{width:56px;height:70px;object-fit:cover;border-radius:8px}
+.coll{display:grid;grid-template-columns:repeat(auto-fill,minmax(112px,1fr));gap:10px}
+.ccard{background:var(--bg2);border:1px solid var(--line);border-radius:12px;overflow:hidden}
+.ccard img{width:100%;aspect-ratio:4/5;object-fit:cover;display:block}
+.ccard div{padding:8px;font-size:12px;color:var(--mute);line-height:1.3}
+.ccard b{display:block;font-style:italic;font-size:13px;color:var(--ink)}
+.ccard.lock img{filter:grayscale(1) brightness(.22) blur(3px)}
+
 @media (max-width:680px){
   .enc{grid-template-columns:1fr}
   .list{max-height:34vh}
@@ -225,6 +254,10 @@ h1 .n{color:var(--pink);text-shadow:0 0 28px rgba(255,91,146,.5)}
   .opts{grid-template-columns:1fr}
   .opt{min-height:54px;padding:10px 12px}
   #stage{height:190px}
+  .pcase{grid-template-columns:84px 1fr;gap:12px;padding:14px}
+  .pcase img{width:84px;height:105px}
+  .pverd div{grid-template-columns:1fr;gap:2px}
+  .pverd em{justify-self:start}
   .big{grid-template-columns:1fr 1fr}
 }
 @media (prefers-reduced-motion:reduce){
@@ -255,6 +288,7 @@ h1 .n{color:var(--pink);text-shadow:0 0 28px rgba(255,91,146,.5)}
       <p class="lede">Escolha a arma certa antes que a colônia se divida. <b id="counts"></b> com mecanismo, espectro, efeitos adversos marcantes, resistência intrínseca e curiosidades.</p>
     </div>
     <div class="modes">
+      <button class="mode" style="--c:var(--amber)" data-go="plan"><h3>Modo Plantão</h3><p>Casos de UTI com antibiograma. Escolha o antimicrobiano mais estreito que funcione e desbloqueie as cartas do baralho ESKAPE.</p><kbd>H</kbd></button>
       <button class="mode" style="--c:var(--pink)" data-go="battle"><h3>Batalha</h3><p>Uma bactéria aparece. Escolha um antimicrobiano ativo. Erros aumentam a pressão de resistência.</p><kbd>B</kbd></button>
       <button class="mode" style="--c:var(--violet)" data-go="quiz"><h3>Quiz de farmacologia</h3><p>12 perguntas sobre classe, mecanismo, efeitos adversos e "quem sou eu?" pelas curiosidades.</p><kbd>Q</kbd></button>
       <button class="mode" style="--c:var(--amber)" data-go="mem"><h3>Memória</h3><p>Vire as cartas e forme pares: fármaco e classe, fármaco e alvo, ou bactéria e antimicrobiano ativo.</p><kbd>J</kbd></button>
@@ -274,6 +308,7 @@ h1 .n{color:var(--pink);text-shadow:0 0 28px rgba(255,91,146,.5)}
     </div>
     <div class="keys">
       <span><kbd>1</kbd><kbd>2</kbd><kbd>3</kbd><kbd>4</kbd> ou <kbd>A</kbd><kbd>S</kbd><kbd>D</kbd><kbd>F</kbd> responder</span>
+      <span><kbd>H</kbd> Modo Plantão</span>
       <span><kbd>Enter</kbd> / <kbd>Espaço</kbd> continuar</span>
       <span><kbd>↑</kbd><kbd>↓</kbd> mover (memória e fuga)</span>
       <span>Arraste a cápsula na Encaixe</span>
@@ -281,6 +316,21 @@ h1 .n{color:var(--pink);text-shadow:0 0 28px rgba(255,91,146,.5)}
       <span><kbd>Esc</kbd> menu</span>
       <span><kbd>M</kbd> som</span>
     </div>
+  </section>
+
+  <!-- PLANTÃO -->
+  <section id="plan" hidden>
+    <div class="hud">
+      <div class="stat"><div class="l">Pontos</div><div class="v" id="pScore">0</div></div>
+      <div class="stat"><div class="l">Caso</div><div class="v" id="pNum" style="color:var(--cyan)">1/8</div></div>
+      <div class="stat"><div class="l">Melhor escolha</div><div class="v" id="pBest" style="color:var(--green)">0</div></div>
+      <div class="stat"><div class="l">Coleção</div><div class="v" id="pColl" style="color:var(--amber)">0/7</div></div>
+    </div>
+    <div class="pcase" id="pCase"></div>
+    <div class="timer" id="pTimerBox"><i id="pTimer"></i></div>
+    <div class="ask">Qual é o melhor antimicrobiano para este paciente?</div>
+    <div class="opts" id="pOpts"></div>
+    <div id="pFb"></div>
   </section>
 
   <!-- BATTLE -->
@@ -548,8 +598,8 @@ const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;',
 const GCOL={pos:'#9d6cff',neg:'#ff5b92',acid:'#ffc24a',none:'#35e6c1'};
 const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
 function store(k,v){try{if(v===undefined)return JSON.parse(localStorage.getItem(k));localStorage.setItem(k,JSON.stringify(v))}catch(e){return null}}
-let best={b:store('arsenal.bestB')||0,q:store('arsenal.bestQ')||0,m:store('arsenal.bestM')||0,f:store('arsenal.bestF')||0,x:store('arsenal.bestX')||0};
-function renderRecs(){$('#recs').innerHTML=`<span>Batalha <b>${best.b}</b></span><span>Quiz <b>${best.q}</b></span><span>Memória <b>${best.m}</b></span><span>Fuga <b>${best.f}</b></span><span>Encaixe <b>${best.x}</b></span>`}
+let best={b:store('arsenal.bestB')||0,q:store('arsenal.bestQ')||0,m:store('arsenal.bestM')||0,f:store('arsenal.bestF')||0,x:store('arsenal.bestX')||0,p:store('arsenal.bestP')||0};
+function renderRecs(){$('#recs').innerHTML=`<span>Plantão <b>${best.p}</b></span><span>Batalha <b>${best.b}</b></span><span>Quiz <b>${best.q}</b></span><span>Memória <b>${best.m}</b></span><span>Fuga <b>${best.f}</b></span><span>Encaixe <b>${best.x}</b></span>`}
 
 /* ================= SOM ================= */
 let actx=null,sound=store('arsenal.sound');if(sound===null)sound=true;
@@ -608,12 +658,12 @@ function burst(col){const cx=SW/2,cy=SH*.58;anim.parts=Array.from({length:reduce
 function popText(txt,col){const p=$('#pop');p.textContent=txt;p.style.color=col;p.classList.remove('go');void p.offsetWidth;p.classList.add('go')}
 
 /* ================= ESTADO ================= */
-let cur='menu';const SCREENS=['menu','battle','quiz','mem','flee','fit','enc','over'];
+let cur='menu';const SCREENS=['menu','plan','battle','quiz','mem','flee','fit','enc','over'];
 function show(id){SCREENS.forEach(s=>$('#'+s).hidden=s!==id);cur=id;window.scrollTo(0,0);if(id==='battle')requestAnimationFrame(sizeStage);if(id==='flee')requestAnimationFrame(sizeFStage)}
 let G=null;
 
 function setTimer(sec){G.tMax=sec;G.tLeft=sec;G.lastTick=Math.ceil(sec)}
-function renderTimer(){const box=$(G.mode==='battle'?'#bTimerBox':G.mode==='fit'?'#xTimerBox':'#qTimerBox');const bar=box.firstElementChild;const k=Math.max(0,G.tLeft/G.tMax);bar.style.width=(k*100)+'%';box.classList.toggle('low',k<.3)}
+function renderTimer(){const box=$(G.mode==='battle'?'#bTimerBox':G.mode==='fit'?'#xTimerBox':G.mode==='plan'?'#pTimerBox':'#qTimerBox');const bar=box.firstElementChild;const k=Math.max(0,G.tLeft/G.tMax);bar.style.width=(k*100)+'%';box.classList.toggle('low',k<.3)}
 
 function optsHTML(list){return list.map((o,i)=>`<button class="opt" data-i="${i}"><kbd>${i+1}</kbd><span class="on">${esc(o.label)}</span>${o.sub?`<span class="os">${esc(o.sub)}</span>`:''}</button>`).join('')}
 function lockOpts(el,chosen,right){el.querySelectorAll('.opt').forEach((b,i)=>{b.disabled=true;if(i===right)b.classList.add('ok');else if(i===chosen)b.classList.add('bad');else b.classList.add('fade')})}
@@ -680,6 +730,196 @@ function answerQuiz(i){if(G.answered)return;G.answered=true;const q=G.q,d=q.d,ok
   const fb=$('#qFb .fb');if(fb&&innerWidth<700)setTimeout(()=>fb.scrollIntoView({behavior:reduce?'auto':'smooth',block:'nearest'}),150);
 }
 function nextFromQuiz(){if(G.idx>=QN)return gameOver();nextQuiz()}
+
+/* ---------- PLANTÃO ---------- */
+// Cartas colecionáveis do baralho ESKAPE @pharmamelo
+const PC={
+  efm:{n:'Enterococcus faecium',nick:'Os gêmeos que sobrevivem a tudo',img:'cards/enterococcus.webp',gc:'pos',gl:'Gram +',no:'01'},
+  sau:{n:'Staphylococcus aureus',nick:'A gangue dourada em cacho',img:'cards/saureus.webp',gc:'pos',gl:'Gram +',no:'02'},
+  kpn:{n:'Klebsiella pneumoniae',nick:'A gordinha encapsulada',img:'cards/klebsiella.webp',gc:'neg',gl:'Gram −',no:'03'},
+  aba:{n:'Acinetobacter baumannii',nick:'O teimoso que não larga o hospital',img:'cards/acinetobacter.webp',gc:'neg',gl:'Gram −',no:'04'},
+  pae:{n:'Pseudomonas aeruginosa',nick:'A nadadora verde das pias',img:'cards/pseudomonas.webp',gc:'neg',gl:'Gram −',no:'05'},
+  ecl:{n:'Enterobacter cloacae',nick:'O que esconde a armadura',img:'cards/enterobacter.webp',gc:'neg',gl:'Gram −',no:'06'},
+  eco:{n:'Escherichia coli',nick:'A vizinha que virou problema',img:'cards/ecoli.webp',gc:'neg',gl:'Gram −',no:'07'}
+};
+const PCK=Object.keys(PC);
+// [carta, fenótipo, sítio, contexto, antibiograma [[fármaco,resultado]], opções [[fármaco, nota 2|1|0, por quê, classe opcional]], lição]
+// nota 2 = melhor escolha · 1 = funciona, mas não é a ideal · 0 = falha
+const PCASES=[
+['kpn','KPC','Pneumonia associada à ventilação','Homem, 64 anos, 9º dia de ventilação mecânica na UTI.',
+ [['Meropenem','R'],['Ertapenem','R'],['Piperacilina-tazobactam','R'],['Ceftazidima-avibactam','S'],['Polimixina B','S'],['Amicacina','S']],
+ [['Ceftazidima-avibactam',2,'O avibactam inibe a KPC e devolve a atividade da ceftazidima. É a escolha preferida.'],
+  ['Polimixina B',1,'Ativa no antibiograma, mas é mais nefrotóxica e menos eficaz que os novos inibidores. Fica como reserva.'],
+  ['Meropenem',0,'A KPC hidrolisa carbapenêmicos: o antibiograma já mostra resistência.'],
+  ['Piperacilina-tazobactam',0,'O tazobactam não inibe carbapenemases.']],
+ 'Diante de KPC, o antibiótico certo vem com um inibidor de nova geração: avibactam, vaborbactam ou relebactam.'],
+['kpn','ESBL','Bacteremia de foco urinário','Mulher, 58 anos, estável, sem choque e com albumina normal.',
+ [['Ceftriaxona','R'],['Cefepima','R'],['Piperacilina-tazobactam','S'],['Ertapenem','S'],['Meropenem','S']],
+ [['Ertapenem',2,'Carbapenêmico sem ação antipseudomonas: trata a ESBL e poupa o meropenem no paciente estável.'],
+  ['Meropenem',1,'Funciona, mas o espectro é mais amplo do que o caso pede.'],
+  ['Piperacilina-tazobactam',0,'No estudo MERINO perdeu para o meropenem na bacteremia por ESBL, mesmo testando sensível.'],
+  ['Ceftriaxona',0,'A ESBL hidrolisa cefalosporinas de 3ª geração.']],
+ 'Em infecção grave por ESBL, use carbapenêmico. No paciente estável, o ertapenem é o de menor espectro.'],
+['kpn','NDM','Pielonefrite com bacteremia','Homem, 71 anos, transferido de outro hospital.',
+ [['Meropenem','R'],['Ceftazidima-avibactam','R'],['Meropenem-vaborbactam','R'],['Aztreonam','R'],['Polimixina B','S']],
+ [['Ceftazidima-avibactam + aztreonam',2,'O aztreonam escapa da metalo-betalactamase, e o avibactam o protege da ESBL que costuma vir junto.','Associação de betalactâmicos'],
+  ['Ceftazidima-avibactam',0,'O avibactam não inibe metalo-betalactamases como a NDM.'],
+  ['Meropenem-vaborbactam',0,'O vaborbactam também não inibe a NDM.'],
+  ['Polimixina B',1,'Ativa, mas mais tóxica e menos eficaz. Reserva para quando não houver alternativa.']],
+ 'NDM é metalo-betalactamase: só o aztreonam escapa dela. Proteja-o com avibactam ou use cefiderocol.'],
+['kpn','Selvagem','Pneumonia adquirida na comunidade, internado','Homem, 52 anos, etilista, sem antibiótico recente.',
+ [['Ampicilina','R'],['Ceftriaxona','S'],['Ciprofloxacino','S'],['Meropenem','S']],
+ [['Ceftriaxona',2,'Cobre a cepa selvagem com o espectro adequado.'],
+  ['Meropenem',1,'Funciona, mas gasta um carbapenêmico sem necessidade.'],
+  ['Ampicilina',0,'Resistência intrínseca pela betalactamase cromossômica SHV-1.'],
+  ['Vancomicina',0,'Não atravessa a membrana externa dos gram-negativos.']],
+ 'Antibiograma sensível pede o antibiótico mais estreito que funcione.'],
+['ecl','AmpC induzível','Bacteremia relacionada a cateter','Mulher, 45 anos, em nutrição parenteral.',
+ [['Amoxicilina-clavulanato','R'],['Cefoxitina','R'],['Ceftriaxona','S'],['Cefepima','S'],['Meropenem','S']],
+ [['Cefepima',2,'Estável frente à AmpC e com espectro menor que o do carbapenêmico.'],
+  ['Ceftriaxona',0,'Pode selecionar mutantes com AmpC desreprimida durante o tratamento. Aqui o "S" engana.'],
+  ['Meropenem',1,'Funciona, mas é amplo demais com a cefepima disponível.'],
+  ['Amoxicilina-clavulanato',0,'Resistência intrínseca pela AmpC cromossômica.']],
+ 'Enterobacter, Citrobacter freundii e Klebsiella aerogenes: pense em AmpC e prefira cefepima em infecção grave.'],
+['ecl','AmpC desreprimida','Infecção de sítio cirúrgico profunda','Homem, 60 anos, após 12 dias de ceftriaxona depois de laparotomia.',
+ [['Ceftriaxona','R'],['Piperacilina-tazobactam','R'],['Cefepima','SDD'],['Ertapenem','S'],['Meropenem','S']],
+ [['Meropenem',2,'Com a cefepima na faixa dose-dependente, o carbapenêmico é a escolha segura.'],
+  ['Ertapenem',2,'Também adequado se o paciente estiver estável e sem risco de Pseudomonas.'],
+  ['Cefepima',0,'A faixa dose-dependente sugere AmpC hiperproduzida ou ESBL associada: não é confiável.'],
+  ['Ceftriaxona',0,'Já falhou: o tratamento prolongado desreprimiu a AmpC.']],
+ 'Cefalosporina de 3ª geração por muitos dias seleciona Enterobacter com AmpC desreprimida.'],
+['pae','Selvagem','Pneumonia associada à ventilação','Mulher, 67 anos, 6º dia de ventilação mecânica.',
+ [['Piperacilina-tazobactam','S'],['Cefepima','S'],['Meropenem','S'],['Ciprofloxacino','S']],
+ [['Cefepima',2,'Betalactâmico antipseudomonas que poupa o carbapenêmico.'],
+  ['Meropenem',1,'Ativo, mas guarde o carbapenêmico para quando ele for necessário.'],
+  ['Ertapenem',0,'É o único carbapenêmico sem ação contra Pseudomonas.'],
+  ['Ceftriaxona',0,'Não tem atividade antipseudomonas.']],
+ 'Nem todo carbapenêmico cobre Pseudomonas: o ertapenem é a exceção.'],
+['pae','DTR (efluxo + perda de OprD)','Bacteremia','Homem, 38 anos, grande queimado.',
+ [['Piperacilina-tazobactam','R'],['Cefepima','R'],['Meropenem','R'],['Ceftolozano-tazobactam','S'],['Ceftazidima-avibactam','S']],
+ [['Ceftolozano-tazobactam',2,'Desenhado para escapar do efluxo e da perda de porinas. Preferido na Pseudomonas difícil de tratar.'],
+  ['Polimixina B',1,'Ativa, porém mais tóxica e menos eficaz. Só quando não houver alternativa.'],
+  ['Meropenem',0,'Resistente: a bactéria fechou a porta de entrada (porina OprD).'],
+  ['Tigeciclina',0,'Pseudomonas é intrinsecamente resistente.']],
+ 'Na Pseudomonas difícil de tratar, os novos betalactâmicos vêm antes das polimixinas.'],
+['pae','Metalo (SPM-1, VIM)','Infecção urinária associada a cateter','Homem, 74 anos, sonda vesical há 20 dias.',
+ [['Meropenem','R'],['Imipenem-relebactam','R'],['Ceftolozano-tazobactam','R'],['Ceftazidima-avibactam','R'],['Cefiderocol','S'],['Polimixina B','S']],
+ [['Cefiderocol',2,'Estável frente às metalo-betalactamases e entra na bactéria pela via de captação de ferro.'],
+  ['Ceftolozano-tazobactam',0,'É hidrolisado por metalo-betalactamases.'],
+  ['Imipenem-relebactam',0,'O relebactam não inibe metalo-betalactamases.'],
+  ['Polimixina B',1,'Ativa, mas mais tóxica e menos eficaz. Reserva para quando não houver alternativa.']],
+ 'A SPM-1 é uma metalo-betalactamase descrita no Brasil. Contra metalo, pense em cefiderocol.'],
+['aba','CRAB (OXA-23)','Pneumonia associada à ventilação','Homem, 55 anos, UTI com surto de Acinetobacter.',
+ [['Meropenem','R'],['Imipenem-cilastatina','R'],['Ampicilina-sulbactam','R'],['Polimixina B','S'],['Minociclina','S']],
+ [['Sulbactam-durlobactam + imipenem',2,'O durlobactam protege o sulbactam das enzimas OXA. É a opção preferida no guia IDSA 2024.','Betalactâmico + inibidor de nova geração'],
+  ['Ampicilina-sulbactam em dose alta + polimixina B',1,'Alternativa quando não há sulbactam-durlobactam: dose alta e sempre em combinação.','Associação'],
+  ['Ceftazidima-avibactam',0,'O avibactam não tem ação útil contra as carbapenemases do Acinetobacter.'],
+  ['Polimixina B isolada',0,'Monoterapia não é recomendada no Acinetobacter resistente a carbapenêmicos.','Polimixinas']],
+ 'Contra Acinetobacter, o sulbactam é o próprio antibiótico. O durlobactam o protege das OXA.'],
+['aba','Sensível a carbapenêmico','Infecção de ferida traumática','Homem, 29 anos, fratura exposta de tíbia.',
+ [['Ampicilina-sulbactam','S'],['Meropenem','S'],['Ciprofloxacino','S']],
+ [['Ampicilina-sulbactam',2,'O sulbactam tem ação própria contra Acinetobacter e poupa o carbapenêmico.'],
+  ['Meropenem',1,'Ativo, mas com espectro maior que o necessário.'],
+  ['Ertapenem',0,'Sem atividade útil contra Acinetobacter.'],
+  ['Aztreonam',0,'Sem atividade útil contra Acinetobacter.']],
+ 'Com Acinetobacter sensível, poupe o carbapenêmico se a ampicilina-sulbactam funcionar.'],
+['sau','MSSA','Bacteremia','Mulher, 49 anos, em hemodiálise por cateter.',
+ [['Oxacilina','S'],['Vancomicina','S'],['Clindamicina','S']],
+ [['Cefazolina',2,'Betalactâmico antiestafilocócico, superior à vancomicina para MSSA e prático na hemodiálise.'],
+  ['Vancomicina',1,'Funciona, mas é inferior aos betalactâmicos contra MSSA.'],
+  ['Aztreonam',0,'Só age em gram-negativos.'],
+  ['Metronidazol',0,'Só age em anaeróbios.']],
+ 'Confirmou MSSA? Troque a vancomicina por oxacilina ou cefazolina.'],
+['sau','MRSA','Pneumonia associada à ventilação','Homem, 62 anos, pós-operatório de neurocirurgia.',
+ [['Oxacilina','R'],['Vancomicina','S'],['Linezolida','S'],['Daptomicina','S']],
+ [['Linezolida',2,'Boa penetração no pulmão e ativa contra MRSA.'],
+  ['Vancomicina',2,'Opção clássica contra MRSA, com monitorização por AUC.'],
+  ['Daptomicina',0,'É inativada pelo surfactante pulmonar: não trata pneumonia.'],
+  ['Cefazolina',0,'O gene mecA gera a PBP2a, que não se liga à cefazolina.']],
+ 'Daptomicina não trata pneumonia. É a armadilha clássica do MRSA.'],
+['efm','VRE (vanA)','Bacteremia','Mulher, 57 anos, em quimioterapia, com neutropenia.',
+ [['Ampicilina','R'],['Vancomicina','R'],['Linezolida','S'],['Daptomicina','S']],
+ [['Daptomicina',2,'Bactericida e ativa contra VRE. No enterococo, use dose alta.'],
+  ['Linezolida',1,'Ativa, mas é bacteriostática e pode piorar a plaquetopenia de quem está em quimioterapia.'],
+  ['Tigeciclina',0,'Fica pouco no sangue: não serve para bacteremia.'],
+  ['Ceftriaxona',0,'O enterococo é intrinsecamente resistente a todas as cefalosporinas.']],
+ 'No VRE com bacteremia, a daptomicina em dose alta costuma ser a primeira escolha.'],
+['efm','Resistente à ampicilina','Infecção urinária complicada','Homem, 69 anos, sonda vesical e internação prolongada.',
+ [['Ampicilina','R'],['Vancomicina','S'],['Linezolida','S'],['Nitrofurantoína','S']],
+ [['Vancomicina',2,'Ativa e poupa linezolida e daptomicina para o VRE.'],
+  ['Linezolida',1,'Funciona, mas é melhor guardá-la para o VRE.'],
+  ['Nitrofurantoína',0,'Não atinge nível útil no rim nem no sangue: só serve para cistite.'],
+  ['Cefepima',0,'O enterococo é intrinsecamente resistente a cefalosporinas.']],
+ 'O E. faecium quase sempre resiste à ampicilina, por alteração da PBP5.'],
+['eco','ESBL','Cistite','Mulher, 34 anos, ambulatorial, sem febre.',
+ [['Ceftriaxona','R'],['Ciprofloxacino','R'],['Nitrofurantoína','S'],['Sulfametoxazol-trimetoprima','S'],['Fosfomicina','S']],
+ [['Nitrofurantoína',2,'Concentra na bexiga, é oral e poupa os carbapenêmicos.'],
+  ['Meropenem',1,'Funciona, mas é exagero para uma cistite.'],
+  ['Ciprofloxacino',0,'O antibiograma mostra resistência.'],
+  ['Cefalexina',0,'A ESBL hidrolisa cefalosporinas.']],
+ 'Cistite por ESBL raramente precisa de carbapenêmico.'],
+['eco','Selvagem','Pielonefrite','Mulher, 27 anos, febre e dor lombar.',
+ [['Ceftriaxona','S'],['Ciprofloxacino','S'],['Nitrofurantoína','S']],
+ [['Ceftriaxona',2,'Atinge rim e sangue com o espectro adequado.'],
+  ['Nitrofurantoína',0,'Só concentra na bexiga: não trata pielonefrite.'],
+  ['Meropenem',1,'Funciona, mas é amplo demais.'],
+  ['Vancomicina',0,'Não atravessa a membrana externa.']],
+ 'Nitrofurantoína só serve para a bexiga, mesmo com "S" no antibiograma.'],
+['eco','ESBL','Bacteremia com choque séptico','Homem, 66 anos, foco biliar e albumina baixa.',
+ [['Ceftriaxona','R'],['Piperacilina-tazobactam','S'],['Ertapenem','S'],['Meropenem','S']],
+ [['Meropenem',2,'No paciente grave e com albumina baixa, é o carbapenêmico preferido.'],
+  ['Ertapenem',1,'Ativo, mas muito ligado à albumina: menos confiável no choque com hipoalbuminemia.'],
+  ['Piperacilina-tazobactam',0,'Perdeu para o meropenem na bacteremia por ESBL (estudo MERINO).'],
+  ['Ceftriaxona',0,'A ESBL hidrolisa a ceftriaxona.']],
+ 'Mesmo germe, decisão diferente: a gravidade do paciente muda a escolha.']
+].map(a=>({c:a[0],fen:a[1],site:a[2],ctx:a[3],abg:a[4],opts:a[5].map(o=>({n:o[0],s:o[1],w:o[2],sub:o[3]||(DBY[o[0]]?DBY[o[0]].c:'')})),les:a[6]}));
+const PN=8;
+function plColl(){return store('arsenal.plCards')||[]}
+function startPlan(){const pool=shuffle(PCASES);const byCard={};const picked=[];
+  // prioriza bactérias diferentes antes de repetir
+  for(const c of pool){if(!byCard[c.c]){byCard[c.c]=1;picked.push(c)}}
+  for(const c of pool){if(picked.length>=PN)break;if(!picked.includes(c))picked.push(c)}
+  G={mode:'plan',score:0,streak:0,hits:0,mids:0,idx:0,answered:false,paused:false,cases:shuffle(picked.slice(0,PN)),newCards:[]};
+  show('plan');nextPlan()}
+function renderPlanHud(){$('#pScore').textContent=G.score;$('#pNum').textContent=Math.min(G.idx,PN)+'/'+PN;$('#pBest').textContent=G.hits;$('#pColl').textContent=plColl().length+'/'+PCK.length}
+function nextPlan(){G.idx++;G.answered=false;const cs=G.cases[G.idx-1];G.cs=cs;const card=PC[cs.c];
+  G.opts=shuffle(cs.opts);
+  $('#pCase').innerHTML=`<img src="${card.img}" alt="${esc(card.n)} como personagem do baralho ESKAPE" width="120" height="150">
+  <div><div class="ptags"><span class="chip ${card.gc}">${esc(card.gl)}</span><span class="chip fen">${esc(cs.fen)}</span></div>
+  <h3><i>${esc(card.n)}</i></h3><p class="psite">${esc(cs.site)}</p><p class="pctx">${esc(cs.ctx)}</p></div>
+  <div class="abg"><span class="lab">Antibiograma</span><div class="row">${cs.abg.map(([d,r])=>`<span class="${r==='S'||r==='R'?r:'I'}">${esc(d)}<b>${esc(r)}</b></span>`).join('')}</div></div>`;
+  const el=$('#pOpts');el.className='opts';el.innerHTML=optsHTML(G.opts.map(o=>({label:o.n,sub:o.sub})));$('#pFb').innerHTML='';
+  renderPlanHud();setTimer(35);window.scrollTo({top:0,behavior:reduce?'auto':'smooth'})}
+function answerPlan(i){if(G.answered)return;G.answered=true;const cs=G.cs,card=PC[cs.c];const o=i>=0?G.opts[i]:null;const s=o?o.s:0;
+  $('#pOpts').querySelectorAll('.opt').forEach((b,j)=>{b.disabled=true;const v=G.opts[j].s;if(v===2)b.classList.add('ok');else if(j===i)b.classList.add(v===1?'mid':'bad');else b.classList.add('fade')});
+  let unlock='';
+  if(s===2){G.streak++;G.hits++;G.score+=100+Math.round(G.tLeft*4)+(G.streak>=3?50:0);sfx.ok();
+    const col=plColl();if(!col.includes(cs.c)){col.push(cs.c);store('arsenal.plCards',col);G.newCards.push(cs.c);setTimeout(sfx.lvl,250);
+      unlock=`<div class="punlock"><img src="${card.img}" alt="" width="56" height="70"><p><span class="lab">Nova carta na coleção · Nº ${card.no}</span><b><i>${esc(card.n)}</i></b> · ${esc(card.nick)}</p></div>`}}
+  else if(s===1){G.streak=0;G.mids++;G.score+=40;sfx.pop()}
+  else{G.streak=0;sfx.bad()}
+  renderPlanHud();
+  const head=s===2?'Melhor escolha':s===1?'Funciona, mas não é a ideal':(i<0?'Tempo esgotado':'Essa falha');
+  const verd=['Falha','Funciona, mas amplo','Melhor escolha'];
+  const last=G.idx>=PN;
+  $('#pFb').innerHTML=`<div class="fb ${s===2?'good':s===1?'mid':'bad'}"><h4>${head}</h4>${unlock}
+  ${o?`<p><b>${esc(o.n)}</b> · ${esc(o.w)}</p>`:'<p>O paciente não pode esperar: decida mais rápido no próximo caso.</p>'}
+  <div class="pverd"><span class="lab">Todas as opções</span>${cs.opts.slice().sort((a,b)=>b.s-a.s).map(x=>`<div><em class="v${x.s}">${verd[x.s]}</em><span><b>${esc(x.n)}</b> · ${esc(x.w)}</span></div>`).join('')}</div>
+  <p><span class="lab">Lição do plantão</span>${esc(cs.les)}</p>
+  <div class="row"><button class="btn" data-next>${last?'Encerrar plantão':'Próximo caso'} <kbd>Enter</kbd></button><button class="btn ghost" data-menu>Menu <kbd>Esc</kbd></button></div></div>`;
+  const fb=$('#pFb .fb');if(fb&&innerWidth<700)setTimeout(()=>fb.scrollIntoView({behavior:reduce?'auto':'smooth',block:'nearest'}),150);
+}
+function nextFromPlan(){if(G.idx>=PN)return finishPlan();nextPlan()}
+function finishPlan(){let rec=false;if(G.score>best.p){best.p=G.score;store('arsenal.bestP',best.p);rec=true}
+  renderRecs();sfx.over();G.answered=true;const col=plColl();const acc=Math.round(G.hits/PN*100);
+  const msg=acc>=85?'Plantão de referência. A CCIH quer você na equipe.':acc>=60?'Bom plantão. Revise os casos em que o espectro ficou amplo demais.':acc>=40?'Plantão puxado. A Enciclopédia ajuda a fechar as lacunas.':'As bactérias venceram este plantão. Volte com a Enciclopédia aberta.';
+  $('#overBox').innerHTML=`<div class="eyebrow">Plantão encerrado</div><h2>${G.hits} de ${PN}</h2>
+  <div class="big"><div class="stat"><div class="l">Pontos</div><div class="v">${G.score}</div></div><div class="stat"><div class="l">Melhor escolha</div><div class="v" style="color:var(--green)">${acc}%</div></div><div class="stat"><div class="l">Aceitáveis</div><div class="v" style="color:var(--amber)">${G.mids}</div></div></div>
+  ${rec?'<p style="color:var(--amber);font-weight:700;margin:0">Novo recorde!</p>':''}<p style="margin:0">${msg}</p>
+  <div class="eyebrow">Coleção ESKAPE · ${col.length}/${PCK.length} cartas${G.newCards.length?` · ${G.newCards.length} nova${G.newCards.length>1?'s':''} neste plantão`:''}</div>
+  <div class="coll">${PCK.map(k=>{const c=PC[k],on=col.includes(k);return `<div class="ccard${on?'':' lock'}"><img src="${c.img}" alt="${on?esc(c.n):'Carta bloqueada'}" loading="lazy" width="120" height="150"><div>${on?`<b>${esc(c.n)}</b>${esc(c.nick)}`:`<b>Nº ${c.no}</b>Acerte um caso desta bactéria`}</div></div>`}).join('')}</div>
+  <div class="row" style="display:flex;gap:10px;flex-wrap:wrap"><button class="btn" id="again">Novo plantão <kbd>Enter</kbd></button><button class="btn ghost" data-menu>Menu <kbd>Esc</kbd></button></div>`;
+  G.overMode='plan';show('over')}
 
 /* ---------- FIM ---------- */
 function gameOver(){const m=G.mode;let rec=false;
@@ -927,18 +1167,18 @@ function togglePause(){if(cur==='flee'){if(!F||F.done)return;F.paused=!F.paused;
 /* ================= EVENTOS ================= */
 document.addEventListener('click',e=>{
   const t=e.target.closest('button');if(!t)return;
-  if(t.dataset.go){const g=t.dataset.go;g==='battle'?startBattle():g==='quiz'?startQuiz():g==='mem'?startMem():g==='flee'?startFlee():g==='fit'?startFit():openEnc('d')}
+  if(t.dataset.go){const g=t.dataset.go;g==='plan'?startPlan():g==='battle'?startBattle():g==='quiz'?startQuiz():g==='mem'?startMem():g==='flee'?startFlee():g==='fit'?startFit():openEnc('d')}
   else if(t.dataset.card!==undefined){const i=+t.dataset.card;moveCursor(i);flipCard(i)}
   else if(t.dataset.theme){startMem(t.dataset.theme)}
   else if(t.id==='memAgain')startMem();
   else if(t.id==='fUp')laneMove(-1);
   else if(t.id==='fDown')laneMove(1);
   else if(t.id==='fAgain')startFlee();
-  else if(t.classList.contains('opt')&&!t.disabled){const i=+t.dataset.i;cur==='battle'?answerBattle(i):cur==='fit'?answerFit(i):answerQuiz(i)}
-  else if(t.hasAttribute('data-next')){cur==='battle'?nextFromBattle():cur==='fit'?nextFromFit():nextFromQuiz()}
+  else if(t.classList.contains('opt')&&!t.disabled){const i=+t.dataset.i;cur==='plan'?answerPlan(i):cur==='battle'?answerBattle(i):cur==='fit'?answerFit(i):answerQuiz(i)}
+  else if(t.hasAttribute('data-next')){cur==='plan'?nextFromPlan():cur==='battle'?nextFromBattle():cur==='fit'?nextFromFit():nextFromQuiz()}
   else if(t.classList.contains('pdot')){promoGo(+t.dataset.i);startPromoRotate()}
   else if(t.hasAttribute('data-menu')||t.id==='home')goMenu();
-  else if(t.id==='again')G.overMode==='battle'?startBattle():G.overMode==='fit'?startFit():startQuiz();
+  else if(t.id==='again')G.overMode==='plan'?startPlan():G.overMode==='battle'?startBattle():G.overMode==='fit'?startFit():startQuiz();
   else if(t.id==='snd')toggleSound();
   else if(t.id==='unpause')togglePause();
   else if(t.id==='tabD'){E.tab='d';buildList()}else if(t.id==='tabB'){E.tab='b';buildList()}
@@ -951,7 +1191,7 @@ document.addEventListener('keydown',e=>{
   if(e.target.matches('input')){if(k==='Escape'){e.target.blur()}else if(k==='ArrowDown'||k==='ArrowUp'){}else return}
   if(e.ctrlKey||e.metaKey||e.altKey)return;
   if(k==='m'){toggleSound();return}
-  if(cur==='menu'){if(k==='b')startBattle();else if(k==='q')startQuiz();else if(k==='j')startMem();else if(k==='f')startFlee();else if(k==='e')openEnc('d');else if(k==='c')newFact();return}
+  if(cur==='menu'){if(k==='h')startPlan();else if(k==='b')startBattle();else if(k==='q')startQuiz();else if(k==='j')startMem();else if(k==='f')startFlee();else if(k==='e')openEnc('d');else if(k==='c')newFact();return}
   if(cur==='mem'){
     if(k==='Escape'){goMenu();return}
     if(k==='1'||k==='2'||k==='3'){startMem(['classe','mec','bac'][+k-1]);return}
@@ -960,13 +1200,13 @@ document.addEventListener('keydown',e=>{
     if(mv){e.preventDefault();moveCursor(M.cursor+mv);return}
     if(k==='Enter'||k===' '){e.preventDefault();M.done?startMem():flipCard(M.cursor)}
     return}
-  if(cur==='battle'||cur==='quiz'||cur==='fit'){
+  if(cur==='plan'||cur==='battle'||cur==='quiz'||cur==='fit'){
     if(k==='Escape'){goMenu();return}
     if(k==='p'){togglePause();return}
     if(G.paused)return;
     const map={'1':0,'2':1,'3':2,'4':3,'a':0,'s':1,'d':2,'f':3};
-    if(k in map&&!G.answered){e.preventDefault();cur==='battle'?answerBattle(map[k]):cur==='fit'?answerFit(map[k]):answerQuiz(map[k]);return}
-    if((k==='Enter'||k===' ')&&G.answered){e.preventDefault();cur==='battle'?nextFromBattle():cur==='fit'?nextFromFit():nextFromQuiz()}
+    if(k in map&&!G.answered){e.preventDefault();cur==='plan'?answerPlan(map[k]):cur==='battle'?answerBattle(map[k]):cur==='fit'?answerFit(map[k]):answerQuiz(map[k]);return}
+    if((k==='Enter'||k===' ')&&G.answered){e.preventDefault();cur==='plan'?nextFromPlan():cur==='battle'?nextFromBattle():cur==='fit'?nextFromFit():nextFromQuiz()}
     return}
   if(cur==='enc'){
     if(k==='Escape'){goMenu();return}
@@ -974,7 +1214,7 @@ document.addEventListener('keydown',e=>{
     if(k==='ArrowDown'||k==='ArrowUp'){e.preventDefault();E.sel=Math.max(0,Math.min(E.items.length-1,E.sel+(k==='ArrowDown'?1:-1)));renderList();renderDetail();return}
     if(k==='ArrowLeft'||k==='ArrowRight'){E.tab=E.tab==='d'?'b':'d';buildList();return}
     return}
-  if(cur==='over'){if(k==='Enter'){e.preventDefault();G.overMode==='battle'?startBattle():G.overMode==='fit'?startFit():startQuiz()}else if(k==='Escape')goMenu()}
+  if(cur==='over'){if(k==='Enter'){e.preventDefault();G.overMode==='plan'?startPlan():G.overMode==='battle'?startBattle():G.overMode==='fit'?startFit():startQuiz()}else if(k==='Escape')goMenu()}
 });
 document.addEventListener('keydown',e=>{
   if(cur!=='flee')return;const k=e.key.length===1?e.key.toLowerCase():e.key;
@@ -996,9 +1236,9 @@ function loop(now){const dt=Math.min(.05,(now-lastT)/1000);lastT=now;const t=now
   if(cur==='enc')drawMini(t);
   if(cur==='flee'){if(!F.paused&&!F.done&&!document.hidden)updateFlee(dt);drawFlee(t)}
   if(cur==='mem'&&M.started&&!M.done&&!document.hidden){const before=Math.floor(M.t);M.t+=dt;if(Math.floor(M.t)!==before)renderMemHud()}
-  if(G&&(cur==='battle'||cur==='quiz'||cur==='fit')&&!G.answered&&!G.paused&&!document.hidden){
+  if(G&&(cur==='plan'||cur==='battle'||cur==='quiz'||cur==='fit')&&!G.answered&&!G.paused&&!document.hidden){
     G.tLeft-=dt;const c=Math.ceil(G.tLeft);if(c<G.lastTick&&c<=3&&c>0)sfx.tick();G.lastTick=c;
-    if(G.tLeft<=0){G.tLeft=0;renderTimer();cur==='battle'?answerBattle(-1):cur==='fit'?answerFit(-1):answerQuiz(-1)}else renderTimer()}
+    if(G.tLeft<=0){G.tLeft=0;renderTimer();cur==='plan'?answerPlan(-1):cur==='battle'?answerBattle(-1):cur==='fit'?answerFit(-1):answerQuiz(-1)}else renderTimer()}
   requestAnimationFrame(loop)}
 
 /* ================= INÍCIO ================= */

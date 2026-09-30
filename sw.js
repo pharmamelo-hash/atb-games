@@ -1,8 +1,10 @@
 // Games @pharmamelo · Antimicrobianos — funciona offline após a primeira abertura
-const CACHE = 'atb-games-v6';
+const CACHE = 'atb-games-v7';
 const CORE = ['./', './index.html', './manifest.webmanifest',
   './icons/icon-192.png', './icons/icon-512.png', './icons/maskable-512.png',
-  './icons/apple-touch-icon.png', './icons/favicon-32.png'];
+  './icons/apple-touch-icon.png', './icons/favicon-32.png',
+  './cards/enterococcus.webp', './cards/saureus.webp', './cards/klebsiella.webp', './cards/acinetobacter.webp',
+  './cards/pseudomonas.webp', './cards/enterobacter.webp', './cards/ecoli.webp'];
 self.addEventListener('install', e => {
   e.waitUntil(caches.open(CACHE).then(c => c.addAll(CORE)).then(() => self.skipWaiting()));
 });

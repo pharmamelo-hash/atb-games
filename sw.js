@@ -1,10 +1,15 @@
 // Games @pharmamelo · Antimicrobianos — funciona offline após a primeira abertura
-const CACHE = 'atb-games-v7';
+const CACHE = 'atb-games-v8';
 const CORE = ['./', './index.html', './manifest.webmanifest',
   './icons/icon-192.png', './icons/icon-512.png', './icons/maskable-512.png',
   './icons/apple-touch-icon.png', './icons/favicon-32.png',
-  './cards/enterococcus.webp', './cards/saureus.webp', './cards/klebsiella.webp', './cards/acinetobacter.webp',
-  './cards/pseudomonas.webp', './cards/enterobacter.webp', './cards/ecoli.webp'];
+  './cards/acinetobacter.webp', './cards/bacteroides-fragilis.webp', './cards/burkholderia.webp', './cards/chlamydia.webp',
+  './cards/citrobacter.webp', './cards/clostridioides-difficile.webp', './cards/clostridium-perfringens.webp', './cards/ecoli.webp',
+  './cards/enterobacter.webp', './cards/enterococcus.webp', './cards/haemophilus.webp', './cards/klebsiella-aerogenes.webp',
+  './cards/klebsiella.webp', './cards/legionella.webp', './cards/mycobacterium-tuberculosis.webp', './cards/mycoplasma.webp',
+  './cards/neisseria-gonorrhoeae.webp', './cards/neisseria-meningitidis.webp', './cards/proteus.webp', './cards/pseudomonas.webp',
+  './cards/saureus.webp', './cards/serratia.webp', './cards/staphylococcus-epidermidis.webp', './cards/stenotrophomonas.webp',
+  './cards/streptococcus-pyogenes.webp'];
 self.addEventListener('install', e => {
   e.waitUntil(caches.open(CACHE).then(c => c.addAll(CORE)).then(() => self.skipWaiting()));
 });

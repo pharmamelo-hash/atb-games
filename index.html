@@ -243,6 +243,9 @@ h1 .n{color:var(--pink);text-shadow:0 0 28px rgba(255,91,146,.5)}
 .ccard img{width:100%;aspect-ratio:4/5;object-fit:cover;display:block}
 .ccard div{padding:8px;font-size:12px;color:var(--mute);line-height:1.3}
 .ccard b{display:block;font-style:italic;font-size:13px;color:var(--ink)}
+.portrait{margin:0;display:grid;gap:6px}
+.portrait img{width:100%;max-width:220px;aspect-ratio:4/5;object-fit:cover;border-radius:14px;border:1px solid var(--line)}
+.portrait figcaption{font-size:13px;color:var(--mute);font-style:italic}
 .ccard.lock img{filter:grayscale(1) brightness(.22) blur(3px)}
 
 @media (max-width:680px){
@@ -288,7 +291,7 @@ h1 .n{color:var(--pink);text-shadow:0 0 28px rgba(255,91,146,.5)}
       <p class="lede">Escolha a arma certa antes que a colônia se divida. <b id="counts"></b> com mecanismo, espectro, efeitos adversos marcantes, resistência intrínseca e curiosidades.</p>
     </div>
     <div class="modes">
-      <button class="mode" style="--c:var(--amber)" data-go="plan"><h3>Modo Plantão</h3><p>Casos de UTI com antibiograma. Escolha o antimicrobiano mais estreito que funcione e desbloqueie as cartas do baralho ESKAPE.</p><kbd>H</kbd></button>
+      <button class="mode" style="--c:var(--amber)" data-go="plan"><h3>Modo Plantão</h3><p>Casos de UTI com antibiograma. Escolha o antimicrobiano mais estreito que funcione e desbloqueie as 25 cartas de bactérias.</p><kbd>H</kbd></button>
       <button class="mode" style="--c:var(--pink)" data-go="battle"><h3>Batalha</h3><p>Uma bactéria aparece. Escolha um antimicrobiano ativo. Erros aumentam a pressão de resistência.</p><kbd>B</kbd></button>
       <button class="mode" style="--c:var(--violet)" data-go="quiz"><h3>Quiz de farmacologia</h3><p>12 perguntas sobre classe, mecanismo, efeitos adversos e "quem sou eu?" pelas curiosidades.</p><kbd>Q</kbd></button>
       <button class="mode" style="--c:var(--amber)" data-go="mem"><h3>Memória</h3><p>Vire as cartas e forme pares: fármaco e classe, fármaco e alvo, ou bactéria e antimicrobiano ativo.</p><kbd>J</kbd></button>
@@ -585,6 +588,9 @@ const B=[
 ['Helicobacter pylori','neg','curvo','Gram −','Bacilo curvo · gastrite, úlcera, linfoma MALT',['Claritromicina','Amoxicilina','Metronidazol','Tetraciclina'],['Vancomicina','Aztreonam','Daptomicina'],'Gram-negativo microaerófilo: vancomicina e daptomicina não atravessam a membrana externa; aztreonam não tem papel.','Barry Marshall bebeu uma cultura da bactéria em 1984 para provar que ela causava gastrite. Recebeu o Nobel com Robin Warren em 2005.'],
 ['Campylobacter jejuni','neg','curvo','Gram −','Bacilo curvo · diarreia, gatilho de Guillain-Barré',['Azitromicina','Ciprofloxacino'],['Sulfametoxazol-trimetoprima','Vancomicina','Cefalexina'],'É intrinsecamente resistente a trimetoprima, vancomicina e cefalosporinas de 1ª geração, usadas até em meios seletivos.','É o principal gatilho infeccioso da síndrome de Guillain-Barré, por mimetismo molecular entre sua parede e os gangliosídeos do nervo.'],
 ['Salmonella Typhi','neg','bacilo','Gram −','Bacilo · febre tifoide',['Ceftriaxona','Azitromicina','Ciprofloxacino'],['Cefazolina','Gentamicina','Vancomicina'],'Por ser intracelular, cefalosporinas de 1ª e 2ª geração e aminoglicosídeos podem parecer ativos in vitro, mas falham na clínica.','Mary Mallon, a "Maria Tifoide", portadora assintomática, transmitiu a doença a dezenas de pessoas; a vesícula biliar é o reservatório crônico.'],
+['Staphylococcus epidermidis','pos','cachos','Gram +','Cocos em cachos · cateter, prótese, biofilme',['Vancomicina','Linezolida','Daptomicina','Rifampicina'],['Aztreonam','Polimixina B','Colistina','Metronidazol'],'Aztreonam e polimixinas não agem em gram-positivos; metronidazol só age em anaeróbios. A maioria das cepas hospitalares carrega o mecA e resiste à oxacilina.','Vive na pele de todo mundo sem causar doença. O problema começa quando encontra plástico ou metal dentro do corpo: forma biofilme sobre cateteres e próteses.'],
+['Klebsiella aerogenes','neg','bacilo','Gram −','Bacilo móvel · AmpC cromossômica induzível',['Cefepima','Meropenem','Ciprofloxacino','Sulfametoxazol-trimetoprima'],['Ampicilina','Amoxicilina-clavulanato','Cefazolina','Cefoxitina'],'A AmpC cromossômica torna ampicilina, amoxicilina-clavulanato, cefazolina e cefoxitina inativas; a ceftriaxona pode falhar durante o tratamento.','Até 2017 se chamava Enterobacter aerogenes. Mudou de gênero, mas manteve a AmpC da família.'],
+['Citrobacter freundii','neg','bacilo','Gram −','Bacilo · AmpC cromossômica induzível',['Cefepima','Meropenem','Ciprofloxacino','Sulfametoxazol-trimetoprima'],['Ampicilina','Amoxicilina-clavulanato','Cefazolina','Cefoxitina'],'A AmpC cromossômica torna ampicilina, amoxicilina-clavulanato, cefazolina e cefoxitina inativas; a ceftriaxona pode falhar durante o tratamento.','O nome vem da capacidade de usar citrato como única fonte de carbono, um teste bioquímico clássico. O primo Citrobacter koseri não tem a AmpC induzível.'],
 ['Burkholderia cepacia (complexo)','neg','bacilo','Gram − não fermentador','Bacilo · fibrose cística, soluções contaminadas',['Sulfametoxazol-trimetoprima','Meropenem','Ceftazidima'],['Polimixina B','Colistina','Gentamicina','Amicacina'],'Tem resistência intrínseca a polimixinas e aminoglicosídeos.','O complexo reúne mais de 20 espécies e já causou surtos por antissépticos e enxaguantes bucais contaminados.']
 ];
 const BACS=B.map(a=>({n:a[0],gc:a[1],f:a[2],gl:a[3],h:a[4],ef:a[5].filter(x=>DBY[x]),in:a[6].filter(x=>DBY[x]),r:a[7],k:a[8]})).filter(b=>b.ef.length&&b.in.length>=3);
@@ -740,12 +746,172 @@ const PC={
   aba:{n:'Acinetobacter baumannii',nick:'O teimoso que não larga o hospital',img:'cards/acinetobacter.webp',gc:'neg',gl:'Gram −',no:'04'},
   pae:{n:'Pseudomonas aeruginosa',nick:'A nadadora verde das pias',img:'cards/pseudomonas.webp',gc:'neg',gl:'Gram −',no:'05'},
   ecl:{n:'Enterobacter cloacae',nick:'O que esconde a armadura',img:'cards/enterobacter.webp',gc:'neg',gl:'Gram −',no:'06'},
-  eco:{n:'Escherichia coli',nick:'A vizinha que virou problema',img:'cards/ecoli.webp',gc:'neg',gl:'Gram −',no:'07'}
+  eco:{n:'Escherichia coli',nick:'A vizinha que virou problema',img:'cards/ecoli.webp',gc:'neg',gl:'Gram −',no:'07'},
+  spy:{n:'Streptococcus pyogenes',nick:'A fila da conga que nunca venceu a penicilina',img:'cards/streptococcus-pyogenes.webp',gc:'pos',gl:'Gram +',no:'08'},
+  sep:{n:'Staphylococcus epidermidis',nick:'A que mora no seu cateter',img:'cards/staphylococcus-epidermidis.webp',gc:'pos',gl:'Gram +',no:'09'},
+  cdi:{n:'Clostridioides difficile',nick:'A que espera o antibiótico passar',img:'cards/clostridioides-difficile.webp',gc:'pos',gl:'Gram + anaeróbio',no:'10'},
+  cpe:{n:'Clostridium perfringens',nick:'O tijolo que se multiplica em 10 minutos',img:'cards/clostridium-perfringens.webp',gc:'pos',gl:'Gram + anaeróbio',no:'11'},
+  bfr:{n:'Bacteroides fragilis',nick:'A introvertida do fundo do cólon',img:'cards/bacteroides-fragilis.webp',gc:'neg',gl:'Gram − anaeróbio',no:'12'},
+  sma:{n:'Stenotrophomonas maltophilia',nick:'A que chega depois do carbapenêmico',img:'cards/stenotrophomonas.webp',gc:'neg',gl:'Gram − não fermentador',no:'13'},
+  pmi:{n:'Proteus mirabilis',nick:'A surfista que constrói castelos de pedra',img:'cards/proteus.webp',gc:'neg',gl:'Gram −',no:'14'},
+  srm:{n:'Serratia marcescens',nick:'A pintora do pão vermelho',img:'cards/serratia.webp',gc:'neg',gl:'Gram −',no:'15'},
+  kae:{n:'Klebsiella aerogenes',nick:'A prima com armadura escondida',img:'cards/klebsiella-aerogenes.webp',gc:'neg',gl:'Gram −',no:'16'},
+  cfr:{n:'Citrobacter freundii',nick:'A cítrica de armadura',img:'cards/citrobacter.webp',gc:'neg',gl:'Gram −',no:'17'},
+  bce:{n:'Burkholderia cepacia',nick:'A gangue da piscina de antisséptico',img:'cards/burkholderia.webp',gc:'neg',gl:'Gram − não fermentador',no:'18'},
+  hin:{n:'Haemophilus influenzae',nick:'A que não é a gripe',img:'cards/haemophilus.webp',gc:'neg',gl:'Gram −',no:'19'},
+  ngo:{n:'Neisseria gonorrhoeae',nick:'A colecionadora de resistências',img:'cards/neisseria-gonorrhoeae.webp',gc:'neg',gl:'Gram −',no:'20'},
+  nme:{n:'Neisseria meningitidis',nick:'A velocista das meninges',img:'cards/neisseria-meningitidis.webp',gc:'neg',gl:'Gram −',no:'21'},
+  lpn:{n:'Legionella pneumophila',nick:'A legionária do ar-condicionado',img:'cards/legionella.webp',gc:'neg',gl:'Gram − intracelular',no:'22'},
+  mpn:{n:'Mycoplasma pneumoniae',nick:'A gelatina sem armadura',img:'cards/mycoplasma.webp',gc:'none',gl:'Sem parede',no:'23'},
+  ctr:{n:'Chlamydia trachomatis',nick:'A dupla que mora dentro da célula',img:'cards/chlamydia.webp',gc:'none',gl:'Intracelular obrigatória',no:'24'},
+  mtb:{n:'Mycobacterium tuberculosis',nick:'A anciã de capa de cera',img:'cards/mycobacterium-tuberculosis.webp',gc:'acid',gl:'BAAR',no:'25'}
 };
+// retrato de cada bactéria da base, pelo nome
+const ART={'Staphylococcus aureus (MSSA)':'sau','Staphylococcus aureus (MRSA)':'sau','Streptococcus pyogenes':'spy','Enterococcus faecium (VRE)':'efm','Clostridioides difficile':'cdi','Clostridium perfringens':'cpe','Bacteroides fragilis':'bfr','Escherichia coli':'eco','Klebsiella pneumoniae':'kpn','Klebsiella pneumoniae KPC':'kpn','Pseudomonas aeruginosa':'pae','Acinetobacter baumannii':'aba','Stenotrophomonas maltophilia':'sma','Proteus mirabilis':'pmi','Serratia marcescens':'srm','Enterobacter cloacae':'ecl','Haemophilus influenzae':'hin','Neisseria gonorrhoeae':'ngo','Neisseria meningitidis':'nme','Mycoplasma pneumoniae':'mpn','Chlamydia trachomatis':'ctr','Legionella pneumophila':'lpn','Mycobacterium tuberculosis':'mtb','Burkholderia cepacia (complexo)':'bce','Staphylococcus epidermidis':'sep','Klebsiella aerogenes':'kae','Citrobacter freundii':'cfr'};
 const PCK=Object.keys(PC);
 // [carta, fenótipo, sítio, contexto, antibiograma [[fármaco,resultado]], opções [[fármaco, nota 2|1|0, por quê, classe opcional]], lição]
 // nota 2 = melhor escolha · 1 = funciona, mas não é a ideal · 0 = falha
 const PCASES=[
+['spy','Sensível','Erisipela','Mulher, 55 anos, febre e placa vermelha bem delimitada na perna.',
+ 'Sem cultura: tratamento empírico, guiado pela clínica.',
+ [['Penicilina G cristalina',2,'O estreptococo do grupo A nunca desenvolveu resistência à penicilina. É o espectro mais estreito que funciona.'],
+  ['Cefazolina',1,'Funciona e cobre também o S. aureus. Útil quando há dúvida entre erisipela e celulite.'],
+  ['Ciprofloxacino',0,'Atividade fraca contra estreptococos.'],
+  ['Aztreonam',0,'Só age em gram-negativos.']],
+ 'Erisipela é estreptocócica: penicilina continua sendo a arma certa.'],
+['spy','Toxinas superantígenas','Fasciíte necrosante com choque tóxico','Homem, 44 anos, após o desbridamento cirúrgico.',
+ [['Penicilina G cristalina','S'],['Clindamicina','S'],['Vancomicina','S']],
+ [['Penicilina G cristalina + clindamicina',2,'A penicilina mata a bactéria; a clindamicina bloqueia a síntese das toxinas e age mesmo com muita bactéria no tecido.','Associação'],
+  ['Penicilina G cristalina',1,'Ativa, mas perde força com inóculo alto e não freia a produção de toxinas.'],
+  ['Clindamicina',1,'Mesmo sensível, sozinha não é recomendada: ela é o complemento antitoxina, não a base.'],
+  ['Gentamicina',0,'Estreptococos têm resistência intrínseca de baixo nível aos aminoglicosídeos.']],
+ 'Na infecção estreptocócica grave com toxina, some clindamicina ao betalactâmico. A cirurgia continua sendo o tratamento principal.'],
+['sep','Resistente à oxacilina','Bacteremia relacionada a cateter','Mulher, 63 anos, em nutrição parenteral. Duas hemoculturas positivas.',
+ [['Oxacilina','R'],['Vancomicina','S'],['Linezolida','S'],['Daptomicina','S']],
+ [['Vancomicina',2,'Ativa contra estafilococo resistente à oxacilina. Junto com ela, retire o cateter.'],
+  ['Linezolida',1,'Ativa, mas bacteriostática e melhor guardada para quem não pode usar vancomicina.'],
+  ['Cefazolina',0,'O mecA gera a PBP2a, que não se liga à cefazolina.'],
+  ['Ceftriaxona',0,'O mecA torna os betalactâmicos comuns inativos.']],
+ 'Duas hemoculturas positivas contam; uma só, com esse germe, costuma ser contaminação. Tire o cateter sempre que possível.'],
+['sep','Biofilme em implante','Infecção de prótese de quadril','Homem, 70 anos, desbridamento com retenção da prótese.',
+ [['Oxacilina','R'],['Vancomicina','S'],['Rifampicina','S'],['Linezolida','S']],
+ [['Vancomicina + rifampicina',2,'A rifampicina penetra no biofilme sobre o metal; a vancomicina a protege da resistência.','Associação'],
+  ['Vancomicina',1,'Ativa, mas sozinha alcança mal as bactérias escondidas no biofilme.'],
+  ['Rifampicina',0,'Nunca sozinha: uma única mutação no rpoB basta para a resistência.'],
+  ['Cefazolina',0,'O mecA gera a PBP2a, que não se liga à cefazolina.']],
+ 'Com implante retido, a rifampicina entra no esquema, sempre associada.'],
+['cdi','Toxina positiva','Diarreia associada a antibiótico','Mulher, 70 anos, após 7 dias de ceftriaxona. Primeiro episódio, sem critérios de gravidade.',
+ 'Pesquisa de toxina positiva: não há antibiograma de rotina para C. difficile.',
+ [['Vancomicina oral',2,'Fica no lúmen do cólon, onde a bactéria está.','Glicopeptídeo por via oral'],
+  ['Fidaxomicina',2,'Preferida pelo guia IDSA: espectro estreito e menos recorrência. A limitação é o custo.'],
+  ['Metronidazol',1,'Perdeu espaço. Só quando as outras não estiverem disponíveis, em caso não grave.'],
+  ['Vancomicina intravenosa',0,'Não chega ao lúmen do cólon.','Glicopeptídeo por via intravenosa']],
+ 'Contra C. difficile, a vancomicina tem que ser oral. E suspenda o antibiótico que causou o quadro, se possível.'],
+['cpe','Toxina alfa','Mionecrose (gangrena gasosa) após trauma','Homem, 30 anos, dor intensa e crepitação na coxa, já no centro cirúrgico.',
+ 'Gram do tecido com bacilos grandes gram-positivos: sem tempo para esperar a cultura.',
+ [['Penicilina G cristalina + clindamicina',2,'A penicilina mata; a clindamicina reduz a produção da toxina alfa.','Associação'],
+  ['Penicilina G cristalina',1,'Ativa, mas sem o bloqueio de toxina da clindamicina.'],
+  ['Gentamicina',0,'Aminoglicosídeos não entram em anaeróbios.'],
+  ['Aztreonam',0,'Não age em gram-positivos.']],
+ 'Na mionecrose, a cirurgia é o tratamento principal. O antibiótico vem junto, com clindamicina para frear a toxina.'],
+['bfr','Anaeróbio','Abscesso intra-abdominal após apendicite perfurada','Homem, 40 anos, abscesso já drenado, estável.',
+ 'Infecção polimicrobiana da comunidade: tratamento empírico com cobertura de anaeróbios.',
+ [['Ceftriaxona + metronidazol',2,'A ceftriaxona cobre as enterobactérias e o metronidazol cobre o B. fragilis.','Associação'],
+  ['Meropenem',1,'Cobre tudo, mas é amplo demais para uma infecção comunitária sem gravidade.'],
+  ['Ceftriaxona',0,'Não cobre o B. fragilis.'],
+  ['Clindamicina',0,'A resistência do B. fragilis cresceu tanto que ela saiu das recomendações para infecção intra-abdominal.']],
+ 'Infecção abaixo do diafragma pede cobertura de anaeróbios, e o metronidazol é o mais confiável.'],
+['sma','Metalo-betalactamase L1','Pneumonia associada à ventilação','Homem, 61 anos, em uso de meropenem há 10 dias.',
+ [['Meropenem','R'],['Sulfametoxazol-trimetoprima','S'],['Levofloxacino','S'],['Minociclina','S']],
+ [['Sulfametoxazol-trimetoprima + minociclina',2,'Em infecção grave, o guia IDSA 2024 prefere combinar dois agentes ativos.','Associação'],
+  ['Sulfametoxazol-trimetoprima',1,'Ativo e é a base, mas em infecção grave a combinação é preferida.'],
+  ['Meropenem',0,'A L1 hidrolisa os carbapenêmicos. Foi o próprio meropenem que a selecionou.'],
+  ['Amicacina',0,'Resistência intrínseca aos aminoglicosídeos.']],
+ 'Stenotrophomonas aparece em quem já está em carbapenêmico. O SMX-TMP é a base do tratamento.'],
+['pmi','Resistência intrínseca','Cistite','Mulher, 30 anos, ambulatorial, sem febre.',
+ [['Ampicilina','S'],['Nitrofurantoína','R'],['Sulfametoxazol-trimetoprima','S'],['Ciprofloxacino','S']],
+ [['Sulfametoxazol-trimetoprima',2,'Oral, ativo e com espectro adequado para cistite.'],
+  ['Ciprofloxacino',1,'Funciona, mas é melhor guardar a quinolona e evitar seus efeitos adversos.'],
+  ['Nitrofurantoína',0,'Proteus é intrinsecamente resistente.'],
+  ['Polimixina B',0,'Proteus é intrinsecamente resistente às polimixinas.']],
+ 'Com Proteus, nitrofurantoína, polimixinas e tetraciclinas estão fora. Se houver cálculo, a infecção volta enquanto ele não sair.'],
+['srm','AmpC de baixo risco','Bacteremia associada a cateter','Homem, 50 anos, internado na UTI.',
+ [['Cefazolina','R'],['Ceftriaxona','S'],['Cefepima','S'],['Meropenem','S']],
+ [['Ceftriaxona',2,'Na Serratia, o risco de AmpC clinicamente relevante é baixo: o guia IDSA aceita ceftriaxona se sensível.'],
+  ['Meropenem',1,'Funciona, mas é amplo demais com a ceftriaxona sensível.'],
+  ['Polimixina B',0,'Serratia é intrinsecamente resistente às polimixinas.'],
+  ['Cefazolina',0,'O antibiograma já mostra resistência.']],
+ 'Nem toda AmpC é igual: Enterobacter, K. aerogenes e C. freundii têm risco alto de desrepressão; Serratia e Morganella, risco baixo.'],
+['kae','AmpC induzível','Pneumonia hospitalar','Homem, 58 anos, 8º dia de internação.',
+ [['Amoxicilina-clavulanato','R'],['Cefoxitina','R'],['Ceftriaxona','S'],['Cefepima','S'],['Meropenem','S']],
+ [['Cefepima',2,'Estável frente à AmpC e poupa o carbapenêmico.'],
+  ['Ceftriaxona',0,'Pode selecionar mutantes com AmpC desreprimida durante o tratamento. O "S" engana.'],
+  ['Meropenem',1,'Funciona, mas é amplo demais com a cefepima disponível.'],
+  ['Cefazolina',0,'Resistência intrínseca pela AmpC.']],
+ 'Klebsiella aerogenes se chamava Enterobacter aerogenes e herdou a AmpC: trate como Enterobacter.'],
+['cfr','AmpC induzível','Bacteremia de foco urinário','Mulher, 72 anos, estável.',
+ [['Amoxicilina-clavulanato','R'],['Cefoxitina','R'],['Ceftriaxona','S'],['Cefepima','S'],['Ertapenem','S']],
+ [['Cefepima',2,'Estável frente à AmpC, com espectro menor que o do carbapenêmico.'],
+  ['Ertapenem',1,'Funciona, mas gasta um carbapenêmico sem necessidade.'],
+  ['Ceftriaxona',0,'Risco de selecionar AmpC desreprimida durante o tratamento.'],
+  ['Nitrofurantoína',0,'Só concentra na bexiga: não trata bacteremia.']],
+ 'Citrobacter freundii tem AmpC induzível; o Citrobacter koseri não. Saber a espécie muda a escolha.'],
+['bce','Resistência intrínseca','Exacerbação pulmonar na fibrose cística','Mulher, 22 anos, com fibrose cística.',
+ [['Polimixina B','R'],['Amicacina','R'],['Sulfametoxazol-trimetoprima','S'],['Ceftazidima','S'],['Meropenem','S']],
+ [['Sulfametoxazol-trimetoprima',2,'Considerado de escolha para o complexo B. cepacia quando sensível.'],
+  ['Ceftazidima',1,'Alternativa ativa, muitas vezes usada em combinação na fibrose cística.'],
+  ['Polimixina B',0,'Resistência intrínseca: o LPS da Burkholderia não se liga às polimixinas.'],
+  ['Amicacina',0,'Resistência intrínseca aos aminoglicosídeos.']],
+ 'Burkholderia resiste de nascença a polimixinas e aminoglicosídeos, justamente armas usadas contra Pseudomonas.'],
+['hin','Betalactamase positiva','Pneumonia com exacerbação de DPOC','Homem, 68 anos, internado.',
+ [['Ampicilina','R'],['Amoxicilina-clavulanato','S'],['Ceftriaxona','S'],['Levofloxacino','S']],
+ [['Ceftriaxona',2,'Estável frente à betalactamase e adequada para o paciente internado.'],
+  ['Levofloxacino',1,'Funciona, mas é melhor guardar a quinolona respiratória.'],
+  ['Amoxicilina',0,'A betalactamase (TEM-1) destrói a amoxicilina sem inibidor.'],
+  ['Vancomicina',0,'Não atravessa a membrana externa dos gram-negativos.']],
+ 'Parte dos H. influenzae produz betalactamase. Ampicilina resistente pede inibidor ou cefalosporina.'],
+['ngo','Resistente a quinolona','Uretrite','Homem, 25 anos, ambulatorial.',
+ [['Ciprofloxacino','R'],['Tetraciclina','R'],['Ceftriaxona','S']],
+ [['Ceftriaxona',2,'Dose única intramuscular. É a principal arma que sobrou contra o gonococo.'],
+  ['Azitromicina',0,'Em monoterapia não é mais recomendada, pela resistência crescente.'],
+  ['Ciprofloxacino',0,'O antibiograma já mostra resistência.'],
+  ['Penicilina G benzatina',0,'O gonococo perdeu a sensibilidade à penicilina há décadas. A benzatina é para sífilis.']],
+ 'Gonorreia: ceftriaxona intramuscular em dose única. Trate a clamídia se não foi excluída e trate a parceria.'],
+['nme','Sensível','Meningite','Mulher, 19 anos, febre e petéquias. LCR com diplococos gram-negativos.',
+ [['Penicilina G cristalina','S'],['Ceftriaxona','S'],['Ciprofloxacino','S']],
+ [['Ceftriaxona',2,'Excelente penetração no líquor. Com o meningococo confirmado, a vancomicina empírica pode sair.'],
+  ['Penicilina G cristalina',2,'Também adequada quando a cepa é sensível.'],
+  ['Vancomicina',0,'Não age em gram-negativos.'],
+  ['Gentamicina',0,'Penetra mal no líquor e não é o tratamento.']],
+ 'Contatos próximos recebem quimioprofilaxia com rifampicina, ciprofloxacino ou ceftriaxona.'],
+['lpn','Intracelular','Pneumonia grave na UTI','Homem, 57 anos, trabalha na manutenção de torres de resfriamento. Antígeno urinário positivo.',
+ 'Antígeno urinário positivo: Legionella não é cultivada em rotina.',
+ [['Levofloxacino',2,'Alcança alta concentração dentro das células, onde a bactéria vive.'],
+  ['Azitromicina',2,'Também de escolha: acumula-se nos macrófagos.'],
+  ['Ceftriaxona',0,'Não alcança concentração útil dentro dos macrófagos.'],
+  ['Gentamicina',0,'Não age em bactérias intracelulares.']],
+ 'O antígeno urinário detecta sobretudo o sorogrupo 1. Um resultado negativo não exclui Legionella.'],
+['mpn','Sem parede','Pneumonia atípica','Mulher, 22 anos, universitária, tosse seca há 2 semanas.',
+ 'PCR positiva: Mycoplasma não entra no antibiograma de rotina.',
+ [['Azitromicina',2,'Age no ribossomo, que o Mycoplasma tem.'],
+  ['Doxiciclina',2,'Também de escolha, também age no ribossomo.'],
+  ['Amoxicilina',0,'Sem parede celular, o betalactâmico não tem alvo.'],
+  ['Ceftriaxona',0,'Sem parede celular, o betalactâmico não tem alvo.']],
+ 'Sem parede, sem alvo para betalactâmico.'],
+['ctr','Intracelular obrigatória','Cervicite','Mulher, 24 anos, teste molecular positivo.',
+ 'Teste molecular positivo: Chlamydia não é cultivada em rotina.',
+ [['Doxiciclina',2,'Por 7 dias, é a opção preferida desde 2021 pelo CDC.'],
+  ['Azitromicina',1,'Alternativa em dose única, preferida na gestação.'],
+  ['Ceftriaxona',0,'Trata o gonococo, não a clamídia.'],
+  ['Gentamicina',0,'Não age em bactérias intracelulares.']],
+ 'Clamídia: doxiciclina por 7 dias; na gestação, azitromicina. Trate também a parceria.'],
+['mtb','Sensível','Tuberculose pulmonar','Homem, 35 anos, baciloscopia positiva. Teste rápido molecular sem resistência à rifampicina.',
+ [['Rifampicina','S'],['Isoniazida','S']],
+ [['Rifampicina + isoniazida + pirazinamida + etambutol',2,'O esquema básico começa com quatro fármacos por 2 meses.','Esquema RIPE'],
+  ['Rifampicina + isoniazida',0,'Esta é a fase de manutenção. No início o esquema tem quatro fármacos.','Fase de manutenção'],
+  ['Rifampicina',0,'Nunca sozinha: seleciona resistência rapidamente.'],
+  ['Levofloxacino',0,'Não substitui o esquema. Usada sem necessidade, pode atrasar o diagnóstico e selecionar resistência.']],
+ 'No Brasil, o esquema básico é 2 meses de RIPE seguidos de 4 meses de rifampicina e isoniazida.'],
 ['kpn','KPC','Pneumonia associada à ventilação','Homem, 64 anos, 9º dia de ventilação mecânica na UTI.',
  [['Meropenem','R'],['Ertapenem','R'],['Piperacilina-tazobactam','R'],['Ceftazidima-avibactam','S'],['Polimixina B','S'],['Amicacina','S']],
  [['Ceftazidima-avibactam',2,'O avibactam inibe a KPC e devolve a atividade da ceftazidima. É a escolha preferida.'],
@@ -875,19 +1041,20 @@ const PCASES=[
 ].map(a=>({c:a[0],fen:a[1],site:a[2],ctx:a[3],abg:a[4],opts:a[5].map(o=>({n:o[0],s:o[1],w:o[2],sub:o[3]||(DBY[o[0]]?DBY[o[0]].c:'')})),les:a[6]}));
 const PN=8;
 function plColl(){return store('arsenal.plCards')||[]}
-function startPlan(){const pool=shuffle(PCASES);const byCard={};const picked=[];
-  // prioriza bactérias diferentes antes de repetir
-  for(const c of pool){if(!byCard[c.c]){byCard[c.c]=1;picked.push(c)}}
+function startPlan(){const col=plColl();const pool=shuffle(PCASES);const byCard={};const picked=[];
+  // até 5 casos de cartas ainda bloqueadas, depois bactérias diferentes, depois repetições
+  for(const c of pool){if(picked.length>=5)break;if(!col.includes(c.c)&&!byCard[c.c]){byCard[c.c]=1;picked.push(c)}}
+  for(const c of pool){if(picked.length>=PN)break;if(!byCard[c.c]){byCard[c.c]=1;picked.push(c)}}
   for(const c of pool){if(picked.length>=PN)break;if(!picked.includes(c))picked.push(c)}
   G={mode:'plan',score:0,streak:0,hits:0,mids:0,idx:0,answered:false,paused:false,cases:shuffle(picked.slice(0,PN)),newCards:[]};
   show('plan');nextPlan()}
 function renderPlanHud(){$('#pScore').textContent=G.score;$('#pNum').textContent=Math.min(G.idx,PN)+'/'+PN;$('#pBest').textContent=G.hits;$('#pColl').textContent=plColl().length+'/'+PCK.length}
 function nextPlan(){G.idx++;G.answered=false;const cs=G.cases[G.idx-1];G.cs=cs;const card=PC[cs.c];
   G.opts=shuffle(cs.opts);
-  $('#pCase').innerHTML=`<img src="${card.img}" alt="${esc(card.n)} como personagem do baralho ESKAPE" width="120" height="150">
+  $('#pCase').innerHTML=`<img src="${card.img}" alt="${esc(card.n)} como personagem do baralho" width="120" height="150">
   <div><div class="ptags"><span class="chip ${card.gc}">${esc(card.gl)}</span><span class="chip fen">${esc(cs.fen)}</span></div>
   <h3><i>${esc(card.n)}</i></h3><p class="psite">${esc(cs.site)}</p><p class="pctx">${esc(cs.ctx)}</p></div>
-  <div class="abg"><span class="lab">Antibiograma</span><div class="row">${cs.abg.map(([d,r])=>`<span class="${r==='S'||r==='R'?r:'I'}">${esc(d)}<b>${esc(r)}</b></span>`).join('')}</div></div>`;
+  <div class="abg"><span class="lab">Antibiograma</span>${typeof cs.abg==='string'?`<p class="pctx">${esc(cs.abg)}</p>`:`<div class="row">${cs.abg.map(([d,r])=>`<span class="${r==='S'||r==='R'?r:'I'}">${esc(d)}<b>${esc(r)}</b></span>`).join('')}</div>`}</div>`;
   const el=$('#pOpts');el.className='opts';el.innerHTML=optsHTML(G.opts.map(o=>({label:o.n,sub:o.sub})));$('#pFb').innerHTML='';
   renderPlanHud();setTimer(35);window.scrollTo({top:0,behavior:reduce?'auto':'smooth'})}
 function answerPlan(i){if(G.answered)return;G.answered=true;const cs=G.cs,card=PC[cs.c];const o=i>=0?G.opts[i]:null;const s=o?o.s:0;
@@ -916,7 +1083,7 @@ function finishPlan(){let rec=false;if(G.score>best.p){best.p=G.score;store('ars
   $('#overBox').innerHTML=`<div class="eyebrow">Plantão encerrado</div><h2>${G.hits} de ${PN}</h2>
   <div class="big"><div class="stat"><div class="l">Pontos</div><div class="v">${G.score}</div></div><div class="stat"><div class="l">Melhor escolha</div><div class="v" style="color:var(--green)">${acc}%</div></div><div class="stat"><div class="l">Aceitáveis</div><div class="v" style="color:var(--amber)">${G.mids}</div></div></div>
   ${rec?'<p style="color:var(--amber);font-weight:700;margin:0">Novo recorde!</p>':''}<p style="margin:0">${msg}</p>
-  <div class="eyebrow">Coleção ESKAPE · ${col.length}/${PCK.length} cartas${G.newCards.length?` · ${G.newCards.length} nova${G.newCards.length>1?'s':''} neste plantão`:''}</div>
+  <div class="eyebrow">Coleção de bactérias · ${col.length}/${PCK.length} cartas${G.newCards.length?` · ${G.newCards.length} nova${G.newCards.length>1?'s':''} neste plantão`:''}</div>
   <div class="coll">${PCK.map(k=>{const c=PC[k],on=col.includes(k);return `<div class="ccard${on?'':' lock'}"><img src="${c.img}" alt="${on?esc(c.n):'Carta bloqueada'}" loading="lazy" width="120" height="150"><div>${on?`<b>${esc(c.n)}</b>${esc(c.nick)}`:`<b>Nº ${c.no}</b>Acerte um caso desta bactéria`}</div></div>`}).join('')}</div>
   <div class="row" style="display:flex;gap:10px;flex-wrap:wrap"><button class="btn" id="again">Novo plantão <kbd>Enter</kbd></button><button class="btn ghost" data-menu>Menu <kbd>Esc</kbd></button></div>`;
   G.overMode='plan';show('over')}
@@ -960,7 +1127,7 @@ function renderDetail(){const x=E.items[E.sel],el=$('#detail');if(!x){el.innerHT
     ${vs.length?`<div class="f"><span class="lab">Ativo contra (no jogo)</span><div class="tags">${vs.map(b=>`<button class="tag ok" data-jump="b" data-n="${esc(b.n)}">${esc(b.n)}</button>`).join('')}</div></div>`:''}
     ${no.length?`<div class="f"><span class="lab">Não adequado para (no jogo)</span><div class="tags">${no.map(b=>`<button class="tag no" data-jump="b" data-n="${esc(b.n)}">${esc(b.n)}</button>`).join('')}</div></div>`:''}`}
   else{el.innerHTML=`<div style="display:flex;gap:8px;flex-wrap:wrap"><span class="chip ${x.gc}">${esc(x.gl)}</span></div><h2>${esc(x.n)}</h2>
-    <canvas id="mini" style="width:100%;height:120px;display:block;border-radius:12px;background:#0b0f1f"></canvas>
+    ${ART[x.n]?`<figure class="portrait"><img src="${PC[ART[x.n]].img}" alt="${esc(x.n)} como personagem do jogo" width="480" height="600"><figcaption>${esc(PC[ART[x.n]].nick)}</figcaption></figure>`:'<canvas id="mini" style="width:100%;height:120px;display:block;border-radius:12px;background:#0b0f1f"></canvas>'}
     <div class="f"><span class="lab">Morfologia e contexto</span><p>${esc(x.h)}</p></div>
     <div class="f"><span class="lab">Antimicrobianos ativos</span><div class="tags">${x.ef.map(n=>`<button class="tag ok" data-jump="d" data-n="${esc(n)}">${esc(n)}</button>`).join('')}</div></div>
     <div class="f"><span class="lab">Não usar</span><div class="tags">${x.in.map(n=>`<button class="tag no" data-jump="d" data-n="${esc(n)}">${esc(n)}</button>`).join('')}</div></div>

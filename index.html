@@ -181,7 +181,7 @@ h1 .n{color:var(--pink);text-shadow:0 0 28px rgba(255,91,146,.5)}
 
 /* fuga */
 .fwrap{position:relative;margin-top:12px;border-radius:18px;overflow:hidden;border:1px solid var(--line);background:linear-gradient(180deg,#0d1330 0,#0a0e1e 100%);touch-action:none}
-#fstage{display:block;width:100%;height:260px}
+#fstage{display:block;width:100%;height:320px}
 .ftouch{position:absolute;right:10px;top:50%;transform:translateY(-50%);display:flex;flex-direction:column;gap:10px;z-index:2}
 .ftouch button{width:50px;height:50px;border-radius:50%;background:rgba(20,27,48,.85);border:1px solid var(--line);color:var(--ink);font-size:19px;display:grid;place-items:center;cursor:pointer}
 .fbars{display:grid;gap:8px;margin-top:12px}
@@ -193,7 +193,7 @@ h1 .n{color:var(--pink);text-shadow:0 0 28px rgba(255,91,146,.5)}
 .fbar.hp i{background:linear-gradient(90deg,var(--green),var(--amber))}
 .fbar.hp.low i{background:linear-gradient(90deg,var(--red),var(--pink))}
 #fLog{min-height:18px;font-size:13px;color:var(--mute)}
-@media (max-width:520px){#fstage{height:210px}.ftouch button{width:44px;height:44px;font-size:16px}}
+@media (max-width:520px){#fstage{height:264px}.ftouch button{width:44px;height:44px;font-size:16px}}
 
 /* encaixe de classes */
 .xstage{margin-top:14px;height:150px;border-radius:16px;border:1px solid var(--line);background:radial-gradient(ellipse at 50% 30%,#182047 0,#0b0f1f 75%);display:flex;align-items:center;justify-content:center;position:relative;touch-action:none;overflow:visible}
@@ -1181,14 +1181,32 @@ function finishMem(){M.done=true;renderMemHud();const s=Math.floor(M.t);const sc
 
 /* ---------- FUGA DA COLÔNIA ---------- */
 const LANES=4;let Fseen=[],F=null,FW=0,FH=0,fx=null;
+// retratos dos personagens, carregados uma vez; FOCUS = onde está o rosto (fração da largura e da altura)
+const PIMG={};
+const FOCUS={mtb:[.80,.47],efm:[.32,.5],sau:[.5,.47],pae:[.7,.42],ecl:[.35,.38],bce:[.53,.37],cfr:[.5,.28],ngo:[.42,.42],kpn:[.53,.36],spy:[.6,.45],sep:[.42,.34]};
+function portraitOf(name){const k=ART[name];if(!k)return null;
+  if(!PIMG[k]){const im=new Image();im.decoding='async';im.src=PC[k].img;PIMG[k]=im}
+  const im=PIMG[k];return im.complete&&im.naturalWidth?im:null}
+function drawPortrait(ctx,img,col,r,t,k){
+  const bob=reduce?0:Math.sin(t*4)*2.5,tilt=reduce?0:Math.sin(t*2.2)*.06;
+  ctx.save();ctx.translate(0,bob);ctx.rotate(tilt);
+  ctx.shadowColor=col;ctx.shadowBlur=18;ctx.fillStyle=col;ctx.beginPath();ctx.arc(0,0,r+3,0,7);ctx.fill();ctx.shadowBlur=0;
+  ctx.save();ctx.beginPath();ctx.arc(0,0,r,0,7);ctx.clip();
+  // recorte quadrado do terço superior, onde fica o rosto
+  const w=img.naturalWidth,h=img.naturalHeight,side=Math.min(w,h)*.68,[fx0,fy0]=FOCUS[k]||[.5,.39];
+  const sx=Math.max(0,Math.min(w-side,w*fx0-side/2)),sy=Math.max(0,Math.min(h-side,h*fy0-side/2));
+  ctx.drawImage(img,sx,sy,side,side,-r,-r,r*2,r*2);ctx.restore();
+  ctx.lineWidth=2;ctx.strokeStyle='rgba(255,255,255,.55)';ctx.beginPath();ctx.arc(0,0,r,0,7);ctx.stroke();
+  ctx.restore()}
 function sizeFStage(){const c=$('#fstage');if(!c)return;fx=c.getContext('2d');const r=c.getBoundingClientRect();const dpr=Math.min(2,devicePixelRatio||1);FW=r.width;FH=r.height;c.width=FW*dpr;c.height=FH*dpr;fx.setTransform(dpr,0,0,dpr,0,0)}
 function laneYF(lane){return FH/LANES*(lane+.5)}
 function logFlee(text,color){const el=$('#fLog');if(!el)return;el.textContent=text;el.style.color=color}
 function startFlee(){
   let pool=BACS.filter(b=>!Fseen.includes(b.n));if(!pool.length){Fseen=[];pool=BACS}
+  const withArt=pool.filter(b=>ART[b.n]);if(withArt.length&&Math.random()<.75)pool=withArt;
   const bac=pick(pool);Fseen.push(bac.n);
   F={bac,lane:1,visY:null,obstacles:[],parts:[],t:0,dist:0,totalTime:52,spawnTimer:.8,health:100,score:0,passes:0,hits:0,invuln:0,done:false,paused:false};
-  show('flee');
+  portraitOf(bac.n);show('flee');
   $('#fName').textContent=bac.n;const ch=$('#fGram');ch.textContent=bac.gl;ch.className='chip '+bac.gc;
   $('#fDistBar').style.width='0%';$('#fDistLbl').textContent='0%';
   $('#fHpBar').style.width='100%';$('#fHpLbl').textContent='100%';$('#fHpBox').classList.remove('low');
@@ -1226,7 +1244,8 @@ function drawFlee(t){if(!fx||!F)return;fx.clearRect(0,0,FW,FH);
     drawCapsule(fx,ob.x,y,52,22,ob.resolved?(ob.safe?'#4ef08f':'#ff5d5d'):'#ffc24a',t);
     fx.font='600 11px "Chakra Petch",sans-serif';fx.textAlign='center';fx.fillStyle='rgba(234,237,247,.85)';
     fx.fillText(ob.drug,ob.x,y-30<10?y+34:y-28)});
-  if(!(F.invuln>0&&Math.floor(t*10)%2===0)){fx.save();fx.translate(bx,F.visY);drawMicrobe(fx,F.bac.f,GCOL[F.bac.gc],FH*.11,t);fx.restore()}
+  if(!(F.invuln>0&&Math.floor(t*10)%2===0)){fx.save();fx.translate(bx,F.visY);const img=portraitOf(F.bac.n);
+    if(img)drawPortrait(fx,img,GCOL[F.bac.gc],Math.min(FH/LANES*.46,40),t,ART[F.bac.n]);else drawMicrobe(fx,F.bac.f,GCOL[F.bac.gc],FH*.11,t);fx.restore()}
   F.parts.forEach(p=>{fx.globalAlpha=p.a;fx.fillStyle=p.c;fx.beginPath();fx.arc(p.x,p.y,p.r,0,7);fx.fill();fx.globalAlpha=1})}
 function drawCapsule(ctx,x,y,w,h,tint,t){ctx.save();ctx.translate(x,y);ctx.rotate(Math.sin(t*2+x*.01)*.06);const r=h/2;
   ctx.fillStyle='#f0f4ff';rr(ctx,-w/2,-r,w,h,r);ctx.fill();

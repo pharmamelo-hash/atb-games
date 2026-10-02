@@ -86,6 +86,39 @@ h1 .n{color:var(--pink);text-shadow:0 0 28px rgba(255,91,146,.5)}
 .promo .pdot.on{background:var(--pc)}
 .promo a.pbtn{background:var(--pc);color:#0b0f1f;border:0;border-radius:10px;padding:9px 16px;font-weight:700;cursor:pointer;font-size:14px;text-decoration:none;display:inline-flex;align-items:center;gap:6px;white-space:nowrap;transition:transform .12s}
 .promo a.pbtn:hover{transform:translateY(-2px)}
+
+/* ---- Conta / assinatura ---- */
+.authbtn{background:var(--panel);border:1px solid var(--line)}
+.authbtn .av{width:18px;height:18px;border-radius:50%;background:var(--violet);display:inline-grid;place-items:center;font-size:10px;font-weight:800;color:#0b0f1f;flex:none}
+.authbtn .plan{font-family:var(--mono);font-size:10px;padding:1px 6px;border-radius:99px;background:rgba(78,240,143,.15);color:var(--green);border:1px solid rgba(78,240,143,.4)}
+@media(max-width:560px){.authbtn .lbl{display:none}}
+
+.modalveil{position:fixed;inset:0;background:rgba(5,7,16,.72);backdrop-filter:blur(2px);display:grid;place-items:center;z-index:50;padding:16px}
+.modalveil[hidden]{display:none}
+.modalcard{width:100%;max-width:400px;background:var(--panel);border:1px solid var(--line);border-radius:20px;padding:22px;display:grid;gap:14px;position:relative;max-height:92vh;overflow:auto}
+.modalcard .xclose{position:absolute;right:14px;top:14px;background:transparent;border:0;color:var(--mute);font-size:20px;cursor:pointer;line-height:1;padding:4px}
+.modalcard h3{margin:0;font-family:var(--display);font-weight:400;font-size:22px}
+.modalcard p.sub{margin:0;color:var(--mute);font-size:14px}
+.authtabs{display:flex;gap:8px;background:var(--bg2);border-radius:10px;padding:4px}
+.authtabs button{flex:1;background:transparent;border:0;border-radius:8px;padding:8px;font-weight:700;font-size:13px;color:var(--mute);cursor:pointer}
+.authtabs button.on{background:var(--panel2);color:var(--ink)}
+.afield{display:grid;gap:4px}
+.afield label{font-size:12px;color:var(--mute)}
+.afield input{background:var(--bg2);border:1px solid var(--line);border-radius:10px;padding:10px 12px;color:var(--ink);font-family:inherit;font-size:15px}
+.afield input:focus-visible{outline:2px solid var(--cyan)}
+.amsg{font-size:13px;border-radius:10px;padding:8px 12px;display:none}
+.amsg.show{display:block}
+.amsg.err{background:rgba(255,93,93,.12);color:var(--red);border:1px solid rgba(255,93,93,.35)}
+.amsg.ok{background:rgba(78,240,143,.12);color:var(--green);border:1px solid rgba(78,240,143,.35)}
+.btn.block{width:100%;justify-content:center}
+.btn.ghost{background:transparent;color:var(--ink);border:1px solid var(--line)}
+.lockchip{font-family:var(--mono);font-size:10px;letter-spacing:.06em;text-transform:uppercase;padding:2px 8px;border-radius:99px;background:rgba(157,108,255,.18);color:var(--violet);border:1px solid rgba(157,108,255,.4);display:inline-flex;align-items:center;gap:4px;margin-top:4px}
+.mode.locked{opacity:.78}
+.mode.locked:hover{border-color:var(--line);transform:none}
+.plancard{background:var(--bg2);border:1px dashed var(--line);border-radius:14px;padding:14px;display:grid;gap:8px}
+.plancard .price{font-family:var(--display);font-size:28px;color:var(--amber)}
+.plancard .price span{font-family:var(--ui);font-size:13px;color:var(--mute);font-weight:400}
+.plancard ul{margin:0;padding-left:18px;color:var(--mute);font-size:13px;display:grid;gap:3px}
 .keys{margin-top:18px;display:flex;flex-wrap:wrap;gap:10px 18px;color:var(--mute);font-size:13px}
 .keys span{display:flex;gap:6px;align-items:center}
 
@@ -273,6 +306,8 @@ h1 .n{color:var(--pink);text-shadow:0 0 28px rgba(255,91,146,.5)}
 }
 </style>
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="config.js"></script>
 </head>
 <body>
 <canvas id="bg" aria-hidden="true"></canvas>
@@ -286,6 +321,7 @@ h1 .n{color:var(--pink);text-shadow:0 0 28px rgba(255,91,146,.5)}
       <span>Siga no Instagram</span>
     </a>
     <button class="iconbtn" id="snd" aria-label="Ligar ou desligar som"><kbd>M</kbd><span id="sndl">Som: ligado</span></button>
+    <button class="iconbtn authbtn" id="authBtn" hidden></button>
   </header>
 
   <!-- MENU -->
@@ -296,13 +332,13 @@ h1 .n{color:var(--pink);text-shadow:0 0 28px rgba(255,91,146,.5)}
       <p class="lede">Escolha a arma certa antes que a colônia se divida. <b id="counts"></b> com mecanismo, espectro, efeitos adversos marcantes, resistência intrínseca e curiosidades.</p>
     </div>
     <div class="modes">
-      <button class="mode" style="--c:var(--amber)" data-go="plan"><h3>Modo Plantão</h3><p>Casos de UTI com antibiograma. Escolha o antimicrobiano mais estreito que funcione e desbloqueie as 25 cartas de bactérias.</p><kbd>H</kbd></button>
+      <button class="mode" style="--c:var(--amber)" data-go="plan" data-premium="1"><h3>Modo Plantão</h3><p>Casos de UTI com antibiograma. Escolha o antimicrobiano mais estreito que funcione e desbloqueie as 25 cartas de bactérias.</p><kbd>H</kbd></button>
       <button class="mode" style="--c:var(--pink)" data-go="battle"><h3>Batalha</h3><p>Uma bactéria aparece. Escolha um antimicrobiano ativo. Erros aumentam a pressão de resistência.</p><kbd>B</kbd></button>
       <button class="mode" style="--c:var(--violet)" data-go="quiz"><h3>Quiz de farmacologia</h3><p>12 perguntas sobre classe, mecanismo, efeitos adversos e "quem sou eu?" pelas curiosidades.</p><kbd>Q</kbd></button>
-      <button class="mode" style="--c:var(--amber)" data-go="mem"><h3>Memória</h3><p>Vire as cartas e forme pares: fármaco e classe, fármaco e alvo, ou bactéria e antimicrobiano ativo.</p><kbd>J</kbd></button>
-      <button class="mode" style="--c:var(--red)" data-go="flee"><h3>Fuga da Colônia</h3><p>Guie a bactéria por um corredor de antimicrobianos. Passe ilesa pelos que ela resiste; os demais a eliminam.</p><kbd>F</kbd></button>
-      <button class="mode" style="--c:var(--green)" data-go="fit"><h3>Encaixe de Classes</h3><p>Arraste ou encaixe cada antimicrobiano na classe farmacológica certa, entre distratores cada vez mais parecidos.</p><kbd>X</kbd></button>
-      <button class="mode" style="--c:var(--cyan)" data-go="enc"><h3>Enciclopédia</h3><p>Consulte cada fármaco e cada bactéria: quem cobre quem, e por quê.</p><kbd>E</kbd></button>
+      <button class="mode" style="--c:var(--amber)" data-go="mem" data-premium="1"><h3>Memória</h3><p>Vire as cartas e forme pares: fármaco e classe, fármaco e alvo, ou bactéria e antimicrobiano ativo.</p><kbd>J</kbd></button>
+      <button class="mode" style="--c:var(--red)" data-go="flee" data-premium="1"><h3>Fuga da Colônia</h3><p>Guie a bactéria por um corredor de antimicrobianos. Passe ilesa pelos que ela resiste; os demais a eliminam.</p><kbd>F</kbd></button>
+      <button class="mode" style="--c:var(--green)" data-go="fit" data-premium="1"><h3>Encaixe de Classes</h3><p>Arraste ou encaixe cada antimicrobiano na classe farmacológica certa, entre distratores cada vez mais parecidos.</p><kbd>X</kbd></button>
+      <button class="mode" style="--c:var(--cyan)" data-go="enc" data-premium="1"><h3>Enciclopédia</h3><p>Consulte cada fármaco e cada bactéria: quem cobre quem, e por quê.</p><kbd>E</kbd></button>
     </div>
     <div class="fact" id="fact"></div>
     <div class="promo" id="promo">
@@ -462,6 +498,45 @@ h1 .n{color:var(--pink);text-shadow:0 0 28px rgba(255,91,146,.5)}
   </section>
 </div>
 <div class="pauseveil" id="veil" hidden><div><h2>Pausa</h2><p class="small">Pressione <kbd>P</kbd> para voltar</p><button class="btn" id="unpause">Continuar</button></div></div>
+
+<!-- AUTH -->
+<div class="modalveil" id="authVeil" hidden>
+  <div class="modalcard">
+    <button class="xclose" id="authClose" aria-label="Fechar">×</button>
+    <h3>Sua conta @pharmamelo</h3>
+    <p class="sub">Entre ou crie uma conta para salvar seu progresso e desbloquear os modos de assinante.</p>
+    <div class="authtabs">
+      <button class="on" data-atab="login" id="authTabLogin">Entrar</button>
+      <button data-atab="signup" id="authTabSignup">Criar conta</button>
+    </div>
+    <form id="authForm">
+      <div class="afield"><label for="authEmail">E-mail</label><input type="email" id="authEmail" autocomplete="email" required></div>
+      <div class="afield" style="margin-top:10px"><label for="authPass">Senha</label><input type="password" id="authPass" autocomplete="current-password" minlength="6" required></div>
+      <div class="amsg" id="authMsg" style="margin-top:10px"></div>
+      <button class="btn block" id="authSubmit" type="submit" style="margin-top:14px">Entrar</button>
+    </form>
+  </div>
+</div>
+
+<!-- PAYWALL -->
+<div class="modalveil" id="payVeil" hidden>
+  <div class="modalcard">
+    <button class="xclose" id="payClose" aria-label="Fechar">×</button>
+    <h3>Recurso de assinantes</h3>
+    <p class="sub" id="payLede">Este modo faz parte do plano Games @pharmamelo.</p>
+    <div class="plancard">
+      <div class="price" id="payPrice">Assinatura mensal<span> · cancele quando quiser</span></div>
+      <ul>
+        <li>Modo Plantão, Memória, Fuga da Colônia, Encaixe de Classes e Enciclopédia</li>
+        <li>Recordes salvos na sua conta</li>
+        <li>Apoia os próximos lançamentos @pharmamelo</li>
+      </ul>
+    </div>
+    <div class="amsg" id="payMsg"></div>
+    <button class="btn block" id="payCta">Assinar agora</button>
+    <button class="btn ghost block" id="payLogin">Já tenho conta · Entrar</button>
+  </div>
+</div>
 
 <script>
 /* ================= DADOS ================= */
@@ -1392,10 +1467,151 @@ function startPromoRotate(){clearInterval(promoTimer);promoTimer=setInterval(()=
 function togglePause(){if(cur==='flee'){if(!F||F.done)return;F.paused=!F.paused;$('#veil').hidden=!F.paused;return}
   if(!G||G.answered)return;G.paused=!G.paused;$('#veil').hidden=!G.paused}
 
+/* ================= CONTA / ASSINATURA ================= */
+const PREMIUM_MODES=['plan','mem','flee','fit','enc'];
+const CFG=window.ATB_CONFIG||{};
+const supa=(CFG.SUPABASE_URL&&CFG.SUPABASE_ANON_KEY&&window.supabase)?window.supabase.createClient(CFG.SUPABASE_URL,CFG.SUPABASE_ANON_KEY):null;
+let authUser=null,authProfile=null,authSession=null,authTab='login';
+
+function hasAccess(){return!!(authProfile&&['active','trialing'].includes(authProfile.subscription_status))}
+
+function renderGating(){
+  document.querySelectorAll('.mode[data-premium]').forEach(btn=>{
+    let chip=btn.querySelector('.lockchip');
+    if(!supa||hasAccess()){btn.classList.remove('locked');if(chip)chip.remove();return}
+    btn.classList.add('locked');
+    if(!chip){chip=document.createElement('span');chip.className='lockchip';chip.textContent='🔒 Assinantes';btn.querySelector('p').after(chip)}
+  })
+}
+
+function renderAuthBtn(){
+  const b=$('#authBtn');if(!b)return;
+  if(!supa){b.hidden=true;return}
+  b.hidden=false;
+  if(authUser){
+    const label=authUser.email?authUser.email.split('@')[0]:'conta';
+    const plan=hasAccess()?'<span class="plan">Premium</span>':'';
+    b.innerHTML=`<span class="av">${esc((label[0]||'?').toUpperCase())}</span><span class="lbl">${esc(label)}</span>${plan}`;
+    b.setAttribute('aria-label','Sair da conta')
+  }else{
+    b.innerHTML='<span class="lbl">Entrar</span>';
+    b.setAttribute('aria-label','Entrar ou criar conta')
+  }
+}
+
+async function refreshProfile(){
+  if(!supa||!authUser){authProfile=null;return}
+  const{data}=await supa.from('profiles').select('subscription_status').eq('id',authUser.id).single();
+  authProfile=data||{subscription_status:'free'}
+}
+
+async function refreshAuthUI(){
+  if(!supa)return;
+  const{data:{session}}=await supa.auth.getSession();
+  authSession=session;authUser=session?session.user:null;
+  await refreshProfile();
+  renderAuthBtn();renderGating()
+}
+
+function signOutUser(){supa&&supa.auth.signOut()}
+
+function openAuth(tab){setAuthTab(tab||'login');$('#authMsg').className='amsg';$('#authForm').reset();$('#authVeil').hidden=false;setTimeout(()=>$('#authEmail')&&$('#authEmail').focus(),30)}
+function closeAuth(){const v=$('#authVeil');if(v)v.hidden=true}
+function setAuthTab(tab){
+  authTab=tab;
+  $('#authTabLogin').classList.toggle('on',tab==='login');
+  $('#authTabSignup').classList.toggle('on',tab==='signup');
+  $('#authSubmit').textContent=tab==='login'?'Entrar':'Criar conta';
+  $('#authPass').autocomplete=tab==='login'?'current-password':'new-password'
+}
+
+function openPaywall(mode){
+  const names={plan:'Modo Plantão',mem:'Memória',flee:'Fuga da Colônia',fit:'Encaixe de Classes',enc:'Enciclopédia'};
+  $('#payLede').textContent=`"${names[mode]||'Este modo'}" faz parte do plano Games @pharmamelo.`;
+  $('#payMsg').className='amsg';
+  $('#payCta').textContent=authUser?'Assinar agora':'Entrar para assinar';
+  $('#payLogin').hidden=!!authUser;
+  $('#payVeil').hidden=false
+}
+function closePaywall(){const v=$('#payVeil');if(v)v.hidden=true}
+
+function goMode(g){
+  const premium=PREMIUM_MODES.includes(g);
+  if(premium&&supa&&!hasAccess()){openPaywall(g);return}
+  g==='plan'?startPlan():g==='battle'?startBattle():g==='quiz'?startQuiz():g==='mem'?startMem():g==='flee'?startFlee():g==='fit'?startFit():openEnc('d')
+}
+
+async function startCheckout(){
+  if(!authUser){closePaywall();openAuth('login');return}
+  const btn=$('#payCta');btn.disabled=true;btn.textContent='Abrindo checkout...';
+  try{
+    const res=await fetch(CFG.FUNCTIONS_URL+'/create-checkout-session',{
+      method:'POST',
+      headers:{'Authorization':'Bearer '+authSession.access_token,'Content-Type':'application/json'},
+      body:JSON.stringify({origin:location.origin+location.pathname.replace(/[^/]*$/,'')})
+    });
+    const data=await res.json();
+    if(data.url)location.href=data.url;
+    else{$('#payMsg').textContent=data.error||'Não foi possível abrir o checkout.';$('#payMsg').className='amsg err show'}
+  }catch(err){$('#payMsg').textContent='Falha de conexão. Tente novamente.';$('#payMsg').className='amsg err show'}
+  btn.disabled=false;btn.textContent='Assinar agora'
+}
+
+function authErrorMsg(err){
+  const m=(err&&err.message)||'';
+  if(/already registered|already exists|already in use/i.test(m))return'Este e-mail já tem conta. Tente Entrar.';
+  if(/invalid login credentials/i.test(m))return'E-mail ou senha incorretos.';
+  if(/password.*(6|least|short)/i.test(m))return'A senha precisa ter pelo menos 6 caracteres.';
+  if(/email/i.test(m)&&/invalid/i.test(m))return'E-mail inválido.';
+  if(/rate limit/i.test(m))return'Muitas tentativas. Aguarde um instante e tente de novo.';
+  return m||'Algo deu errado. Tente novamente.'
+}
+
+const authFormEl=$('#authForm');
+if(authFormEl)authFormEl.addEventListener('submit',async e=>{
+  e.preventDefault();
+  if(!supa)return;
+  const email=$('#authEmail').value.trim(),pass=$('#authPass').value;
+  const msg=$('#authMsg');msg.className='amsg';
+  const btn=$('#authSubmit');btn.disabled=true;
+  try{
+    if(authTab==='login'){
+      const{error}=await supa.auth.signInWithPassword({email,password:pass});
+      if(error)throw error;
+      closeAuth();await refreshAuthUI()
+    }else{
+      const{data,error}=await supa.auth.signUp({email,password:pass});
+      if(error)throw error;
+      if(data.user&&!data.session){
+        msg.textContent='Quase lá! Confira seu e-mail para confirmar o cadastro.';msg.className='amsg ok show'
+      }else{closeAuth();await refreshAuthUI()}
+    }
+  }catch(err){msg.textContent=authErrorMsg(err);msg.className='amsg err show'}
+  btn.disabled=false
+});
+
+if(supa){
+  supa.auth.onAuthStateChange((_ev,session)=>{
+    authSession=session;authUser=session?session.user:null;
+    refreshProfile().then(()=>{renderAuthBtn();renderGating()})
+  });
+  if(/[?&]assinatura=sucesso/.test(location.search)){
+    history.replaceState(null,'',location.pathname);
+    setTimeout(()=>refreshAuthUI(),2500)
+  }
+}
+
 /* ================= EVENTOS ================= */
 document.addEventListener('click',e=>{
   const t=e.target.closest('button');if(!t)return;
-  if(t.dataset.go){const g=t.dataset.go;g==='plan'?startPlan():g==='battle'?startBattle():g==='quiz'?startQuiz():g==='mem'?startMem():g==='flee'?startFlee():g==='fit'?startFit():openEnc('d')}
+  if(t.dataset.go){goMode(t.dataset.go)}
+  else if(t.id==='authBtn'){authUser?signOutUser():openAuth('login')}
+  else if(t.id==='authClose')closeAuth();
+  else if(t.id==='payClose')closePaywall();
+  else if(t.id==='authTabLogin')setAuthTab('login');
+  else if(t.id==='authTabSignup')setAuthTab('signup');
+  else if(t.id==='payCta')startCheckout();
+  else if(t.id==='payLogin'){closePaywall();openAuth('login')}
   else if(t.dataset.card!==undefined){const i=+t.dataset.card;moveCursor(i);flipCard(i)}
   else if(t.dataset.theme){startMem(t.dataset.theme)}
   else if(t.id==='memAgain')startMem();
@@ -1416,10 +1632,11 @@ document.addEventListener('click',e=>{
 $('#q').addEventListener('input',()=>buildList());
 document.addEventListener('keydown',e=>{
   const k=e.key.length===1?e.key.toLowerCase():e.key;
+  if(!$('#authVeil').hidden||!$('#payVeil').hidden){if(k==='Escape'){closeAuth();closePaywall()}if(!e.target.matches('input'))return}
   if(e.target.matches('input')){if(k==='Escape'){e.target.blur()}else if(k==='ArrowDown'||k==='ArrowUp'){}else return}
   if(e.ctrlKey||e.metaKey||e.altKey)return;
   if(k==='m'){toggleSound();return}
-  if(cur==='menu'){if(k==='h')startPlan();else if(k==='b')startBattle();else if(k==='q')startQuiz();else if(k==='j')startMem();else if(k==='f')startFlee();else if(k==='e')openEnc('d');else if(k==='c')newFact();return}
+  if(cur==='menu'){if(k==='h')goMode('plan');else if(k==='b')goMode('battle');else if(k==='q')goMode('quiz');else if(k==='j')goMode('mem');else if(k==='f')goMode('flee');else if(k==='x')goMode('fit');else if(k==='e')goMode('enc');else if(k==='c')newFact();return}
   if(cur==='mem'){
     if(k==='Escape'){goMenu();return}
     if(k==='1'||k==='2'||k==='3'){startMem(['classe','mec','bac'][+k-1]);return}
@@ -1471,7 +1688,7 @@ function loop(now){const dt=Math.min(.05,(now-lastT)/1000);lastT=now;const t=now
 
 /* ================= INÍCIO ================= */
 $('#counts').textContent=`${DRUGS.length} antimicrobianos e ${BACS.length} bactérias`;
-renderRecs();renderSnd();newFact();renderPromo();startPromoRotate();sizeBg();requestAnimationFrame(loop);
+renderRecs();renderSnd();newFact();renderPromo();startPromoRotate();renderGating();renderAuthBtn();refreshAuthUI();sizeBg();requestAnimationFrame(loop);
 (()=>{const w=document.querySelector('.fwrap');if(!w)return;let ty=0;
   w.addEventListener('touchstart',e=>{ty=e.touches[0].clientY},{passive:true});
   w.addEventListener('touchend',e=>{const dy=e.changedTouches[0].clientY-ty;if(Math.abs(dy)>26)laneMove(dy<0?-1:1)},{passive:true});

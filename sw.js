@@ -1,6 +1,6 @@
 // Games @pharmamelo · Antimicrobianos — funciona offline após a primeira abertura
-const CACHE = 'atb-games-v11';
-const CORE = ['./', './index.html', './manifest.webmanifest',
+const CACHE = 'atb-games-v12';
+const CORE = ['./', './index.html', './manifest.webmanifest', './config.js',
   './icons/icon-192.png', './icons/icon-512.png', './icons/maskable-512.png',
   './icons/apple-touch-icon.png', './icons/favicon-32.png',
   './cards/acinetobacter.webp', './cards/bacteroides-fragilis.webp', './cards/burkholderia.webp', './cards/chlamydia.webp',
@@ -20,8 +20,8 @@ self.addEventListener('activate', e => {
 self.addEventListener('fetch', e => {
   if (e.request.method !== 'GET') return;
   const url = new URL(e.request.url);
-  // Fontes do Google: cache primeiro, depois rede
-  if (url.hostname.includes('fonts.googleapis.com') || url.hostname.includes('fonts.gstatic.com')) {
+  // Fontes do Google e biblioteca do Supabase: cache primeiro, depois rede
+  if (url.hostname.includes('fonts.googleapis.com') || url.hostname.includes('fonts.gstatic.com') || url.hostname.includes('cdn.jsdelivr.net')) {
     e.respondWith(caches.open(CACHE).then(c => c.match(e.request).then(hit => hit ||
       fetch(e.request).then(r => { c.put(e.request, r.clone()); return r; }))));
     return;

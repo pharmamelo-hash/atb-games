@@ -1,0 +1,8 @@
+# Nunca versionar segredos — chaves secretas do Stripe/Supabase não têm
+# lugar nenhum neste repositório (nem mesmo aqui): elas vivem só como
+# Secrets das Edge Functions, dentro do painel do Supabase.
+.env
+.env.*
+*.secret
+supabase/.temp/
+node_modules/

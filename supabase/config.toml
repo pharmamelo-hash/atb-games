@@ -1,0 +1,8 @@
+# create-checkout-session usa o verify_jwt padrão (true): o Supabase já
+# exige um token de usuário válido antes mesmo de rodar o código da função.
+#
+# stripe-webhook é chamada pelo Stripe, não por um usuário logado, então
+# desligamos a exigência de JWT do Supabase — a autenticidade é garantida
+# pela assinatura STRIPE_WEBHOOK_SECRET, verificada dentro do código.
+[functions.stripe-webhook]
+verify_jwt = false

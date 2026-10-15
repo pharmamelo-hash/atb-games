@@ -332,7 +332,7 @@ h1 .n{color:var(--pink);text-shadow:0 0 28px rgba(255,91,146,.5)}
       <p class="lede">Escolha a arma certa antes que a colônia se divida. <b id="counts"></b> com mecanismo, espectro, efeitos adversos marcantes, resistência intrínseca e curiosidades.</p>
     </div>
     <div class="modes">
-      <button class="mode" style="--c:var(--amber)" data-go="plan" data-premium="1"><h3>Modo Plantão</h3><p>Casos de UTI com antibiograma. Escolha o antimicrobiano mais estreito que funcione e desbloqueie as 25 cartas de bactérias.</p><kbd>H</kbd></button>
+      <button class="mode" style="--c:var(--amber)" data-go="plan" data-premium="1"><h3>Modo Plantão</h3><p>Casos de UTI com antibiograma. Escolha o antimicrobiano mais estreito que funcione e desbloqueie as 48 cartas de bactérias.</p><kbd>H</kbd></button>
       <button class="mode" style="--c:var(--pink)" data-go="battle"><h3>Batalha</h3><p>Uma bactéria aparece. Escolha um antimicrobiano ativo. Erros aumentam a pressão de resistência.</p><kbd>B</kbd></button>
       <button class="mode" style="--c:var(--violet)" data-go="quiz"><h3>Quiz de farmacologia</h3><p>12 perguntas sobre classe, mecanismo, efeitos adversos e "quem sou eu?" pelas curiosidades.</p><kbd>Q</kbd></button>
       <button class="mode" style="--c:var(--amber)" data-go="mem" data-premium="1"><h3>Memória</h3><p>Vire as cartas e forme pares: fármaco e classe, fármaco e alvo, ou bactéria e antimicrobiano ativo.</p><kbd>J</kbd></button>
@@ -675,6 +675,27 @@ const B=[
 ['Klebsiella aerogenes','neg','bacilo','Gram −','Bacilo móvel · AmpC cromossômica induzível',['Cefepima','Meropenem','Ciprofloxacino','Sulfametoxazol-trimetoprima'],['Ampicilina','Amoxicilina-clavulanato','Cefazolina','Cefoxitina'],'A AmpC cromossômica torna ampicilina, amoxicilina-clavulanato, cefazolina e cefoxitina inativas; a ceftriaxona pode falhar durante o tratamento.','Até 2017 se chamava Enterobacter aerogenes. Mudou de gênero, mas manteve a AmpC da família.'],
 ['Citrobacter freundii','neg','bacilo','Gram −','Bacilo · AmpC cromossômica induzível',['Cefepima','Meropenem','Ciprofloxacino','Sulfametoxazol-trimetoprima'],['Ampicilina','Amoxicilina-clavulanato','Cefazolina','Cefoxitina'],'A AmpC cromossômica torna ampicilina, amoxicilina-clavulanato, cefazolina e cefoxitina inativas; a ceftriaxona pode falhar durante o tratamento.','O nome vem da capacidade de usar citrato como única fonte de carbono, um teste bioquímico clássico. O primo Citrobacter koseri não tem a AmpC induzível.'],
 ['Burkholderia cepacia (complexo)','neg','bacilo','Gram − não fermentador','Bacilo · fibrose cística, soluções contaminadas',['Sulfametoxazol-trimetoprima','Meropenem','Ceftazidima'],['Polimixina B','Colistina','Gentamicina','Amicacina'],'Tem resistência intrínseca a polimixinas e aminoglicosídeos.','O complexo reúne mais de 20 espécies e já causou surtos por antissépticos e enxaguantes bucais contaminados.']
+,
+["Klebsiella oxytoca","neg","bacilo","Gram −","Bacilo · colite hemorrágica após antibiótico, ITU",["Ceftriaxona", "Cefepima", "Meropenem", "Ciprofloxacino", "Sulfametoxazol-trimetoprima"],["Ampicilina", "Amoxicilina", "Vancomicina", "Clindamicina", "Daptomicina"],"Produz a betalactamase cromossômica K1, que inativa ampicilina e amoxicilina; a hiperprodução reduz também a ceftriaxona e o aztreonam.","É indol positiva, ao contrário da K. pneumoniae. A colite hemorrágica que pode surgir após amoxicilina-clavulanato é causada por uma citotoxina (tilivalina)."],
+["Morganella morganii","neg","bacilo","Gram −","Bacilo móvel · ITU, bacteremia",["Cefepima", "Meropenem", "Ciprofloxacino", "Sulfametoxazol-trimetoprima", "Amicacina"],["Colistina", "Polimixina B", "Nitrofurantoína", "Ampicilina", "Cefazolina"],"Tem AmpC cromossômica e resistência natural às polimixinas e à nitrofurantoína, além de ampicilina e cefalosporinas de 1ª geração.","Converte histidina em histamina em peixes mal conservados e pode causar a intoxicação escombroide. O nome homenageia Harry de Riemer Morgan, que a isolou em 1906."],
+["Providencia stuartii","neg","bacilo","Gram −","Bacilo · ITU em idosos com cateter vesical",["Cefepima", "Meropenem", "Amicacina", "Ciprofloxacino", "Piperacilina-tazobactam"],["Colistina", "Polimixina B", "Nitrofurantoína", "Tigeciclina", "Ampicilina"],"Tem resistência natural às polimixinas e à nitrofurantoína, e a enzima AAC(2')-Ia reduz a atividade de gentamicina e tobramicina.","Alcaliniza a urina com urease e forma cristais e biofilme em cateteres de longa permanência."],
+["Salmonella enterica (não tifoide)","neg","bacilo","Gram −","Bacilo móvel · gastroenterite, bacteremia em imunossuprimidos",["Ceftriaxona", "Azitromicina", "Ciprofloxacino", "Sulfametoxazol-trimetoprima"],["Cefazolina", "Gentamicina", "Vancomicina", "Clindamicina"],"Por ser intracelular, aminoglicosídeos e cefalosporinas de 1ª e 2ª geração parecem ativos in vitro, mas falham in vivo.","Em adulto saudável, a gastroenterite costuma dispensar antibiótico, que pode até prolongar o estado de portador."],
+["Shigella sonnei","neg","bacilo","Gram −","Bacilo imóvel · disenteria, surtos em creches",["Azitromicina", "Ciprofloxacino", "Ceftriaxona"],["Cefazolina", "Gentamicina", "Vancomicina", "Clindamicina"],"Aminoglicosídeos e cefalosporinas de 1ª e 2ª geração falham in vivo; a resistência a ampicilina e SMX-TMP é frequente, então vale o antibiograma local.","Bastam cerca de 10 a 100 bactérias para causar doença, por isso os surtos em creches são comuns."],
+["Yersinia enterocolitica","neg","bacilo","Gram −","Bacilo · ileíte, pseudoapendicite, sepse transfusional",["Ceftriaxona", "Ciprofloxacino", "Sulfametoxazol-trimetoprima", "Gentamicina"],["Ampicilina", "Amoxicilina-clavulanato", "Cefazolina", "Vancomicina"],"Produz betalactamases cromossômicas: ampicilina, amoxicilina-clavulanato e cefalosporinas de 1ª geração ficam inativas.","Cresce em temperatura de geladeira, a 4 °C, e já contaminou bolsas de concentrado de hemácias."],
+["Cronobacter sakazakii","neg","bacilo","Gram −","Bacilo · meningite e enterocolite em neonatos, fórmula em pó",["Meropenem", "Cefotaxima", "Cefepima", "Gentamicina"],["Vancomicina", "Clindamicina", "Daptomicina", "Linezolida"],"Tem AmpC cromossômica; costuma ser sensível a cefalosporinas de 3ª geração e a carbapenêmicos. Glicopeptídeos e linezolida não atravessam a membrana externa.","Já foi chamado de Enterobacter sakazakii. O nome Cronobacter lembra Cronos, o titã que devorava os filhos, pela gravidade da doença neonatal."],
+["Achromobacter xylosoxidans","neg","bacilo","Gram − não fermentador","Bacilo · fibrose cística, soluções contaminadas",["Meropenem", "Imipenem-cilastatina", "Piperacilina-tazobactam", "Ceftazidima", "Sulfametoxazol-trimetoprima"],["Gentamicina", "Amicacina", "Aztreonam", "Cefazolina"],"Tem resistência natural a aminoglicosídeos, aztreonam e cefalosporinas de 1ª e 2ª geração.","Sobrevive em soluções aquosas e já causou surtos por soro, líquido de diálise e nebulizadores contaminados. Antes se chamava Alcaligenes xylosoxidans."],
+["Elizabethkingia meningoseptica","neg","bacilo","Gram − não fermentador","Bacilo · meningite neonatal, pia de berçário",["Levofloxacino", "Minociclina", "Rifampicina", "Sulfametoxazol-trimetoprima", "Vancomicina"],["Meropenem", "Imipenem-cilastatina", "Colistina", "Gentamicina", "Amicacina"],"Produz metalo-betalactamases e outras betalactamases: carbapenêmicos não funcionam, e aminoglicosídeos e colistina também falham.","O nome homenageia Elizabeth King, que descreveu a bactéria em 1959. Costuma ser isolada de pias e de água de berçários."],
+["Ralstonia pickettii","neg","bacilo","Gram − não fermentador","Bacilo · pseudossurtos por água e soluções estéreis",["Sulfametoxazol-trimetoprima", "Levofloxacino", "Meropenem", "Ceftazidima"],["Gentamicina", "Amicacina", "Ampicilina", "Cefazolina"],"Tem betalactamases cromossômicas (OXA-22 e OXA-10) e pouca atividade de aminoglicosídeos.","Atravessa filtros de 0,2 µm e já contaminou água estéril e soluções de enxágue, causando pseudossurtos."],
+["Sphingomonas paucimobilis","neg","bacilo","Gram − não fermentador","Bacilo amarelo · água hospitalar, hemocultura",["Meropenem", "Gentamicina", "Ciprofloxacino", "Sulfametoxazol-trimetoprima", "Amicacina"],["Ampicilina", "Cefazolina", "Vancomicina", "Clindamicina"],"Tem resistência natural limitada, mas pode ter betalactamases cromossômicas. Vancomicina e clindamicina não têm atividade útil contra gram-negativos.","Em vez de lipopolissacarídeo típico, tem esfingolipídios na membrana externa, de onde vem o nome. É amarela e comum em água hospitalar."],
+["Burkholderia pseudomallei","neg","bacilo","Gram − não fermentador","Bacilo · melioidose, solo e água lamacenta",["Ceftazidima", "Meropenem", "Sulfametoxazol-trimetoprima", "Amoxicilina-clavulanato"],["Gentamicina", "Amicacina", "Polimixina B", "Colistina", "Ampicilina"],"Tem resistência natural a aminoglicosídeos, polimixinas, ampicilina e cefalosporinas de 1ª e 2ª geração.","Causa a melioidose, \"a grande imitadora\", e os casos aumentam depois de chuvas intensas. Pode ficar latente por anos."],
+["Chryseobacterium indologenes","neg","bacilo","Gram − não fermentador","Bacilo · cateter, falha de carbapenêmico",["Levofloxacino", "Sulfametoxazol-trimetoprima", "Piperacilina-tazobactam", "Minociclina"],["Meropenem", "Imipenem-cilastatina", "Gentamicina", "Amicacina", "Ertapenem"],"Produz metalo-betalactamases (como a IND), por isso carbapenêmicos e a maioria dos betalactâmicos não funcionam; aminoglicosídeos também falham.","Chryseo vem do grego chrysos, ouro, pela cor dourada; indologenes, por produzir indol."],
+["Staphylococcus saprophyticus","pos","cachos","Gram +","Cocos em cachos · cistite em mulheres jovens",["Nitrofurantoína", "Fosfomicina", "Sulfametoxazol-trimetoprima", "Ciprofloxacino"],["Aztreonam", "Polimixina B", "Colistina", "Metronidazol"],"É naturalmente resistente à novobiocina, o teste que a separa do S. epidermidis. Aztreonam e polimixinas não agem em gram-positivos.","É a segunda causa mais comum de cistite em mulheres jovens e sexualmente ativas, depois da E. coli."],
+["Streptococcus agalactiae","pos","cadeia","Gram +","Cocos em cadeia · sepse neonatal, gestação",["Penicilina G cristalina", "Ampicilina", "Cefazolina", "Vancomicina"],["Aztreonam", "Polimixina B", "Metronidazol", "Gentamicina"],"A penicilina segue ativa, mas a resistência a clindamicina e macrolídeos é frequente. Aztreonam e polimixinas não agem em gram-positivos.","Entre 10% e 30% das gestantes carregam o GBS no trato genital ou retal, sem sintomas."],
+["Streptococcus viridans (grupo)","pos","cadeia","Gram +","Cocos em cadeia · endocardite subaguda, flora da boca",["Penicilina G cristalina", "Ceftriaxona", "Ampicilina", "Vancomicina"],["Aztreonam", "Polimixina B", "Metronidazol", "Gentamicina"],"A sensibilidade à penicilina é variável. Aztreonam e polimixinas não agem em gram-positivos, e aminoglicosídeos isolados não tratam endocardite.","Viridans vem de viridis, verde: a alfa-hemólise dá cor esverdeada ao ágar-sangue."],
+["Streptococcus gallolyticus","pos","cadeia","Gram +","Cocos em cadeia · endocardite e câncer colorretal",["Penicilina G cristalina", "Ceftriaxona", "Ampicilina"],["Aztreonam", "Polimixina B", "Metronidazol", "Gentamicina"],"Costuma ser sensível a penicilina e ceftriaxona. Aztreonam e polimixinas não agem em gram-positivos.","Antes chamado de S. bovis, tem associação com pólipos e câncer colorretal: bacteremia por ele pede colonoscopia."],
+["Clostridium tetani","pos","bacilo","Gram + anaeróbio","Bacilo com esporo terminal · tétano",["Metronidazol", "Penicilina G cristalina"],["Gentamicina", "Amicacina", "Aztreonam", "Polimixina B"],"Aminoglicosídeos dependem de oxigênio para entrar na célula e não agem em anaeróbios. O dano vem da toxina, que o antibiótico não neutraliza: o tratamento inclui imunoglobulina e suporte.","A tetanospasmina é uma das toxinas mais potentes conhecidas. O esporo redondo na ponta lembra uma baqueta de tambor."],
+["Clostridium botulinum","pos","bacilo","Gram + anaeróbio","Bacilo com esporo subterminal · botulismo",["Penicilina G cristalina", "Metronidazol"],["Gentamicina", "Amicacina", "Aztreonam", "Polimixina B"],"Na doença alimentar e na infantil, o tratamento é antitoxina e suporte, sem antibiótico; o antibiótico entra no botulismo de ferida. Aminoglicosídeos podem piorar o bloqueio neuromuscular.","Por risco de botulismo infantil, não se dá mel a menores de 1 ano."],
+["Corynebacterium diphtheriae","pos","bacilo","Gram +","Bacilo em clava · difteria",["Penicilina G cristalina", "Eritromicina", "Azitromicina", "Claritromicina"],["Aztreonam", "Polimixina B", "Metronidazol", "Gentamicina"],"O antibiótico erradica o bacilo, mas não neutraliza a toxina: sem antitoxina, o dano continua.","O gene da toxina vem de um bacteriófago: só as cepas infectadas pelo vírus produzem a toxina."]
 ];
 const BACS=B.map(a=>({n:a[0],gc:a[1],f:a[2],gl:a[3],h:a[4],ef:a[5].filter(x=>DBY[x]),in:a[6].filter(x=>DBY[x]),r:a[7],k:a[8]})).filter(b=>b.ef.length&&b.in.length>=3);
 
@@ -824,7 +845,19 @@ function nextFromBattle(){if(G.res>=100)return gameOver();nextBattle();window.sc
 /* ---------- QUIZ ---------- */
 const QN=12;
 function redact(text,name){let out=text;name.split(/[-\s]+/).filter(w=>w.length>3&&!/^(de|da|do)$/i.test(w)).forEach(w=>{out=out.replace(new RegExp(w.replace(/[.*+?^${}()|[\]\\]/g,'\\$&'),'gi'),'█████')});return out}
+function makeBacQ(){
+  const types=['quem','ineficaz','util','quem'];
+  for(let tries=0;tries<12;tries++){
+    const type=pick(types),b=pick(BACS);
+    if(type==='quem'){const others=shuffle(BACS.filter(x=>x!==b&&x.gc===b.gc)).slice(0,3);if(others.length<3)continue;const opts=shuffle([b,...others]);
+      return{tag:'Quem sou eu? · Bactéria',q:'Qual bactéria tem esta curiosidade?',x:redact(b.k,b.n),opts:opts.map(o=>({label:o.n,sub:o.gl})),right:opts.indexOf(b),d:b,bac:true,long:false}}
+    if(type==='ineficaz'){if(b.ef.length<3)continue;const bad=pick(b.in),good=shuffle(b.ef).slice(0,3);const opts=shuffle([bad,...good]);
+      return{tag:'Resistência natural',q:`Qual destes antimicrobianos NÃO tem atividade útil contra ${b.n}?`,opts:opts.map(o=>({label:o,sub:DBY[o].c})),right:opts.indexOf(bad),d:b,bac:true,long:false}}
+    const good=pick(b.ef),bad=shuffle(b.in).slice(0,3);const opts=shuffle([good,...bad]);
+    return{tag:'Espectro',q:`Qual destes antimicrobianos é uma opção contra ${b.n}?`,opts:opts.map(o=>({label:o,sub:DBY[o].c})),right:opts.indexOf(good),d:b,bac:true,long:false}}
+  return null}
 function makeQ(){
+  if(Math.random()<.4){const bq=makeBacQ();if(bq)return bq}
   const type=pick(['classe','mec','ea','quem','quem']);const d=pick(DRUGS);
   if(type==='classe'){const cls=shuffle([...new Set(DRUGS.map(x=>x.c))].filter(c=>c!==d.c)).slice(0,3);const opts=shuffle([d.c,...cls]);return{tag:'Classe',q:`A qual classe pertence ${d.n}?`,opts:opts.map(o=>({label:o})),right:opts.indexOf(d.c),d,long:false}}
   if(type==='mec'){const ms=shuffle(Object.keys(MEC).filter(k=>k!==d.m)).slice(0,3);const keys=shuffle([d.m,...ms]);return{tag:'Mecanismo de ação',q:`Qual é o mecanismo de ação de ${d.n}?`,opts:keys.map(k=>({label:MEC[k]})),right:keys.indexOf(d.m),d,long:true}}
@@ -843,11 +876,14 @@ function answerQuiz(i){if(G.answered)return;G.answered=true;const q=G.q,d=q.d,ok
   renderQuizHud();
   const last=G.idx>=QN;
   $('#qFb').innerHTML=`<div class="fb ${ok?'good':'bad'}"><h4>${ok?'Correto':(i<0?'Tempo esgotado':'Não foi dessa vez')}</h4>
-  <p><b>${esc(d.n)}</b> · ${esc(d.c)}</p>
+  ${q.bac?`<p><b><i>${esc(d.n)}</i></b> · ${esc(d.gl)}</p><p>${esc(d.h)}</p>
+  <p><span class="lab">Por que importa</span>${esc(d.r)}</p>
+  <p><span class="lab">Opções ativas</span>${esc(d.ef.join(', '))}</p>
+  <p><span class="lab">Curiosidade</span>${esc(d.k)}</p>`:`<p><b>${esc(d.n)}</b> · ${esc(d.c)}</p>
   <p><span class="lab">Mecanismo</span>${esc(MEC[d.m])}</p>
   <p><span class="lab">Espectro</span>${esc(d.e)}</p>
   <p><span class="lab">Efeito adverso marcante</span>${esc(d.a)}</p>
-  <p><span class="lab">Curiosidade</span>${esc(d.k)}</p>
+  <p><span class="lab">Curiosidade</span>${esc(d.k)}</p>`}
   <div class="row"><button class="btn" data-next>${last?'Ver resultado':'Próxima'} <kbd>Enter</kbd></button><button class="btn ghost" data-menu>Menu <kbd>Esc</kbd></button></div></div>`;
   const fb=$('#qFb .fb');if(fb&&innerWidth<700)setTimeout(()=>fb.scrollIntoView({behavior:reduce?'auto':'smooth',block:'nearest'}),150);
 }
@@ -880,10 +916,55 @@ const PC={
   lpn:{n:'Legionella pneumophila',nick:'A legionária do ar-condicionado',img:'cards/legionella.webp',gc:'neg',gl:'Gram − intracelular',no:'22'},
   mpn:{n:'Mycoplasma pneumoniae',nick:'A gelatina sem armadura',img:'cards/mycoplasma.webp',gc:'none',gl:'Sem parede',no:'23'},
   ctr:{n:'Chlamydia trachomatis',nick:'A dupla que mora dentro da célula',img:'cards/chlamydia.webp',gc:'none',gl:'Intracelular obrigatória',no:'24'},
+  kox:{n:"Klebsiella oxytoca",nick:"A prima indol positiva que dá colite",img:'cards/klebsiella-oxytoca.webp',gc:'neg',gl:"Gram −",no:'26'},
+
+  mmo:{n:"Morganella morganii",nick:"A que ignora a colistina",img:'cards/morganella.webp',gc:'neg',gl:"Gram −",no:'27'},
+
+  pst:{n:"Providencia stuartii",nick:"A moradora do cateter do idoso",img:'cards/providencia.webp',gc:'neg',gl:"Gram −",no:'28'},
+
+  sen:{n:"Salmonella enterica",nick:"A viajante do frango mal cozido",img:'cards/salmonella-enterica.webp',gc:'neg',gl:"Gram −",no:'29'},
+
+  sso:{n:"Shigella sonnei",nick:"Poucas bactérias, grande estrago",img:'cards/shigella-sonnei.webp',gc:'neg',gl:"Gram −",no:'30'},
+
+  yen:{n:"Yersinia enterocolitica",nick:"A gelada do banco de sangue",img:'cards/yersinia-enterocolitica.webp',gc:'neg',gl:"Gram −",no:'31'},
+
+  csa:{n:"Cronobacter sakazakii",nick:"A intrusa da mamadeira",img:'cards/cronobacter-sakazakii.webp',gc:'neg',gl:"Gram −",no:'32'},
+
+  axy:{n:"Achromobacter xylosoxidans",nick:"A nadadora do soro",img:'cards/achromobacter.webp',gc:'neg',gl:"Gram − não fermentador",no:'33'},
+
+  eme:{n:"Elizabethkingia meningoseptica",nick:"A rainha da pia do berçário",img:'cards/elizabethkingia.webp',gc:'neg',gl:"Gram − não fermentador",no:'34'},
+
+  rpi:{n:"Ralstonia pickettii",nick:"A que atravessa o filtro",img:'cards/ralstonia.webp',gc:'neg',gl:"Gram − não fermentador",no:'35'},
+
+  spa:{n:"Sphingomonas paucimobilis",nick:"A amarela da torneira",img:'cards/sphingomonas.webp',gc:'neg',gl:"Gram − não fermentador",no:'36'},
+
+  bps:{n:"Burkholderia pseudomallei",nick:"A traiçoeira do solo lamacento",img:'cards/burkholderia-pseudomallei.webp',gc:'neg',gl:"Gram − não fermentador",no:'37'},
+
+  cin:{n:"Chryseobacterium indologenes",nick:"A garimpeira do cateter",img:'cards/chryseobacterium.webp',gc:'neg',gl:"Gram − não fermentador",no:'38'},
+
+  ssa:{n:"Staphylococcus saprophyticus",nick:"A da cistite das jovens",img:'cards/staphylococcus-saprophyticus.webp',gc:'pos',gl:"Gram +",no:'39'},
+
+  efa:{n:"Enterococcus faecalis",nick:"O boneco de neve que aguenta sal e bile",img:'cards/enterococcus-faecalis.webp',gc:'pos',gl:"Gram +",no:'40'},
+
+  spn:{n:"Streptococcus pneumoniae",nick:"A lanceta de cápsula",img:'cards/streptococcus-pneumoniae.webp',gc:'pos',gl:"Gram +",no:'41'},
+
+  sag:{n:"Streptococcus agalactiae",nick:"A viajante do parto",img:'cards/streptococcus-agalactiae.webp',gc:'pos',gl:"Gram +",no:'42'},
+
+  svi:{n:"Streptococcus viridans",nick:"A verde da boca",img:'cards/streptococcus-viridans.webp',gc:'pos',gl:"Gram +",no:'43'},
+
+  sga:{n:"Streptococcus gallolyticus",nick:"A pista que leva ao cólon",img:'cards/streptococcus-gallolyticus.webp',gc:'pos',gl:"Gram +",no:'44'},
+
+  cte:{n:"Clostridium tetani",nick:"A baqueta que trava os músculos",img:'cards/clostridium-tetani.webp',gc:'pos',gl:"Gram + anaeróbio",no:'45'},
+
+  cbo:{n:"Clostridium botulinum",nick:"A que corta os fios dos músculos",img:'cards/clostridium-botulinum.webp',gc:'pos',gl:"Gram + anaeróbio",no:'46'},
+
+  lmo:{n:"Listeria monocytogenes",nick:"A acrobata da geladeira",img:'cards/listeria.webp',gc:'pos',gl:"Gram +",no:'47'},
+
+  cdp:{n:"Corynebacterium diphtheriae",nick:"A de capa e cartola da garganta",img:'cards/corynebacterium.webp',gc:'pos',gl:"Gram +",no:'48'},
   mtb:{n:'Mycobacterium tuberculosis',nick:'A anciã de capa de cera',img:'cards/mycobacterium-tuberculosis.webp',gc:'acid',gl:'BAAR',no:'25'}
 };
 // retrato de cada bactéria da base, pelo nome
-const ART={'Staphylococcus aureus (MSSA)':'sau','Staphylococcus aureus (MRSA)':'sau','Streptococcus pyogenes':'spy','Enterococcus faecium (VRE)':'efm','Clostridioides difficile':'cdi','Clostridium perfringens':'cpe','Bacteroides fragilis':'bfr','Escherichia coli':'eco','Klebsiella pneumoniae':'kpn','Klebsiella pneumoniae KPC':'kpn','Pseudomonas aeruginosa':'pae','Acinetobacter baumannii':'aba','Stenotrophomonas maltophilia':'sma','Proteus mirabilis':'pmi','Serratia marcescens':'srm','Enterobacter cloacae':'ecl','Haemophilus influenzae':'hin','Neisseria gonorrhoeae':'ngo','Neisseria meningitidis':'nme','Mycoplasma pneumoniae':'mpn','Chlamydia trachomatis':'ctr','Legionella pneumophila':'lpn','Mycobacterium tuberculosis':'mtb','Burkholderia cepacia (complexo)':'bce','Staphylococcus epidermidis':'sep','Klebsiella aerogenes':'kae','Citrobacter freundii':'cfr'};
+const ART={'Staphylococcus aureus (MSSA)':'sau','Staphylococcus aureus (MRSA)':'sau','Streptococcus pyogenes':'spy','Enterococcus faecium (VRE)':'efm','Clostridioides difficile':'cdi','Clostridium perfringens':'cpe','Bacteroides fragilis':'bfr','Escherichia coli':'eco','Klebsiella pneumoniae':'kpn','Klebsiella pneumoniae KPC':'kpn','Pseudomonas aeruginosa':'pae','Acinetobacter baumannii':'aba','Stenotrophomonas maltophilia':'sma','Proteus mirabilis':'pmi','Serratia marcescens':'srm','Enterobacter cloacae':'ecl','Haemophilus influenzae':'hin','Neisseria gonorrhoeae':'ngo','Neisseria meningitidis':'nme','Mycoplasma pneumoniae':'mpn','Chlamydia trachomatis':'ctr','Legionella pneumophila':'lpn','Mycobacterium tuberculosis':'mtb','Burkholderia cepacia (complexo)':'bce','Staphylococcus epidermidis':'sep','Klebsiella aerogenes':'kae','Citrobacter freundii':'cfr',"Klebsiella oxytoca":"kox","Morganella morganii":"mmo","Providencia stuartii":"pst","Salmonella enterica (não tifoide)":"sen","Salmonella Typhi":"sen","Shigella sonnei":"sso","Yersinia enterocolitica":"yen","Cronobacter sakazakii":"csa","Achromobacter xylosoxidans":"axy","Elizabethkingia meningoseptica":"eme","Ralstonia pickettii":"rpi","Sphingomonas paucimobilis":"spa","Burkholderia pseudomallei":"bps","Chryseobacterium indologenes":"cin","Staphylococcus saprophyticus":"ssa","Enterococcus faecalis":"efa","Streptococcus pneumoniae":"spn","Streptococcus agalactiae":"sag","Streptococcus viridans (grupo)":"svi","Streptococcus gallolyticus":"sga","Clostridium tetani":"cte","Clostridium botulinum":"cbo","Listeria monocytogenes":"lmo","Corynebacterium diphtheriae":"cdp"};
 const PCK=Object.keys(PC);
 // [carta, fenótipo, sítio, contexto, antibiograma [[fármaco,resultado]], opções [[fármaco, nota 2|1|0, por quê, classe opcional]], lição]
 // nota 2 = melhor escolha · 1 = funciona, mas não é a ideal · 0 = falha
@@ -1153,7 +1234,175 @@ const PCASES=[
   ['Ertapenem',1,'Ativo, mas muito ligado à albumina: menos confiável no choque com hipoalbuminemia.'],
   ['Piperacilina-tazobactam',0,'Perdeu para o meropenem na bacteremia por ESBL (estudo MERINO).'],
   ['Ceftriaxona',0,'A ESBL hidrolisa a ceftriaxona.']],
- 'Mesmo germe, decisão diferente: a gravidade do paciente muda a escolha.']
+ 'Mesmo germe, decisão diferente: a gravidade do paciente muda a escolha.'],
+["kox","Betalactamase cromossômica","Pielonefrite comunitária","Mulher, 38 anos, febre e dor lombar; urocultura com K. oxytoca. Estável, sem sinais de gravidade.",
+ [["Ampicilina", "R"], ["Ceftriaxona", "S"], ["Ciprofloxacino", "S"], ["Sulfametoxazol-trimetoprima", "S"]],
+ [["Ceftriaxona",2,"Ativa no antibiograma e adequada para pielonefrite. Confirme a sensibilidade, porque a hiperprodução de K1 pode reduzi-la."],
+  ["Meropenem",1,"Funciona, mas é amplo demais: reserve para ESBL ou falha."],
+  ["Ampicilina",0,"A betalactamase cromossômica da K. oxytoca a inativa: resistência natural."],
+  ["Nitrofurantoína",0,"Não atinge nível tecidual: serve para cistite, não para pielonefrite."]],
+ "K. oxytoca vem com a ampicilina inativa de fábrica. Na pielonefrite, o antibiótico precisa chegar ao tecido renal."],
+["mmo","AmpC cromossômica","Bacteremia associada a sonda vesical","Homem, 70 anos, sonda vesical há 3 semanas, hipotensão leve; hemocultura com Morganella morganii.",
+ [["Ampicilina", "R"], ["Cefazolina", "R"], ["Ceftriaxona", "S"], ["Cefepima", "S"], ["Colistina", "R"], ["Ciprofloxacino", "S"]],
+ [["Cefepima",2,"Estável diante da AmpC cromossômica e ativa no antibiograma."],
+  ["Ceftriaxona",1,"Pode funcionar, pois o risco de AmpC induzível em Morganella é intermediário, mas em bacteremia a cefepima é mais segura."],
+  ["Colistina",0,"Resistência natural às polimixinas."],
+  ["Nitrofurantoína",0,"Sem nível sistêmico, e a Morganella é naturalmente resistente."]],
+ "Morganella tem AmpC e resistência natural às polimixinas. Em infecção invasiva, prefira a cefepima à ceftriaxona."],
+["pst","Polimixina e aminoglicosídeo","ITU associada a cateter de longa permanência","Mulher, 82 anos, institucionalizada, sonda vesical há meses, febre; urocultura com Providencia stuartii.",
+ [["Cefepima", "S"], ["Ceftriaxona", "S"], ["Gentamicina", "R"], ["Amicacina", "S"], ["Ciprofloxacino", "R"]],
+ [["Cefepima",2,"Ativa e sem o risco renal e auditivo de um aminoglicosídeo em paciente idosa."],
+  ["Amicacina",1,"Ativa no antibiograma, mas nefrotóxica e ototóxica em idosa: reserve para quando faltar opção."],
+  ["Gentamicina",0,"A enzima AAC(2')-Ia inativa gentamicina e tobramicina."],
+  ["Colistina",0,"Providencia tem resistência natural às polimixinas."]],
+ "Troque a sonda: sem remover o biofilme, a bactéria volta. Colistina e gentamicina não funcionam contra Providencia."],
+["sen","Não tifoide","Gastroenterite","Homem, 26 anos, saudável, diarreia com muco e febre baixa há 2 dias após churrasco; coprocultura com Salmonella enterica.",
+ [["Ciprofloxacino", "S"], ["Azitromicina", "S"], ["Ceftriaxona", "S"]],
+ [["Hidratação oral e observação, sem antibiótico",2,"Em adulto imunocompetente com quadro não complicado, o antibiótico não encurta a doença e pode prolongar o estado de portador.","Suporte"],
+  ["Ciprofloxacino",1,"Ativo, mas sem benefício na doença não complicada. Fica para grupos de risco."],
+  ["Ceftriaxona",0,"Venosa e ampla demais para um quadro autolimitado."],
+  ["Gentamicina",0,"Parece ativa in vitro, mas falha in vivo contra Salmonella intracelular."]],
+ "Salmonella não tifoide em adulto saudável: hidratação. O antibiótico entra em idosos, imunossuprimidos, lactentes e doença invasiva."],
+["sso","Resistência a ampicilina e SMX-TMP","Disenteria em creche","Menino, 4 anos, diarreia sanguinolenta, febre e tenesmo; surto na creche. Coprocultura com Shigella sonnei.",
+ [["Ampicilina", "R"], ["Sulfametoxazol-trimetoprima", "R"], ["Azitromicina", "S"], ["Ceftriaxona", "S"], ["Ciprofloxacino", "S"]],
+ [["Azitromicina",2,"Oral, ativa e adequada para criança quando ampicilina e SMX-TMP estão resistentes."],
+  ["Ceftriaxona",1,"Ativa, mas exige via venosa: reserve para quadro grave ou intolerância oral."],
+  ["Ampicilina",0,"Resistente no antibiograma."],
+  ["Sulfametoxazol-trimetoprima",0,"Resistente no antibiograma."]],
+ "Em shigelose, o antibiograma local manda. A dose infectante é minúscula: lavagem de mãos e isolamento de contato contam tanto quanto o antibiótico."],
+["yen","Betalactamases cromossômicas","Sepse após transfusão","Mulher, 66 anos, calafrios, febre e hipotensão 20 minutos após o início da transfusão de concentrado de hemácias. Hemocultura do paciente e da bolsa com Yersinia enterocolitica.",
+ [["Ampicilina", "R"], ["Cefazolina", "R"], ["Ceftriaxona", "S"], ["Ciprofloxacino", "S"], ["Gentamicina", "S"]],
+ [["Ceftriaxona",2,"Ativa e boa opção inicial em sepse por gram-negativo. Em paralelo: suspender a transfusão e notificar a hemovigilância."],
+  ["Ciprofloxacino",1,"Ativo, mas a ceftriaxona costuma ser a primeira escolha em sepse."],
+  ["Ampicilina",0,"As betalactamases cromossômicas da Yersinia a inativam."],
+  ["Cefazolina",0,"Cefalosporina de 1ª geração é inativa contra Yersinia."]],
+ "Febre durante a transfusão: pare a transfusão, guarde a bolsa e notifique. Yersinia gosta de geladeira e de ferro."],
+["csa","AmpC cromossômica","Meningite neonatal","Prematuro de 15 dias, em nutrição parenteral com cálcio, febre e instabilidade. LCR e hemocultura com Cronobacter sakazakii; a mãe usava fórmula em pó.",
+ [["Cefotaxima", "S"], ["Ceftriaxona", "S"], ["Meropenem", "S"], ["Gentamicina", "S"]],
+ [["Meropenem",2,"Atinge o LCR, é estável diante da AmpC e não tem as restrições da ceftriaxona em neonato."],
+  ["Cefotaxima",1,"Ativa e atinge o LCR: alternativa quando a cepa é sensível."],
+  ["Ceftriaxona",0,"Contraindicada em neonato com nutrição parenteral com cálcio (risco de precipitado) e hiperbilirrubinemia."],
+  ["Gentamicina",0,"Em monoterapia não atinge concentração útil no LCR."]],
+ "Neonato com cálcio venoso: a ceftriaxona sai da lista. Fórmula em pó é fonte clássica de Cronobacter."],
+["axy","Aminoglicosídeo e aztreonam naturais","Exacerbação em fibrose cística","Mulher, 24 anos, fibrose cística, piora da tosse e do escarro; cultura com Achromobacter xylosoxidans.",
+ [["Meropenem", "S"], ["Piperacilina-tazobactam", "S"], ["Ceftazidima", "S"], ["Gentamicina", "R"], ["Aztreonam", "R"]],
+ [["Meropenem",2,"Os carbapenêmicos costumam ser os mais ativos contra Achromobacter, e o antibiograma confirma."],
+  ["Ceftazidima",1,"Ativa no antibiograma e segue como alternativa."],
+  ["Gentamicina",0,"Resistência natural aos aminoglicosídeos."],
+  ["Aztreonam",0,"Resistência natural, ao contrário da P. aeruginosa."]],
+ "Achromobacter não é Pseudomonas: aminoglicosídeo e aztreonam, comuns na fibrose cística, não funcionam aqui."],
+["eme","Metalo-betalactamase","Bacteremia por cateter em UTI","Homem, 58 anos, UTI, febre persistente após 5 dias de meropenem; hemocultura com Elizabethkingia meningoseptica.",
+ [["Meropenem", "R"], ["Colistina", "R"], ["Amicacina", "R"], ["Levofloxacino", "S"], ["Minociclina", "S"], ["Rifampicina", "S"], ["Vancomicina", "S"]],
+ [["Levofloxacino + rifampicina",2,"Duas opções ativas no antibiograma. Combinações assim são usadas com apoio da infectologia.","Associação"],
+  ["Minociclina",1,"Ativa no antibiograma, mas costuma ser usada em combinação."],
+  ["Meropenem",0,"Metalo-betalactamase: o carbapenêmico não funciona, como a falha mostrou."],
+  ["Colistina",0,"Resistência natural."]],
+ "Falha ao carbapenêmico: pense em Elizabethkingia e Chryseobacterium. O antibiograma e a infectologia guiam a combinação."],
+["rpi","Pseudossurto","Hemoculturas positivas em vários pacientes","Quatro pacientes assintomáticos da mesma enfermaria, com hemocultura positiva para Ralstonia pickettii em 3 dias; todos receberam flush com o mesmo lote de soro fisiológico.",
+ "Sem sinais clínicos de infecção. O isolado é sensível a SMX-TMP e levofloxacino.",
+ [["Suspender o lote, recoletar hemoculturas e investigar a fonte",2,"Várias culturas com a mesma bactéria de água sugerem fonte comum: pare a fonte e confirme o que é infecção.","Investigação"],
+  ["Suspender o lote e tratar só quem tiver sinais clínicos",1,"Reduz o risco, mas sem recoleta e investigação fica difícil separar pseudossurto de infecção.","Investigação"],
+  ["Iniciar meropenem em todos os pacientes",0,"Trata contaminação, aumenta a pressão seletiva e não resolve a fonte.","Antibiótico"],
+  ["Aguardar uma semana e repetir a hemocultura",0,"Deixa a fonte ativa e outros pacientes expostos.","Conduta"]],
+ "Mesma bactéria de água em vários pacientes: pense em fonte comum. Parar o lote vale mais do que qualquer antibiótico."],
+["spa","Pouca resistência natural","Bacteremia associada a cateter","Homem, 63 anos, febre com duas hemoculturas positivas (cateter e periférica) para Sphingomonas paucimobilis; estável.",
+ [["Ampicilina", "R"], ["Cefazolina", "R"], ["Ciprofloxacino", "S"], ["Sulfametoxazol-trimetoprima", "S"], ["Meropenem", "S"]],
+ [["Ciprofloxacino",2,"Ativo, com alta biodisponibilidade oral, e poupa o carbapenêmico em paciente estável."],
+  ["Meropenem",1,"Ativo, mas amplo demais para uma bactéria sensível a vários agentes."],
+  ["Cefazolina",0,"Resistente no antibiograma."],
+  ["Ampicilina",0,"Resistente no antibiograma."]],
+ "Sphingomonas costuma ser pouco resistente. Duas hemoculturas positivas num paciente com cateter indicam infecção, e remover o cateter faz parte da conduta."],
+["bps","Fase intensiva e erradicação","Choque séptico com abscessos pulmonares","Homem, 52 anos, agricultor, diabético, após chuvas intensas: febre alta e choque séptico. Hemocultura com Burkholderia pseudomallei.",
+ [["Ceftazidima", "S"], ["Meropenem", "S"], ["Sulfametoxazol-trimetoprima", "S"], ["Amoxicilina-clavulanato", "S"], ["Gentamicina", "R"], ["Colistina", "R"]],
+ [["Meropenem",2,"Na fase intensiva venosa de doença grave, com choque, o meropenem é a opção preferida."],
+  ["Ceftazidima",1,"Também é opção de fase intensiva, mas na doença grave o meropenem é preferido."],
+  ["Amoxicilina-clavulanato",0,"Não serve para a fase intensiva de um quadro grave."],
+  ["Gentamicina",0,"Resistência natural aos aminoglicosídeos."]],
+ "Melioidose tem duas fases: venosa intensiva (meropenem ou ceftazidima) e, depois, SMX-TMP por meses para erradicar. Avise o laboratório ao suspeitar."],
+["cin","Metalo-betalactamase natural","Pneumonia associada à ventilação","Homem, 67 anos, UTI, PAV sem resposta ao meropenem após 4 dias; aspirado traqueal com Chryseobacterium indologenes.",
+ [["Meropenem", "R"], ["Colistina", "R"], ["Amicacina", "R"], ["Levofloxacino", "S"], ["Sulfametoxazol-trimetoprima", "S"], ["Piperacilina-tazobactam", "S"]],
+ [["Levofloxacino",2,"Ativo no antibiograma e com boa penetração pulmonar."],
+  ["Sulfametoxazol-trimetoprima",1,"Ativo no antibiograma e é alternativa."],
+  ["Meropenem",0,"A metalo-betalactamase natural hidrolisa os carbapenêmicos."],
+  ["Colistina",0,"Resistente no antibiograma."]],
+ "Falha ao carbapenêmico não é sempre Pseudomonas resistente: Chryseobacterium traz a MBL de fábrica."],
+["ssa","Novobiocina resistente","Cistite não complicada","Mulher, 22 anos, disúria e polaciúria há 2 dias, após início da vida sexual; urocultura com S. saprophyticus, sensível a todos.",
+ [["Nitrofurantoína", "S"], ["Fosfomicina", "S"], ["Ciprofloxacino", "S"], ["Sulfametoxazol-trimetoprima", "S"]],
+ [["Nitrofurantoína",2,"Atinge alta concentração na urina e poupa as quinolonas."],
+  ["Fosfomicina",1,"Dose única e ativa: boa alternativa."],
+  ["Ciprofloxacino",1,"Funciona, mas quinolona deve ser poupada em cistite não complicada."],
+  ["Metronidazol",0,"Só age em anaeróbios."]],
+ "Cocos gram-positivos coagulase-negativos em urocultura de mulher jovem sintomática: pense em S. saprophyticus, não em contaminante."],
+["sag","Sem alergia","Profilaxia intraparto","Gestante de 38 semanas em trabalho de parto, rastreio positivo para S. agalactiae (GBS), sem alergia a penicilina.",
+ "Rastreio positivo entre 35 e 37 semanas, sem alergia.",
+ [["Penicilina G cristalina",2,"É a escolha: espectro estreito e ativa contra o GBS. Deve começar pelo menos 4 horas antes do parto."],
+  ["Ampicilina",1,"Alternativa aceitável, de espectro mais amplo."],
+  ["Clindamicina",0,"A resistência é frequente: fica para alergia de alto risco com cepa sensível."],
+  ["Gentamicina",0,"Não é profilaxia do GBS."]],
+ "Rastreio entre 35 e 37 semanas e penicilina intraparto reduzem a sepse neonatal precoce."],
+["sag","Alergia grave e clindamicina resistente","Profilaxia intraparto","Gestante de 39 semanas, GBS positivo, com história de anafilaxia à penicilina.",
+ [["Clindamicina", "R"], ["Eritromicina", "R"], ["Vancomicina", "S"]],
+ [["Vancomicina",2,"Ativa e indicada na alergia de alto risco quando a cepa resiste à clindamicina."],
+  ["Clindamicina",0,"Resistente no teste."],
+  ["Cefazolina",0,"Na anafilaxia, a recomendação é evitar betalactâmicos."],
+  ["Ampicilina",0,"É penicilina: contraindicada."]],
+ "A alergia define a rota: sem alergia, penicilina. Com anafilaxia, o teste de clindamicina decide entre ela e a vancomicina."],
+["svi","Penicilina sensível","Endocardite de válvula nativa","Mulher, 45 anos, febre há 3 semanas, sopro novo e vegetação mitral; hemoculturas com S. viridans, CIM de penicilina 0,06 mg/L; sem alergia.",
+ [["Penicilina G cristalina", "S"], ["Ceftriaxona", "S"], ["Vancomicina", "S"], ["Gentamicina", "S"]],
+ [["Penicilina G cristalina",2,"Cepa muito sensível: a penicilina é a base do tratamento, por semanas."],
+  ["Ceftriaxona",1,"Equivalente na eficácia e mais cômoda, mas de espectro mais amplo."],
+  ["Vancomicina",1,"Ativa, mas inferior aos betalactâmicos em cepa sensível: reserve para alergia."],
+  ["Gentamicina",0,"Em monoterapia não trata endocardite."]],
+ "Endocardite por viridans muito sensível: penicilina ou ceftriaxona por semanas, com ecocardiograma e cuidado dentário."],
+["sga","Pista para o cólon","Endocardite aórtica","Homem, 68 anos, endocardite aórtica por S. gallolyticus (antigo S. bovis), sem sintomas intestinais.",
+ [["Penicilina G cristalina", "S"], ["Ceftriaxona", "S"]],
+ [["Penicilina G cristalina + colonoscopia",2,"Trata a infecção e investiga a porta de entrada provável, uma lesão colorretal.","Conduta"],
+  ["Penicilina G cristalina, sem investigar o cólon",1,"Trata a infecção, mas perde a chance de achar o câncer ou pólipo.","Conduta"],
+  ["Gentamicina",0,"Em monoterapia não trata endocardite."],
+  ["Aztreonam",0,"Não age em gram-positivos."]],
+ "Bacteremia ou endocardite por S. gallolyticus: pense em colonoscopia."],
+["cte","Tetanospasmina","Tétano generalizado","Homem, 48 anos, sem vacinação conhecida, ferida por prego há 6 dias; trismo e rigidez de nuca.",
+ "Diagnóstico clínico: não há cultura que decida.",
+ [["Imunoglobulina antitetânica + metronidazol",2,"A imunoglobulina neutraliza a toxina ainda livre e o metronidazol elimina a bactéria. Some o desbridamento da ferida e o suporte.","Associação"],
+  ["Penicilina G cristalina isolada",1,"Ativa contra a bactéria, mas sem neutralizar a toxina."],
+  ["Apenas vacina dT",0,"A vacina não neutraliza a toxina circulante."],
+  ["Gentamicina",0,"Anaeróbio: o aminoglicosídeo não entra."]],
+ "No tétano, o dano é da toxina. Imunoglobulina, desbridamento e suporte vêm antes de qualquer discussão de antibiótico."],
+["cbo","Toxina botulínica","Botulismo infantil","Lactente de 4 meses, constipação há 5 dias, choro fraco, hipotonia e ptose; dieta com mel.",
+ "Diagnóstico clínico, confirmado por toxina nas fezes.",
+ [["Antitoxina botulínica e suporte ventilatório",2,"Neutraliza a toxina circulante, enquanto o suporte protege o paciente até a recuperação. Notificação imediata.","Antitoxina"],
+  ["Penicilina G cristalina",0,"No botulismo infantil o antibiótico não é indicado, e a toxina continua agindo."],
+  ["Gentamicina",0,"Aminoglicosídeos podem piorar o bloqueio neuromuscular."],
+  ["Ceftriaxona",0,"Antibiótico não neutraliza a toxina."]],
+ "Paralisia flácida descendente e simétrica, sem febre: pense em botulismo. Não dê mel a menores de 1 ano."],
+["cdp","Toxina diftérica","Difteria","Criança de 6 anos, sem vacinas, dor de garganta, febre baixa, pseudomembrana acinzentada nas amígdalas e \"pescoço de touro\".",
+ "Suspeita clínica: não espere a cultura.",
+ [["Soro antidiftérico + penicilina G cristalina",2,"A antitoxina neutraliza a toxina ainda livre e o antibiótico erradica o bacilo.","Associação"],
+  ["Soro antidiftérico + eritromicina",1,"Alternativa aceita, útil na alergia à penicilina.","Associação"],
+  ["Penicilina G cristalina isolada",0,"O antibiótico mata o bacilo, mas a toxina já produzida segue agindo sem a antitoxina."],
+  ["Gentamicina",0,"Não é tratamento da difteria."]],
+ "Na difteria, a antitoxina não espera a cultura. Isolamento respiratório, notificação e vacina para os contatos."],
+["lmo","Resistência natural às cefalosporinas","Meningite em idoso","Homem, 72 anos, febre, cefaleia e confusão; LCR com bacilos gram-positivos curtos.",
+ "Gram do LCR: bacilos gram-positivos. Cultura pendente.",
+ [["Ampicilina + gentamicina",2,"A ampicilina é a base contra Listeria e a gentamicina soma sinergismo.","Associação"],
+  ["Sulfametoxazol-trimetoprima",1,"Alternativa na alergia à penicilina, pois atravessa a barreira hematoencefálica."],
+  ["Ceftriaxona",0,"Listeria é naturalmente resistente às cefalosporinas."],
+  ["Vancomicina",0,"Não é opção confiável contra Listeria."]],
+ "Meningite em idoso, gestante ou imunossuprimido: acrescente ampicilina ao esquema, porque a ceftriaxona não cobre Listeria."],
+["efa","Gentamicina de alto nível resistente","Endocardite de válvula nativa","Homem, 68 anos, febre e sopro novo; hemoculturas com E. faecalis.",
+ [["Ampicilina", "S"], ["Vancomicina", "S"], ["Gentamicina (alto nível)", "R"], ["Ceftriaxona", "R"]],
+ [["Ampicilina + ceftriaxona",2,"Atua em PBPs diferentes e funciona mesmo com gentamicina de alto nível resistente, sem a nefrotoxicidade do aminoglicosídeo.","Associação"],
+  ["Vancomicina",1,"Ativa, mas inferior à ampicilina em cepa sensível."],
+  ["Ampicilina + gentamicina",0,"Com gentamicina de alto nível resistente, o sinergismo se perde."],
+  ["Ceftriaxona",0,"Cefalosporina sozinha não trata enterococo: resistência natural."]],
+ "Enterococo resiste às cefalosporinas, mas ampicilina com ceftriaxona funciona em conjunto na endocardite."],
+["spn","Meningite pneumocócica","Meningite","Homem, 59 anos, febre, rigidez de nuca e sonolência; LCR turvo com diplococos gram-positivos lanceolados.",
+ "Gram do LCR sugere pneumococo; antibiograma pendente.",
+ [["Ceftriaxona + vancomicina",2,"Cobre pneumococos de sensibilidade reduzida à penicilina e à ceftriaxona até o antibiograma.","Associação"],
+  ["Ceftriaxona",1,"Funciona na maioria, mas sem a vancomicina deixa descoberta a cepa com CIM elevada."],
+  ["Azitromicina",0,"Não atinge concentração útil no LCR."],
+  ["Gentamicina",0,"Não atinge concentração útil no LCR."]],
+ "Meningite pneumocócica: pontos de corte próprios e vancomicina empírica até o antibiograma. A vacina conjugada previne."]
 ].map(a=>({c:a[0],fen:a[1],site:a[2],ctx:a[3],abg:a[4],opts:a[5].map(o=>({n:o[0],s:o[1],w:o[2],sub:o[3]||(DBY[o[0]]?DBY[o[0]].c:'')})),les:a[6]}));
 const PN=8;
 function plColl(){return store('arsenal.plCards')||[]}
@@ -1299,7 +1548,7 @@ function finishMem(){M.done=true;renderMemHud();const s=Math.floor(M.t);const sc
 const LANES=4;let Fseen=[],F=null,FW=0,FH=0,fx=null;
 // retratos dos personagens, carregados uma vez; FOCUS = onde está o rosto (fração da largura e da altura)
 const PIMG={};
-const FOCUS={mtb:[.80,.47],efm:[.32,.5],sau:[.5,.47],pae:[.7,.42],ecl:[.35,.38],bce:[.53,.37],cfr:[.5,.28],ngo:[.42,.42],kpn:[.53,.36],spy:[.6,.45],sep:[.42,.34]};
+const FOCUS={mtb:[.80,.47],ngo:[.42,.42]};const OLDART=['mtb','ngo','hin','nme'];
 function portraitOf(name){const k=ART[name];if(!k)return null;
   if(!PIMG[k]){const im=new Image();im.decoding='async';im.src=PC[k].img;PIMG[k]=im}
   const im=PIMG[k];return im.complete&&im.naturalWidth?im:null}
@@ -1309,7 +1558,7 @@ function drawPortrait(ctx,img,col,r,t,k){
   ctx.shadowColor=col;ctx.shadowBlur=18;ctx.fillStyle=col;ctx.beginPath();ctx.arc(0,0,r+3,0,7);ctx.fill();ctx.shadowBlur=0;
   ctx.save();ctx.beginPath();ctx.arc(0,0,r,0,7);ctx.clip();
   // recorte quadrado do terço superior, onde fica o rosto
-  const w=img.naturalWidth,h=img.naturalHeight,side=Math.min(w,h)*.68,[fx0,fy0]=FOCUS[k]||[.5,.39];
+  const w=img.naturalWidth,h=img.naturalHeight,side=Math.min(w,h)*(OLDART.includes(k)?.68:.8),[fx0,fy0]=FOCUS[k]||[.5,.4];
   const sx=Math.max(0,Math.min(w-side,w*fx0-side/2)),sy=Math.max(0,Math.min(h-side,h*fy0-side/2));
   ctx.drawImage(img,sx,sy,side,side,-r,-r,r*2,r*2);ctx.restore();
   ctx.lineWidth=2;ctx.strokeStyle='rgba(255,255,255,.55)';ctx.beginPath();ctx.arc(0,0,r,0,7);ctx.stroke();

@@ -1,21 +1,10 @@
-// ========================================================================
-// Games @pharmamelo · Antimicrobianos — configuração pública
-// ------------------------------------------------------------------------
-// Só ficam aqui informações que são SEGURAS para aparecer no código-fonte:
-// a "anon key" do Supabase é pública por design (protegida pelas regras
-// de RLS do banco, não por estar escondida) e o Price ID do Stripe é só
-// um identificador de produto, não dá acesso a nada sozinho.
-//
-// NUNCA coloque aqui: a service_role key do Supabase, a chave secreta do
-// Stripe (sk_...) ou o webhook signing secret (whsec_...). Essas ficam só
-// como "secrets" das Edge Functions, dentro do painel do Supabase.
-//
-// Depois de criar seu projeto no Supabase e seu produto no Stripe, troque
-// os valores abaixo pelos reais (veja supabase/README-SETUP.md).
-// ========================================================================
+// Configuração pública do jogo. Só entram aqui dados SEGUROS para ficar no
+// código-fonte: a chave "publishable" do Supabase é pública por design (a
+// proteção está nas regras RLS do banco). NUNCA coloque aqui a chave
+// secret/service_role nem o segredo do webhook da Cakto.
 window.ATB_CONFIG = {
-  SUPABASE_URL: "", // ex.: "https://xxxxxxxxxxxx.supabase.co"
-  SUPABASE_ANON_KEY: "", // Settings → API → Project API keys → anon public
-  FUNCTIONS_URL: "", // normalmente "https://xxxxxxxxxxxx.supabase.co/functions/v1"
-  STRIPE_PRICE_ID: "", // Stripe → Product catalog → seu produto → Pricing → price_...
+  SUPABASE_URL: "https://sqoggtqycsgxfakpfwqe.supabase.co",
+  SUPABASE_ANON_KEY: "sb_publishable_IgelQgOCcZfZl81OkGJHnA_91ec4nDV",
+  CAKTO_CHECKOUT_URL: "https://pay.cakto.com.br/35p2h6i_1208191",
+  DEMOS_PER_GAME: 3,
 };

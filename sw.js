@@ -1,5 +1,5 @@
 // Games @pharmamelo · Antimicrobianos — funciona offline após a primeira abertura
-const CACHE = 'atb-games-v13';
+const CACHE = 'atb-games-v14';
 const CORE = ['./', './index.html', './manifest.webmanifest', './config.js',
   './icons/icon-192.png', './icons/icon-512.png', './icons/maskable-512.png',
   './icons/apple-touch-icon.png', './icons/favicon-32.png',

@@ -115,6 +115,20 @@ h1 .n{color:var(--pink);text-shadow:0 0 28px rgba(255,91,146,.5)}
 .lockchip{font-family:var(--mono);font-size:10px;letter-spacing:.06em;text-transform:uppercase;padding:2px 8px;border-radius:99px;background:rgba(157,108,255,.18);color:var(--violet);border:1px solid rgba(157,108,255,.4);display:inline-flex;align-items:center;gap:4px;margin-top:4px}
 .mode.locked{opacity:.78}
 .mode.locked:hover{border-color:var(--line);transform:none}
+.backbtn{font-weight:700}
+.toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--panel2,#1b2442);border:1px solid var(--line);border-radius:12px;padding:10px 16px;font-size:14px;z-index:60;max-width:92vw;box-shadow:0 8px 30px rgba(0,0,0,.5)}
+.toast[hidden]{display:none}
+.rank{margin-top:18px;background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:14px 16px;display:grid;gap:10px}
+.rank h2{margin:0;font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--dim);font-weight:600}
+.podium{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.pod{background:var(--bg2);border:1px solid var(--line);border-radius:14px;padding:10px 12px;display:grid;gap:2px;min-width:0}
+.pod .pos{font-family:var(--display);font-size:22px;line-height:1}
+.pod.p1{border-color:#ffc24a;--pc:#ffc24a}.pod.p2{border-color:#c9d3e6;--pc:#c9d3e6}.pod.p3{border-color:#d08a52;--pc:#d08a52}
+.pod .pos{color:var(--pc,var(--mute))}
+.pod .nm{font-weight:700;font-size:14px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.pod .pt{font-family:var(--mono);font-size:12px;color:var(--mute);font-variant-numeric:tabular-nums}
+.rank .small{margin:0}
+@media(max-width:560px){.podium{grid-template-columns:1fr}.pod{grid-template-columns:auto 1fr auto;align-items:center;gap:10px}}
 .plancard{background:var(--bg2);border:1px dashed var(--line);border-radius:14px;padding:14px;display:grid;gap:8px}
 .plancard .price{font-family:var(--display);font-size:28px;color:var(--amber)}
 .plancard .price span{font-family:var(--ui);font-size:13px;color:var(--mute);font-weight:400}
@@ -313,6 +327,7 @@ h1 .n{color:var(--pink);text-shadow:0 0 28px rgba(255,91,146,.5)}
 <canvas id="bg" aria-hidden="true"></canvas>
 <div class="wrap">
   <header class="bar">
+    <button class="iconbtn backbtn" id="backBtn" aria-label="Voltar ao menu" hidden>← Voltar</button>
     <button class="logo" id="home" aria-label="Voltar ao menu"><i></i>GAMES @PHARMAMELO</button>
     <div class="sp"></div>
     <div class="recs" id="recs"></div>
@@ -331,14 +346,19 @@ h1 .n{color:var(--pink);text-shadow:0 0 28px rgba(255,91,146,.5)}
       <h1>Arsenal <span class="p">Anti</span><span class="n">micro</span>biano</h1>
       <p class="lede">Escolha a arma certa antes que a colônia se divida. <b id="counts"></b> com mecanismo, espectro, efeitos adversos marcantes, resistência intrínseca e curiosidades.</p>
     </div>
+    <div class="rank" id="rank" hidden>
+      <h2>Ranking · mais pontos</h2>
+      <div class="podium" id="podium"></div>
+      <p class="small" id="rankNote"></p>
+    </div>
     <div class="modes">
       <button class="mode" style="--c:var(--amber)" data-go="plan" data-premium="1"><h3>Modo Plantão</h3><p>Casos de UTI com antibiograma. Escolha o antimicrobiano mais estreito que funcione e desbloqueie as 48 cartas de bactérias.</p><kbd>H</kbd></button>
-      <button class="mode" style="--c:var(--pink)" data-go="battle"><h3>Batalha</h3><p>Uma bactéria aparece. Escolha um antimicrobiano ativo. Erros aumentam a pressão de resistência.</p><kbd>B</kbd></button>
-      <button class="mode" style="--c:var(--violet)" data-go="quiz"><h3>Quiz de farmacologia</h3><p>12 perguntas sobre classe, mecanismo, efeitos adversos e "quem sou eu?" pelas curiosidades.</p><kbd>Q</kbd></button>
+      <button class="mode" style="--c:var(--pink)" data-go="battle" data-premium="1"><h3>Batalha</h3><p>Uma bactéria aparece. Escolha um antimicrobiano ativo. Erros aumentam a pressão de resistência.</p><kbd>B</kbd></button>
+      <button class="mode" style="--c:var(--violet)" data-go="quiz" data-premium="1"><h3>Quiz de farmacologia</h3><p>12 perguntas sobre classe, mecanismo, efeitos adversos e "quem sou eu?" pelas curiosidades.</p><kbd>Q</kbd></button>
       <button class="mode" style="--c:var(--amber)" data-go="mem" data-premium="1"><h3>Memória</h3><p>Vire as cartas e forme pares: fármaco e classe, fármaco e alvo, ou bactéria e antimicrobiano ativo.</p><kbd>J</kbd></button>
       <button class="mode" style="--c:var(--red)" data-go="flee" data-premium="1"><h3>Fuga da Colônia</h3><p>Guie a bactéria por um corredor de antimicrobianos. Passe ilesa pelos que ela resiste; os demais a eliminam.</p><kbd>F</kbd></button>
       <button class="mode" style="--c:var(--green)" data-go="fit" data-premium="1"><h3>Encaixe de Classes</h3><p>Arraste ou encaixe cada antimicrobiano na classe farmacológica certa, entre distratores cada vez mais parecidos.</p><kbd>X</kbd></button>
-      <button class="mode" style="--c:var(--cyan)" data-go="enc" data-premium="1"><h3>Enciclopédia</h3><p>Consulte cada fármaco e cada bactéria: quem cobre quem, e por quê.</p><kbd>E</kbd></button>
+      <button class="mode" style="--c:var(--cyan)" data-go="enc"><h3>Enciclopédia</h3><p>Consulte cada fármaco e cada bactéria: quem cobre quem, e por quê.</p><kbd>E</kbd></button>
     </div>
     <div class="fact" id="fact"></div>
     <div class="promo" id="promo">
@@ -503,17 +523,21 @@ h1 .n{color:var(--pink);text-shadow:0 0 28px rgba(255,91,146,.5)}
 <div class="modalveil" id="authVeil" hidden>
   <div class="modalcard">
     <button class="xclose" id="authClose" aria-label="Fechar">×</button>
-    <h3>Sua conta @pharmamelo</h3>
-    <p class="sub">Entre ou crie uma conta para salvar seu progresso e desbloquear os modos de assinante.</p>
-    <div class="authtabs">
+    <h3 id="authTitle">Sua conta @pharmamelo</h3>
+    <p class="sub" id="authSub">Entre ou crie sua conta para jogar. Cada jogo tem 3 demos grátis; seu progresso fica salvo.</p>
+    <div class="authtabs" id="authTabs">
       <button class="on" data-atab="login" id="authTabLogin">Entrar</button>
       <button data-atab="signup" id="authTabSignup">Criar conta</button>
     </div>
-    <form id="authForm">
-      <div class="afield"><label for="authEmail">E-mail</label><input type="email" id="authEmail" autocomplete="email" required></div>
-      <div class="afield" style="margin-top:10px"><label for="authPass">Senha</label><input type="password" id="authPass" autocomplete="current-password" minlength="6" required></div>
+    <form id="authForm" novalidate>
+      <div class="afield" id="authWName" hidden><label for="authName">Nome</label><input type="text" id="authName" autocomplete="name" maxlength="40"></div>
+      <div class="afield" id="authWEmail" style="margin-top:10px"><label for="authEmail">E-mail</label><input type="email" id="authEmail" autocomplete="email"></div>
+      <div class="afield" id="authWPass" style="margin-top:10px"><label for="authPass">Senha</label><input type="password" id="authPass" autocomplete="current-password" minlength="6"></div>
+      <div class="afield" id="authWCode" style="margin-top:10px" hidden><label for="authCode">Código recebido por e-mail</label><input type="text" id="authCode" inputmode="numeric" autocomplete="one-time-code" maxlength="8" placeholder="000000"></div>
       <div class="amsg" id="authMsg" style="margin-top:10px"></div>
       <button class="btn block" id="authSubmit" type="submit" style="margin-top:14px">Entrar</button>
+      <button class="btn ghost block" id="authResend" type="button" style="margin-top:8px" hidden>Reenviar código</button>
+      <button class="btn ghost block" id="authBackForm" type="button" style="margin-top:8px" hidden>Voltar ao cadastro</button>
     </form>
   </div>
 </div>
@@ -522,21 +546,22 @@ h1 .n{color:var(--pink);text-shadow:0 0 28px rgba(255,91,146,.5)}
 <div class="modalveil" id="payVeil" hidden>
   <div class="modalcard">
     <button class="xclose" id="payClose" aria-label="Fechar">×</button>
-    <h3>Recurso de assinantes</h3>
-    <p class="sub" id="payLede">Este modo faz parte do plano Games @pharmamelo.</p>
+    <h3>Seus demos acabaram</h3>
+    <p class="sub" id="payLede">Libere o acesso completo ao Games @pharmamelo.</p>
     <div class="plancard">
-      <div class="price" id="payPrice">Assinatura mensal<span> · cancele quando quiser</span></div>
+      <div class="price">Acesso completo</div>
       <ul>
-        <li>Modo Plantão, Memória, Fuga da Colônia, Encaixe de Classes e Enciclopédia</li>
-        <li>Recordes salvos na sua conta</li>
+        <li>Todos os jogos, sem limite de partidas</li>
+        <li>Recordes, cartas e ranking salvos na sua conta</li>
         <li>Apoia os próximos lançamentos @pharmamelo</li>
       </ul>
     </div>
     <div class="amsg" id="payMsg"></div>
-    <button class="btn block" id="payCta">Assinar agora</button>
-    <button class="btn ghost block" id="payLogin">Já tenho conta · Entrar</button>
+    <button class="btn block" id="payCta">Pagar e liberar</button>
+    <button class="btn ghost block" id="payCheck">Já paguei · verificar acesso</button>
   </div>
 </div>
+<div class="toast" id="toast" role="status" hidden></div>
 
 <script>
 /* ================= DADOS ================= */
@@ -707,7 +732,7 @@ const shuffle=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=rnd(i+1);[a[
 const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 const GCOL={pos:'#9d6cff',neg:'#ff5b92',acid:'#ffc24a',none:'#35e6c1'};
 const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
-function store(k,v){try{if(v===undefined)return JSON.parse(localStorage.getItem(k));localStorage.setItem(k,JSON.stringify(v))}catch(e){return null}}
+function store(k,v){try{if(v===undefined)return JSON.parse(localStorage.getItem(k));localStorage.setItem(k,JSON.stringify(v));if(/^arsenal\.(best|plCards)/.test(k)&&window.schedulePush)window.schedulePush()}catch(e){return null}}
 let best={b:store('arsenal.bestB')||0,q:store('arsenal.bestQ')||0,m:store('arsenal.bestM')||0,f:store('arsenal.bestF')||0,x:store('arsenal.bestX')||0,p:store('arsenal.bestP')||0};
 function renderRecs(){$('#recs').innerHTML=`<span>Plantão <b>${best.p}</b></span><span>Batalha <b>${best.b}</b></span><span>Quiz <b>${best.q}</b></span><span>Memória <b>${best.m}</b></span><span>Fuga <b>${best.f}</b></span><span>Encaixe <b>${best.x}</b></span>`}
 
@@ -802,7 +827,7 @@ function popText(txt,col){const p=$('#pop');p.textContent=txt;p.style.color=col;
 
 /* ================= ESTADO ================= */
 let cur='menu';const SCREENS=['menu','plan','battle','quiz','mem','flee','fit','enc','over'];
-function show(id){SCREENS.forEach(s=>$('#'+s).hidden=s!==id);cur=id;window.scrollTo(0,0);if(id==='battle')requestAnimationFrame(sizeStage);if(id==='flee')requestAnimationFrame(sizeFStage)}
+function show(id){SCREENS.forEach(s=>$('#'+s).hidden=s!==id);cur=id;{const bb=$('#backBtn');if(bb)bb.hidden=id==='menu'}window.scrollTo(0,0);if(id==='battle')requestAnimationFrame(sizeStage);if(id==='flee')requestAnimationFrame(sizeFStage)}
 let G=null;
 
 function setTimer(sec){G.tMax=sec;G.tLeft=sec;G.lastTick=Math.ceil(sec)}
@@ -1698,7 +1723,7 @@ function nextFromFit(){if(G.jam>=100)return gameOver();nextFit();window.scrollTo
 /* ---------- MENU ---------- */
 function newFact(){const all=[...DRUGS.map(d=>({n:d.n,s:d.c,k:d.k,t:'d'})),...BACS.map(b=>({n:b.n,s:b.gl,k:b.k,t:'b'}))];const f=pick(all);
   $('#fact').innerHTML=`<div class="t">Curiosidade relâmpago <kbd>C</kbd> outra</div><div class="who">${esc(f.n)} <span class="small" style="font-weight:400">· ${esc(f.s)}</span></div><p>${esc(f.k)}</p>`}
-function goMenu(){$('#veil').hidden=true;if(G)G.paused=false;show('menu');newFact()}
+function goMenu(){$('#veil').hidden=true;if(G)G.paused=false;show('menu');newFact();if(window.loadRanking)loadRanking()}
 
 /* ---- Promo dos livros @pharmamelo ---- */
 const PROMOS=[
@@ -1716,162 +1741,258 @@ function startPromoRotate(){clearInterval(promoTimer);promoTimer=setInterval(()=
 function togglePause(){if(cur==='flee'){if(!F||F.done)return;F.paused=!F.paused;$('#veil').hidden=!F.paused;return}
   if(!G||G.answered)return;G.paused=!G.paused;$('#veil').hidden=!G.paused}
 
-/* ================= CONTA / ASSINATURA ================= */
-const PREMIUM_MODES=['plan','mem','flee','fit','enc'];
+/* ================= CONTA / DEMOS / PAGAMENTO ================= */
 const CFG=window.ATB_CONFIG||{};
+const DEMOS=CFG.DEMOS_PER_GAME||3;
+const GAME_NAMES={plan:'Modo Plantão',battle:'Batalha',quiz:'Quiz',mem:'Memória',flee:'Fuga da Colônia',fit:'Encaixe de Classes'};
 const supa=(CFG.SUPABASE_URL&&CFG.SUPABASE_ANON_KEY&&window.supabase)?window.supabase.createClient(CFG.SUPABASE_URL,CFG.SUPABASE_ANON_KEY):null;
-let authUser=null,authProfile=null,authSession=null,authTab='login';
+let authUser=null,authProfile=null,authDemos={},authTab='login',pendingEmail='',entering=false,syncing=null,applying=false;
 
 function hasAccess(){return!!(authProfile&&['active','trialing'].includes(authProfile.subscription_status))}
+function userName(){return(authProfile&&authProfile.display_name)||(authUser&&authUser.user_metadata&&authUser.user_metadata.name)||(authUser&&authUser.email?authUser.email.split('@')[0]:'')}
+let toastT=null;
+function toast(msg,ms){const t=$('#toast');t.textContent=msg;t.hidden=false;clearTimeout(toastT);toastT=setTimeout(()=>t.hidden=true,ms||3500)}
 
 function renderGating(){
   document.querySelectorAll('.mode[data-premium]').forEach(btn=>{
     let chip=btn.querySelector('.lockchip');
     if(!supa||hasAccess()){btn.classList.remove('locked');if(chip)chip.remove();return}
-    btn.classList.add('locked');
-    if(!chip){chip=document.createElement('span');chip.className='lockchip';chip.textContent='🔒 Assinantes';btn.querySelector('p').after(chip)}
+    const g=btn.dataset.go,used=authDemos[g]||0,rem=Math.max(0,DEMOS-used);
+    const txt=!authUser?`${DEMOS} demos grátis`:rem>0?`${rem} de ${DEMOS} demos`:'🔒 Pagar para liberar';
+    btn.classList.toggle('locked',!!authUser&&rem<=0);
+    if(!chip){chip=document.createElement('span');chip.className='lockchip';btn.querySelector('p').after(chip)}
+    chip.textContent=txt
   })
 }
-
 function renderAuthBtn(){
   const b=$('#authBtn');if(!b)return;
   if(!supa){b.hidden=true;return}
   b.hidden=false;
   if(authUser){
-    const label=authUser.email?authUser.email.split('@')[0]:'conta';
-    const plan=hasAccess()?'<span class="plan">Premium</span>':'';
-    b.innerHTML=`<span class="av">${esc((label[0]||'?').toUpperCase())}</span><span class="lbl">${esc(label)}</span>${plan}`;
+    const label=userName()||'conta';
+    b.innerHTML=`<span class="av">${esc((label[0]||'?').toUpperCase())}</span><span class="lbl">${esc(label)}</span>${hasAccess()?'<span class="plan">Premium</span>':''}<span class="lbl">· Sair</span>`;
     b.setAttribute('aria-label','Sair da conta')
-  }else{
-    b.innerHTML='<span class="lbl">Entrar</span>';
-    b.setAttribute('aria-label','Entrar ou criar conta')
-  }
+  }else{b.innerHTML='<span class="lbl">Entrar</span>';b.setAttribute('aria-label','Entrar ou criar conta')}
 }
 
-async function refreshProfile(){
-  if(!supa||!authUser){authProfile=null;return}
-  const{data}=await supa.from('profiles').select('subscription_status').eq('id',authUser.id).single();
-  authProfile=data||{subscription_status:'free'}
-}
-
-async function refreshAuthUI(){
-  if(!supa)return;
-  const{data:{session}}=await supa.auth.getSession();
-  authSession=session;authUser=session?session.user:null;
-  await refreshProfile();
-  renderAuthBtn();renderGating()
-}
-
-function signOutUser(){supa&&supa.auth.signOut()}
-
-function openAuth(tab){setAuthTab(tab||'login');$('#authMsg').className='amsg';$('#authForm').reset();$('#authVeil').hidden=false;setTimeout(()=>$('#authEmail')&&$('#authEmail').focus(),30)}
-function closeAuth(){const v=$('#authVeil');if(v)v.hidden=true}
-function setAuthTab(tab){
-  authTab=tab;
-  $('#authTabLogin').classList.toggle('on',tab==='login');
-  $('#authTabSignup').classList.toggle('on',tab==='signup');
-  $('#authSubmit').textContent=tab==='login'?'Entrar':'Criar conta';
-  $('#authPass').autocomplete=tab==='login'?'current-password':'new-password'
-}
-
-function openPaywall(mode){
-  const names={plan:'Modo Plantão',mem:'Memória',flee:'Fuga da Colônia',fit:'Encaixe de Classes',enc:'Enciclopédia'};
-  $('#payLede').textContent=`"${names[mode]||'Este modo'}" faz parte do plano Games @pharmamelo.`;
-  $('#payMsg').className='amsg';
-  $('#payCta').textContent=authUser?'Assinar agora':'Entrar para assinar';
-  $('#payLogin').hidden=!!authUser;
-  $('#payVeil').hidden=false
-}
-function closePaywall(){const v=$('#payVeil');if(v)v.hidden=true}
-
-function goMode(g){
-  const premium=PREMIUM_MODES.includes(g);
-  if(premium&&supa&&!hasAccess()){openPaywall(g);return}
-  g==='plan'?startPlan():g==='battle'?startBattle():g==='quiz'?startQuiz():g==='mem'?startMem():g==='flee'?startFlee():g==='fit'?startFit():openEnc('d')
-}
-
-async function startCheckout(){
-  if(!authUser){closePaywall();openAuth('login');return}
-  const btn=$('#payCta');btn.disabled=true;btn.textContent='Abrindo checkout...';
+async function loadRanking(){
+  const box=$('#rank');if(!box)return;
+  if(!supa){box.hidden=true;return}
   try{
-    const res=await fetch(CFG.FUNCTIONS_URL+'/create-checkout-session',{
-      method:'POST',
-      headers:{'Authorization':'Bearer '+authSession.access_token,'Content-Type':'application/json'},
-      body:JSON.stringify({origin:location.origin+location.pathname.replace(/[^/]*$/,'')})
-    });
-    const data=await res.json();
-    if(data.url)location.href=data.url;
-    else{$('#payMsg').textContent=data.error||'Não foi possível abrir o checkout.';$('#payMsg').className='amsg err show'}
-  }catch(err){$('#payMsg').textContent='Falha de conexão. Tente novamente.';$('#payMsg').className='amsg err show'}
-  btn.disabled=false;btn.textContent='Assinar agora'
+    const{data,error}=await supa.rpc('get_ranking');if(error)throw error;
+    box.hidden=false;
+    const rows=data||[];
+    $('#podium').innerHTML=rows.length?rows.map(r=>`<div class="pod p${r.pos}"><span class="pos">${r.pos}º</span><span class="nm">${esc(r.name)}</span><span class="pt">${Number(r.points).toLocaleString('pt-BR')} pts</span></div>`).join(''):'';
+    $('#rankNote').textContent=rows.length?'Soma dos seus recordes em todos os jogos.':'Ninguém pontuou ainda. Seja o 1º lugar!'
+  }catch(e){box.hidden=true}
 }
+
+function localProgress(){return{best:{...best},cards:plColl()}}
+function mergeProgress(srv){
+  if(!srv)return;applying=true;
+  try{
+    const sb=srv.best||{};
+    for(const k of ['b','q','m','f','x','p']){const v=Math.max(+sb[k]||0,best[k]||0);if(v!==best[k]){best[k]=v}store('arsenal.best'+{b:'B',q:'Q',m:'M',f:'F',x:'X',p:'P'}[k],best[k])}
+    const cards=[...new Set([...(srv.cards||[]),...plColl()])];store('arsenal.plCards',cards);
+    renderRecs()
+  }finally{applying=false}
+}
+let pushT=null;
+window.schedulePush=function(){if(applying||!supa||!authUser)return;clearTimeout(pushT);pushT=setTimeout(pushProgress,1500)};
+async function pushProgress(){
+  if(!supa||!authUser)return;clearTimeout(pushT);
+  try{const{data,error}=await supa.rpc('save_progress',{p_data:localProgress()});if(error)throw error;mergeProgress(data);loadRanking()}catch(e){}
+}
+function clearLocalProgress(){
+  ['B','Q','M','F','X','P'].forEach(k=>{try{localStorage.removeItem('arsenal.best'+k)}catch(e){}});
+  try{localStorage.removeItem('arsenal.plCards')}catch(e){}
+  for(const k in best)best[k]=0;renderRecs()
+}
+
+async function syncAccount(){
+  if(!supa)return;
+  if(syncing)return syncing;
+  syncing=(async()=>{
+    try{
+      const{data:{session}}=await supa.auth.getSession();
+      authUser=session?session.user:null;
+      if(!authUser){authProfile=null;authDemos={}}
+      else{
+        const[pr,dm]=await Promise.all([
+          supa.from('profiles').select('subscription_status,display_name').eq('id',authUser.id).maybeSingle(),
+          supa.from('demo_usage').select('game,used').eq('user_id',authUser.id)
+        ]);
+        authProfile=pr.data||{subscription_status:'free'};
+        authDemos={};(dm.data||[]).forEach(r=>authDemos[r.game]=r.used);
+        const{data:gp}=await supa.from('game_progress').select('data').eq('user_id',authUser.id).maybeSingle();
+        mergeProgress(gp&&gp.data);
+        await pushProgress()
+      }
+    }catch(e){}
+    renderAuthBtn();renderGating();loadRanking();syncing=null
+  })();
+  return syncing
+}
+
+async function signOutUser(){
+  clearTimeout(pushT);
+  if(authUser)await pushProgress();
+  await supa.auth.signOut();
+  authUser=null;authProfile=null;authDemos={};clearLocalProgress();
+  renderAuthBtn();renderGating();goMenu();toast('Você saiu da conta.')
+}
+
+/* ---- janela de login ---- */
+function setAuthTab(tab){
+  authTab=tab;const otp=tab==='otp',su=tab==='signup';
+  $('#authTabs').hidden=otp;
+  $('#authTabLogin').classList.toggle('on',tab==='login');
+  $('#authTabSignup').classList.toggle('on',su);
+  $('#authWName').hidden=!su;$('#authWPass').hidden=otp;$('#authWEmail').hidden=otp;$('#authWCode').hidden=!otp;
+  $('#authResend').hidden=!otp;$('#authBackForm').hidden=!otp;
+  $('#authSubmit').textContent=otp?'Confirmar código':su?'Criar conta e enviar código':'Entrar';
+  $('#authTitle').textContent=otp?'Confirme seu e-mail':'Sua conta @pharmamelo';
+  $('#authSub').textContent=otp?`Enviamos um código para ${pendingEmail}. Digite-o abaixo para ativar sua conta (olhe também o spam).`:'Entre ou crie sua conta para jogar. Cada jogo tem '+DEMOS+' demos grátis; seu progresso fica salvo.';
+  $('#authPass').autocomplete=su?'new-password':'current-password'
+}
+function authMsg(text,kind){const m=$('#authMsg');if(!text){m.className='amsg';return}m.textContent=text;m.className='amsg '+kind+' show'}
+function openAuth(tab){authMsg('');$('#authForm').reset();setAuthTab(tab||'login');$('#authVeil').hidden=false;setTimeout(()=>{const f=authTab==='otp'?$('#authCode'):$('#authEmail');f&&f.focus()},30)}
+function closeAuth(){const v=$('#authVeil');if(v)v.hidden=true}
 
 function authErrorMsg(err){
   const m=(err&&err.message)||'';
-  if(/already registered|already exists|already in use/i.test(m))return'Este e-mail já tem conta. Tente Entrar.';
+  if(/already registered|already exists|already in use/i.test(m))return'Este e-mail já tem conta. Use Entrar.';
   if(/invalid login credentials/i.test(m))return'E-mail ou senha incorretos.';
-  if(/password.*(6|least|short)/i.test(m))return'A senha precisa ter pelo menos 6 caracteres.';
+  if(/password.*(6|least|short)|weak/i.test(m))return'A senha precisa ter pelo menos 6 caracteres.';
+  if(/otp.*(expired|invalid)|token.*(expired|invalid)|expired|invalid.*token/i.test(m))return'Código inválido ou expirado. Peça um novo.';
   if(/email/i.test(m)&&/invalid/i.test(m))return'E-mail inválido.';
-  if(/rate limit/i.test(m))return'Muitas tentativas. Aguarde um instante e tente de novo.';
+  if(/rate limit|too many|seconds/i.test(m))return'Muitas tentativas. Aguarde um instante e tente de novo.';
+  if(/fetch|network/i.test(m))return'Sem conexão com o servidor. Tente novamente.';
   return m||'Algo deu errado. Tente novamente.'
 }
+function toOtp(email,note){pendingEmail=email;setAuthTab('otp');authMsg(note,'ok');setTimeout(()=>$('#authCode').focus(),30)}
 
 const authFormEl=$('#authForm');
-if(authFormEl)authFormEl.addEventListener('submit',async e=>{
-  e.preventDefault();
-  if(!supa)return;
-  const email=$('#authEmail').value.trim(),pass=$('#authPass').value;
-  const msg=$('#authMsg');msg.className='amsg';
-  const btn=$('#authSubmit');btn.disabled=true;
+authFormEl.addEventListener('submit',async e=>{
+  e.preventDefault();if(!supa)return;
+  const btn=$('#authSubmit');btn.disabled=true;authMsg('');
   try{
-    if(authTab==='login'){
-      const{error}=await supa.auth.signInWithPassword({email,password:pass});
+    if(authTab==='otp'){
+      const token=$('#authCode').value.replace(/\s/g,'');
+      if(token.length<6)throw{message:'Digite o código recebido por e-mail.'};
+      const{error}=await supa.auth.verifyOtp({email:pendingEmail,token,type:'signup'});
       if(error)throw error;
-      closeAuth();await refreshAuthUI()
+      closeAuth();await syncAccount();toast('Conta confirmada! Bom jogo.')
     }else{
-      const{data,error}=await supa.auth.signUp({email,password:pass});
-      if(error)throw error;
-      if(data.user&&!data.session){
-        msg.textContent='Quase lá! Confira seu e-mail para confirmar o cadastro.';msg.className='amsg ok show'
-      }else{closeAuth();await refreshAuthUI()}
+      const email=$('#authEmail').value.trim(),pass=$('#authPass').value;
+      if(!/^\S+@\S+\.\S+$/.test(email))throw{message:'E-mail inválido.'};
+      if(pass.length<6)throw{message:'A senha precisa ter pelo menos 6 caracteres.'};
+      if(authTab==='login'){
+        const{error}=await supa.auth.signInWithPassword({email,password:pass});
+        if(error){
+          if(/not confirmed/i.test(error.message)){await supa.auth.resend({type:'signup',email});toOtp(email,'Seu e-mail ainda não foi confirmado. Enviamos um novo código.');btn.disabled=false;return}
+          throw error}
+        closeAuth();await syncAccount()
+      }else{
+        const name=$('#authName').value.trim().replace(/\s+/g,' ');
+        if(name.length<2)throw{message:'Informe seu nome.'};
+        const{data,error}=await supa.auth.signUp({email,password:pass,options:{data:{name}}});
+        if(error)throw error;
+        if(data.user&&Array.isArray(data.user.identities)&&data.user.identities.length===0)throw{message:'Este e-mail já tem conta. Use Entrar.'};
+        if(data.session){closeAuth();await syncAccount()}
+        else toOtp(email,'Código enviado! Confira sua caixa de entrada.')
+      }
     }
-  }catch(err){msg.textContent=authErrorMsg(err);msg.className='amsg err show'}
+  }catch(err){authMsg(authErrorMsg(err),'err')}
   btn.disabled=false
 });
+async function resendCode(){
+  const b=$('#authResend');b.disabled=true;
+  try{const{error}=await supa.auth.resend({type:'signup',email:pendingEmail});if(error)throw error;authMsg('Novo código enviado.','ok')}
+  catch(err){authMsg(authErrorMsg(err),'err')}
+  setTimeout(()=>b.disabled=false,20000)
+}
+
+/* ---- pagamento (Cakto) ---- */
+function openPaywall(g){
+  $('#payLede').textContent=`Você usou os ${DEMOS} demos de "${GAME_NAMES[g]||'este jogo'}". Após o pagamento ser confirmado, todos os jogos são liberados.`;
+  $('#payMsg').className='amsg';$('#payVeil').hidden=false
+}
+function closePaywall(){const v=$('#payVeil');if(v)v.hidden=true}
+function payMsg(t,k){const m=$('#payMsg');m.textContent=t;m.className='amsg '+k+' show'}
+function startCheckout(){
+  if(!authUser){closePaywall();openAuth('login');return}
+  if(!CFG.CAKTO_CHECKOUT_URL){payMsg('Checkout ainda não configurado.','err');return}
+  let url=CFG.CAKTO_CHECKOUT_URL;
+  try{const u=new URL(url);u.searchParams.set('email',authUser.email);if(userName())u.searchParams.set('name',userName());url=u.toString()}catch(e){}
+  window.open(url,'_blank','noopener');
+  payMsg(`Use o MESMO e-mail da conta (${authUser.email}) no pagamento. Depois volte aqui e toque em "Já paguei".`,'ok')
+}
+async function checkPayment(){
+  const b=$('#payCheck');b.disabled=true;b.textContent='Verificando...';
+  await syncAccount();
+  b.disabled=false;b.textContent='Já paguei · verificar acesso';
+  if(hasAccess()){closePaywall();toast('Pagamento confirmado! Todos os jogos liberados.',5000)}
+  else payMsg('Pagamento ainda não confirmado. Pode levar alguns minutos; tente de novo em instantes.','err')
+}
+
+/* ---- entrada nos jogos (3 demos por jogo) ---- */
+function runGame(g){
+  g==='plan'?startPlan():g==='battle'?startBattle():g==='quiz'?startQuiz():g==='mem'?startMem():g==='flee'?startFlee():g==='fit'?startFit():openEnc('d')
+}
+async function goMode(g){
+  if(!supa||g==='enc'){runGame(g);return}
+  if(!authUser){openAuth('login');authMsg('Entre ou crie sua conta para jogar.','ok');return}
+  if(entering)return;
+  if(hasAccess()){runGame(g);return}
+  entering=true;
+  try{
+    const{data,error}=await supa.rpc('use_demo',{p_game:g});
+    if(error)throw error;
+    authDemos[g]=data.used;renderGating();
+    if(!data.allowed){openPaywall(g);return}
+    if(data.paid){authProfile={...authProfile,subscription_status:'active'};renderAuthBtn();renderGating();runGame(g);return}
+    runGame(g);
+    const rem=data.limit-data.used;
+    toast(rem>0?`Demo ${data.used} de ${data.limit} · restam ${rem}`:`Último demo de ${GAME_NAMES[g]} usado.`)
+  }catch(err){toast('Não foi possível validar seu acesso. Verifique a conexão e tente de novo.',4500)}
+  finally{entering=false}
+}
 
 if(supa){
-  supa.auth.onAuthStateChange((_ev,session)=>{
-    authSession=session;authUser=session?session.user:null;
-    refreshProfile().then(()=>{renderAuthBtn();renderGating()})
+  supa.auth.onAuthStateChange((ev)=>{ if(ev==='SIGNED_OUT'){authUser=null;authProfile=null;authDemos={};renderAuthBtn();renderGating()} });
+  document.addEventListener('visibilitychange',()=>{
+    if(document.hidden){if(authUser)pushProgress()}
+    else if(authUser&&!$('#payVeil').hidden)syncAccount()
   });
-  if(/[?&]assinatura=sucesso/.test(location.search)){
-    history.replaceState(null,'',location.pathname);
-    setTimeout(()=>refreshAuthUI(),2500)
-  }
-}
+  syncAccount()
+}else{renderGating();renderAuthBtn();loadRanking()}
 
 /* ================= EVENTOS ================= */
 document.addEventListener('click',e=>{
   const t=e.target.closest('button');if(!t)return;
   if(t.dataset.go){goMode(t.dataset.go)}
   else if(t.id==='authBtn'){authUser?signOutUser():openAuth('login')}
+  else if(t.id==='backBtn')goMenu();
+  else if(t.id==='authResend')resendCode();
+  else if(t.id==='authBackForm'){pendingEmail='';authMsg('');setAuthTab('signup')}
+  else if(t.id==='payCheck')checkPayment();
   else if(t.id==='authClose')closeAuth();
   else if(t.id==='payClose')closePaywall();
   else if(t.id==='authTabLogin')setAuthTab('login');
   else if(t.id==='authTabSignup')setAuthTab('signup');
   else if(t.id==='payCta')startCheckout();
-  else if(t.id==='payLogin'){closePaywall();openAuth('login')}
-  else if(t.dataset.card!==undefined){const i=+t.dataset.card;moveCursor(i);flipCard(i)}
+    else if(t.dataset.card!==undefined){const i=+t.dataset.card;moveCursor(i);flipCard(i)}
   else if(t.dataset.theme){startMem(t.dataset.theme)}
-  else if(t.id==='memAgain')startMem();
+  else if(t.id==='memAgain')goMode('mem');
   else if(t.id==='fUp')laneMove(-1);
   else if(t.id==='fDown')laneMove(1);
-  else if(t.id==='fAgain')startFlee();
+  else if(t.id==='fAgain')goMode('flee');
   else if(t.classList.contains('opt')&&!t.disabled){const i=+t.dataset.i;cur==='plan'?answerPlan(i):cur==='battle'?answerBattle(i):cur==='fit'?answerFit(i):answerQuiz(i)}
   else if(t.hasAttribute('data-next')){cur==='plan'?nextFromPlan():cur==='battle'?nextFromBattle():cur==='fit'?nextFromFit():nextFromQuiz()}
   else if(t.classList.contains('pdot')){promoGo(+t.dataset.i);startPromoRotate()}
   else if(t.hasAttribute('data-menu')||t.id==='home')goMenu();
-  else if(t.id==='again')G.overMode==='plan'?startPlan():G.overMode==='battle'?startBattle():G.overMode==='fit'?startFit():startQuiz();
+  else if(t.id==='again')goMode(G.overMode||'quiz');
   else if(t.id==='snd')toggleSound();
   else if(t.id==='unpause')togglePause();
   else if(t.id==='tabD'){E.tab='d';buildList()}else if(t.id==='tabB'){E.tab='b';buildList()}
@@ -1889,10 +2010,10 @@ document.addEventListener('keydown',e=>{
   if(cur==='mem'){
     if(k==='Escape'){goMenu();return}
     if(k==='1'||k==='2'||k==='3'){startMem(['classe','mec','bac'][+k-1]);return}
-    if(k==='r'){startMem();return}
+    if(k==='r'){goMode('mem');return}
     const mv={ArrowLeft:-1,ArrowRight:1,ArrowUp:-4,ArrowDown:4}[k];
     if(mv){e.preventDefault();moveCursor(M.cursor+mv);return}
-    if(k==='Enter'||k===' '){e.preventDefault();M.done?startMem():flipCard(M.cursor)}
+    if(k==='Enter'||k===' '){e.preventDefault();M.done?goMode('mem'):flipCard(M.cursor)}
     return}
   if(cur==='plan'||cur==='battle'||cur==='quiz'||cur==='fit'){
     if(k==='Escape'){goMenu();return}
@@ -1908,7 +2029,7 @@ document.addEventListener('keydown',e=>{
     if(k==='ArrowDown'||k==='ArrowUp'){e.preventDefault();E.sel=Math.max(0,Math.min(E.items.length-1,E.sel+(k==='ArrowDown'?1:-1)));renderList();renderDetail();return}
     if(k==='ArrowLeft'||k==='ArrowRight'){E.tab=E.tab==='d'?'b':'d';buildList();return}
     return}
-  if(cur==='over'){if(k==='Enter'){e.preventDefault();G.overMode==='plan'?startPlan():G.overMode==='battle'?startBattle():G.overMode==='fit'?startFit():startQuiz()}else if(k==='Escape')goMenu()}
+  if(cur==='over'){if(k==='Enter'){e.preventDefault();goMode(G.overMode||'quiz')}else if(k==='Escape')goMenu()}
 });
 document.addEventListener('keydown',e=>{
   if(cur!=='flee')return;const k=e.key.length===1?e.key.toLowerCase():e.key;
@@ -1918,7 +2039,7 @@ document.addEventListener('keydown',e=>{
   if(F.paused)return;
   if(k==='ArrowUp'||k==='w'){e.preventDefault();laneMove(-1);return}
   if(k==='ArrowDown'||k==='s'){e.preventDefault();laneMove(1);return}
-  if(F.done&&(k==='Enter'||k===' ')){e.preventDefault();startFlee()}
+  if(F.done&&(k==='Enter'||k===' ')){e.preventDefault();goMode('flee')}
 });
 addEventListener('resize',()=>{sizeBg();if(cur==='battle')sizeStage();if(cur==='enc')sizeMini();if(cur==='flee')sizeFStage()});
 
@@ -1937,7 +2058,7 @@ function loop(now){const dt=Math.min(.05,(now-lastT)/1000);lastT=now;const t=now
 
 /* ================= INÍCIO ================= */
 $('#counts').textContent=`${DRUGS.length} antimicrobianos e ${BACS.length} bactérias`;
-renderRecs();renderSnd();newFact();renderPromo();startPromoRotate();renderGating();renderAuthBtn();refreshAuthUI();sizeBg();requestAnimationFrame(loop);
+renderRecs();renderSnd();newFact();renderPromo();startPromoRotate();sizeBg();requestAnimationFrame(loop);
 (()=>{const w=document.querySelector('.fwrap');if(!w)return;let ty=0;
   w.addEventListener('touchstart',e=>{ty=e.touches[0].clientY},{passive:true});
   w.addEventListener('touchend',e=>{const dy=e.changedTouches[0].clientY-ty;if(Math.abs(dy)>26)laneMove(dy<0?-1:1)},{passive:true});

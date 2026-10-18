@@ -352,7 +352,7 @@ h1 .n{color:var(--pink);text-shadow:0 0 28px rgba(255,91,146,.5)}
       <p class="small" id="rankNote"></p>
     </div>
     <div class="modes">
-      <button class="mode" style="--c:var(--amber)" data-go="plan" data-premium="1"><h3>Modo Plantão</h3><p>Casos de UTI com antibiograma. Escolha o antimicrobiano mais estreito que funcione e desbloqueie as 55 cartas de bactérias.</p><kbd>H</kbd></button>
+      <button class="mode" style="--c:var(--amber)" data-go="plan" data-premium="1"><h3>Modo Plantão</h3><p>Casos de UTI com antibiograma. Escolha o antimicrobiano mais estreito que funcione e desbloqueie as 64 cartas de bactérias.</p><kbd>H</kbd></button>
       <button class="mode" style="--c:var(--pink)" data-go="battle" data-premium="1"><h3>Batalha</h3><p>Uma bactéria aparece. Escolha um antimicrobiano ativo. Erros aumentam a pressão de resistência.</p><kbd>B</kbd></button>
       <button class="mode" style="--c:var(--violet)" data-go="quiz" data-premium="1"><h3>Quiz de farmacologia</h3><p>12 perguntas sobre classe, mecanismo, efeitos adversos e "quem sou eu?" pelas curiosidades.</p><kbd>Q</kbd></button>
       <button class="mode" style="--c:var(--amber)" data-go="mem" data-premium="1"><h3>Memória</h3><p>Vire as cartas e forme pares: fármaco e classe, fármaco e alvo, ou bactéria e antimicrobiano ativo.</p><kbd>J</kbd></button>
@@ -727,6 +727,13 @@ const B=[
 ["Bordetella pertussis","neg","cocobacilo","Gram −","Cocobacilo · coqueluche",["Azitromicina", "Claritromicina", "Eritromicina", "Sulfametoxazol-trimetoprima"],["Amoxicilina", "Cefalexina", "Vancomicina", "Clindamicina"],"Os macrolídeos são a base; β-lactâmicos orais não funcionam bem. Em menores de 2 meses, o SMX-TMP é contraindicado.","Pertussis vem do latim \"tosse intensa\". A vacina na gestação protege o recém-nascido nos primeiros meses de vida."],
 ["Moraxella catarrhalis","neg","diplo","Gram −","Diplococo · otite média, sinusite, exacerbação de DPOC",["Amoxicilina-clavulanato", "Cefuroxima", "Azitromicina", "Sulfametoxazol-trimetoprima"],["Penicilina G cristalina", "Ampicilina", "Amoxicilina", "Vancomicina"],"Mais de 90% dos isolados produzem β-lactamase: penicilina, ampicilina e amoxicilina simples falham.","Já foi chamada de Branhamella catarrhalis. É uma das principais causas bacterianas de otite média, ao lado do pneumococo e do H. influenzae."],
 ["Vibrio cholerae","neg","curvo","Gram −","Bacilo em vírgula · cólera, diarreia aquosa",["Doxiciclina", "Azitromicina", "Ciprofloxacino", "Sulfametoxazol-trimetoprima"],["Vancomicina", "Daptomicina", "Clindamicina", "Metronidazol"],"O antibiótico é complemento: encurta a diarreia, mas quem salva é a reidratação. Resistência a tetraciclina e SMX-TMP já foi descrita.","A cólera pode levar a perdas de litros de líquido por hora; com reposição adequada, a mortalidade cai para menos de 1%."]
+,
+["Mycobacterium leprae","acid","bacilo","BAAR","Bacilo álcool-ácido resistente · hanseníase",["Rifampicina", "Claritromicina", "Minociclina", "Moxifloxacino"],["Penicilina G cristalina", "Vancomicina", "Ceftriaxona", "Ampicilina"],"A parede cerosa e a vida dentro de células dispensam os β-lactâmicos e os glicopeptídeos; o tratamento é a poliquimioterapia (rifampicina, dapsona e clofazimina).","Tem um dos tempos de duplicação mais lentos entre as bactérias (cerca de 12 a 14 dias) e nunca foi cultivada em meio artificial. O tatu de nove bandas também abriga o bacilo."],
+["Mycobacterium avium","acid","bacilo","BAAR","Bacilo álcool-ácido resistente · complexo MAC, doença disseminada no HIV",["Azitromicina", "Claritromicina", "Etambutol", "Rifampicina"],["Isoniazida", "Pirazinamida", "Ceftriaxona", "Vancomicina"],"É naturalmente resistente à isoniazida e à pirazinamida, drogas centrais da tuberculose; o esquema usa macrolídeo mais etambutol.","Vive em água encanada e em biofilmes de chuveiros. A doença disseminada aparece no HIV avançado, com CD4 muito baixo."],
+["Mycobacterium abscessus","acid","bacilo","BAAR","Micobactéria de crescimento rápido · pulmão em fibrose cística, pele após procedimentos",["Amicacina", "Cefoxitina", "Imipenem-cilastatina", "Tigeciclina"],["Isoniazida", "Pirazinamida", "Penicilina G cristalina", "Vancomicina"],"Tem resistência intrínseca aos antituberculosos clássicos e aos β-lactâmicos comuns, e o gene erm(41) pode inutilizar o macrolídeo.","Ao contrário da maioria das micobactérias, cresce em menos de uma semana. Causa surtos ligados a procedimentos estéticos e infecta pulmões de pacientes com fibrose cística."],
+["Borrelia burgdorferi","neg","espiral","Espiroqueta","Espiral · doença de Lyme, carrapato Ixodes",["Doxiciclina", "Amoxicilina", "Cefuroxima", "Ceftriaxona"],["Vancomicina", "Ciprofloxacino", "Metronidazol", "Gentamicina"],"Quinolonas e aminoglicosídeos têm pouca atividade clínica contra a Borrelia; doxiciclina, amoxicilina e cefalosporinas são a base.","Tem genoma fragmentado, com plasmídeos lineares, e depende do carrapato Ixodes. O eritema migrans aparece na maioria dos infectados."],
+["Nocardia spp.","pos","bacilo","Filamentosa","Filamentos ramificados · pneumonia e abscesso cerebral em imunossuprimidos",["Sulfametoxazol-trimetoprima", "Imipenem-cilastatina", "Amicacina", "Linezolida"],["Penicilina G cristalina", "Vancomicina", "Metronidazol", "Aztreonam"],"A maioria é resistente a penicilinas e vancomicina; o SMX-TMP é a base, com imipenem e amicacina nas formas graves.","Parece um fungo ao microscópio, com filamentos ramificados, e cora fracamente pelo método álcool-ácido. Vem do solo."],
+["Actinomyces israelii","pos","bacilo","Filamentosa","Filamentos ramificados anaeróbios · actinomicose, DIU, boca",["Penicilina G cristalina", "Amoxicilina", "Doxiciclina", "Clindamicina"],["Metronidazol", "Ciprofloxacino", "Gentamicina", "Aztreonam"],"Metronidazol não funciona contra Actinomyces, apesar de ser anaeróbio; aminoglicosídeos e aztreonam não agem em anaeróbios.","Os \"grânulos de enxofre\" são colônias amarelas visíveis a olho nu na secreção. A infecção ligada ao DIU costuma surgir depois de anos de uso."]
 ];
 const BACS=B.map(a=>({n:a[0],gc:a[1],f:a[2],gl:a[3],h:a[4],ef:a[5].filter(x=>DBY[x]),in:a[6].filter(x=>DBY[x]),r:a[7],k:a[8]})).filter(b=>b.ef.length&&b.in.length>=3);
 
@@ -1005,10 +1012,27 @@ const PC={
   mca:{n:"Moraxella catarrhalis",nick:"A friorenta de escudo",img:'cards/moraxella-catarrhalis.webp',gc:'neg',gl:"Gram −",no:'54'},
 
   vch:{n:"Vibrio cholerae",nick:"O remador da água de arroz",img:'cards/vibrio-cholerae.webp',gc:'neg',gl:"Gram −",no:'55'},
-  mtb:{n:'Mycobacterium tuberculosis',nick:'A anciã de capa de cera',img:'cards/mycobacterium-tuberculosis.webp',gc:'acid',gl:'BAAR',no:'25'}
+  tpa:{n:"Treponema pallidum",nick:"O cavalheiro da cartola",img:'cards/treponema-pallidum.webp',gc:'neg',gl:"Espiroqueta",no:'56'},
+
+  lin:{n:"Leptospira interrogans",nick:"A corredora da enchente",img:'cards/leptospira-interrogans.webp',gc:'neg',gl:"Espiroqueta",no:'57'},
+
+  ric:{n:"Rickettsia rickettsii",nick:"O cavaleiro do carrapato-estrela",img:'cards/rickettsia-rickettsii.webp',gc:'none',gl:"Intracelular",no:'58'},
+
+  mle:{n:"Mycobacterium leprae",nick:"Os abraçados de cachecol",img:'cards/mycobacterium-leprae.webp',gc:'acid',gl:"BAAR",no:'59'},
+
+  mav:{n:"Mycobacterium avium",nick:"O cavaleiro da avezinha",img:'cards/mycobacterium-avium.webp',gc:'acid',gl:"BAAR",no:'60'},
+
+  mab:{n:"Mycobacterium abscessus",nick:"O encouraçado de cadeados",img:'cards/mycobacterium-abscessus.webp',gc:'acid',gl:"BAAR",no:'61'},
+
+  bbu:{n:"Borrelia burgdorferi",nick:"A pendurada no carrapato",img:'cards/borrelia-burgdorferi.webp',gc:'neg',gl:"Espiroqueta",no:'62'},
+
+  nsp:{n:"Nocardia spp.",nick:"A jardineira de raízes rosa",img:'cards/nocardia.webp',gc:'pos',gl:"Filamentosa",no:'63'},
+
+  ais:{n:"Actinomyces israelii",nick:"A árvore dos grânulos de enxofre",img:'cards/actinomyces-israelii.webp',gc:'pos',gl:"Filamentosa",no:'64'},
+  mtb:{n:'Mycobacterium tuberculosis',nick:"O bacilo da lanterna vermelha",img:'cards/mycobacterium-tuberculosis.webp',gc:'acid',gl:'BAAR',no:'25'}
 };
 // retrato de cada bactéria da base, pelo nome
-const ART={'Staphylococcus aureus (MSSA)':'sau','Staphylococcus aureus (MRSA)':'sau','Streptococcus pyogenes':'spy','Enterococcus faecium (VRE)':'efm','Clostridioides difficile':'cdi','Clostridium perfringens':'cpe','Bacteroides fragilis':'bfr','Escherichia coli':'eco','Klebsiella pneumoniae':'kpn','Klebsiella pneumoniae KPC':'kpn','Pseudomonas aeruginosa':'pae','Acinetobacter baumannii':'aba','Stenotrophomonas maltophilia':'sma','Proteus mirabilis':'pmi','Serratia marcescens':'srm','Enterobacter cloacae':'ecl','Haemophilus influenzae':'hin','Neisseria gonorrhoeae':'ngo','Neisseria meningitidis':'nme','Mycoplasma pneumoniae':'mpn','Chlamydia trachomatis':'ctr','Legionella pneumophila':'lpn','Mycobacterium tuberculosis':'mtb','Burkholderia cepacia (complexo)':'bce','Staphylococcus epidermidis':'sep','Klebsiella aerogenes':'kae','Citrobacter freundii':'cfr',"Klebsiella oxytoca":"kox","Morganella morganii":"mmo","Providencia stuartii":"pst","Salmonella enterica (não tifoide)":"sen","Salmonella Typhi":"sen","Shigella sonnei":"sso","Yersinia enterocolitica":"yen","Cronobacter sakazakii":"csa","Achromobacter xylosoxidans":"axy","Elizabethkingia meningoseptica":"eme","Ralstonia pickettii":"rpi","Sphingomonas paucimobilis":"spa","Burkholderia pseudomallei":"bps","Chryseobacterium indologenes":"cin","Staphylococcus saprophyticus":"ssa","Enterococcus faecalis":"efa","Streptococcus pneumoniae":"spn","Streptococcus agalactiae":"sag","Streptococcus viridans (grupo)":"svi","Streptococcus gallolyticus":"sga","Clostridium tetani":"cte","Clostridium botulinum":"cbo","Listeria monocytogenes":"lmo","Corynebacterium diphtheriae":"cdp","Brucella melitensis":"bme","Pasteurella multocida":"pmu","Helicobacter pylori":"hpy","Campylobacter jejuni":"cje","Bordetella pertussis":"bpe","Moraxella catarrhalis":"mca","Vibrio cholerae":"vch"};
+const ART={'Staphylococcus aureus (MSSA)':'sau','Staphylococcus aureus (MRSA)':'sau','Streptococcus pyogenes':'spy','Enterococcus faecium (VRE)':'efm','Clostridioides difficile':'cdi','Clostridium perfringens':'cpe','Bacteroides fragilis':'bfr','Escherichia coli':'eco','Klebsiella pneumoniae':'kpn','Klebsiella pneumoniae KPC':'kpn','Pseudomonas aeruginosa':'pae','Acinetobacter baumannii':'aba','Stenotrophomonas maltophilia':'sma','Proteus mirabilis':'pmi','Serratia marcescens':'srm','Enterobacter cloacae':'ecl','Haemophilus influenzae':'hin','Neisseria gonorrhoeae':'ngo','Neisseria meningitidis':'nme','Mycoplasma pneumoniae':'mpn','Chlamydia trachomatis':'ctr','Legionella pneumophila':'lpn','Mycobacterium tuberculosis':'mtb','Burkholderia cepacia (complexo)':'bce','Staphylococcus epidermidis':'sep','Klebsiella aerogenes':'kae','Citrobacter freundii':'cfr',"Klebsiella oxytoca":"kox","Morganella morganii":"mmo","Providencia stuartii":"pst","Salmonella enterica (não tifoide)":"sen","Salmonella Typhi":"sen","Shigella sonnei":"sso","Yersinia enterocolitica":"yen","Cronobacter sakazakii":"csa","Achromobacter xylosoxidans":"axy","Elizabethkingia meningoseptica":"eme","Ralstonia pickettii":"rpi","Sphingomonas paucimobilis":"spa","Burkholderia pseudomallei":"bps","Chryseobacterium indologenes":"cin","Staphylococcus saprophyticus":"ssa","Enterococcus faecalis":"efa","Streptococcus pneumoniae":"spn","Streptococcus agalactiae":"sag","Streptococcus viridans (grupo)":"svi","Streptococcus gallolyticus":"sga","Clostridium tetani":"cte","Clostridium botulinum":"cbo","Listeria monocytogenes":"lmo","Corynebacterium diphtheriae":"cdp","Brucella melitensis":"bme","Pasteurella multocida":"pmu","Helicobacter pylori":"hpy","Campylobacter jejuni":"cje","Bordetella pertussis":"bpe","Moraxella catarrhalis":"mca","Vibrio cholerae":"vch","Treponema pallidum":"tpa","Leptospira interrogans":"lin","Rickettsia rickettsii":"ric","Mycobacterium leprae":"mle","Mycobacterium avium":"mav","Mycobacterium abscessus":"mab","Borrelia burgdorferi":"bbu","Nocardia spp.":"nsp","Actinomyces israelii":"ais"};
 const PCK=Object.keys(PC);
 // [carta, fenótipo, sítio, contexto, antibiograma [[fármaco,resultado]], opções [[fármaco, nota 2|1|0, por quê, classe opcional]], lição]
 // nota 2 = melhor escolha · 1 = funciona, mas não é a ideal · 0 = falha
@@ -1509,7 +1533,105 @@ const PCASES=[
   ["Ampicilina",0,"Parte das cepas produz β-lactamase: não é segura na meningite."],
   ["Gentamicina",0,"Em monoterapia não atinge concentração útil no líquor."],
   ["Vancomicina",0,"Não age em gram-negativos."]],
- "Meningite por Hib: ceftriaxona. A vacina Hib quase eliminou a doença; os contatos podem receber rifampicina."]
+ "Meningite por Hib: ceftriaxona. A vacina Hib quase eliminou a doença; os contatos podem receber rifampicina."],
+["mtb","Multirresistente","Tuberculose resistente à rifampicina","Mulher, 30 anos, tuberculose pulmonar com baciloscopia positiva; o teste rápido molecular detecta resistência à rifampicina e o antibiograma confirma resistência à isoniazida.",
+ [["Rifampicina", "R"], ["Isoniazida", "R"], ["Moxifloxacino", "S"], ["Linezolida", "S"], ["Bedaquilina", "S"]],
+ [["Esquema de TB-MDR com bedaquilina, linezolida e moxifloxacino, em centro de referência",2,"Resistência a rifampicina e isoniazida é multirresistência: o esquema usa drogas ativas mais novas, por infectologia ou centro de referência.","Associação"],
+  ["Repetir rifampicina + isoniazida + pirazinamida + etambutol",0,"As duas drogas principais não funcionam: repetir o esquema básico seleciona mais resistência.","Associação"],
+  ["Rifampicina em dose maior",0,"Aumentar a dose não vence uma resistência definida pelo teste."],
+  ["Isoniazida + etambutol",0,"Sem a rifampicina e com resistência à isoniazida, o esquema fica sem drogas ativas suficientes.","Associação"]],
+ "Resistência à rifampicina: não repita o esquema básico. TB-MDR pede esquema com bedaquilina, linezolida e quinolona, em centro de referência."],
+["tpa","Sífilis recente","Sífilis secundária","Mulher, 26 anos, exantema que atinge as palmas e as plantas, lesões em mucosa e adenomegalia; VDRL 1:64 e teste treponêmico positivo; não está grávida e não tem alergia.",
+ "Sem teste de sensibilidade: o T. pallidum não cresce em cultura.",
+ [["Penicilina G benzatina intramuscular em dose única",2,"É o tratamento de escolha da sífilis recente, sem resistência à penicilina descrita."],
+  ["Doxiciclina por 15 dias",1,"É alternativa em alergia à penicilina fora da gestação; sem alergia, a penicilina é superior."],
+  ["Azitromicina",0,"Há resistência por mutação no rRNA 23S e falhas documentadas: não use."],
+  ["Ciprofloxacino",0,"Não tem papel no tratamento da sífilis."]],
+ "Sífilis recente: penicilina benzatina em dose única, VDRL de acompanhamento e tratamento dos parceiros."],
+["tpa","Gestação","Sífilis na gestante","Gestante de 24 semanas, sífilis latente tardia, VDRL 1:32; relata alergia à penicilina, com história de urticária e edema labial.",
+ "Alergia confirmada à penicilina; sem teste de sensibilidade.",
+ [["Dessensibilizar e tratar com penicilina G benzatina",2,"Só a penicilina trata o feto; em alergia confirmada a conduta é dessensibilizar e tratar."],
+  ["Doxiciclina",0,"Contraindicada na gestação, por afetar ossos e dentes do feto."],
+  ["Azitromicina",0,"Não trata o feto de forma confiável e há resistência."],
+  ["Eritromicina",0,"Não atravessa bem a placenta: a gestante é tratada e o feto, não."]],
+ "Na gestação, só a penicilina trata o feto. Alergia confirmada pede dessensibilização, não troca de antibiótico."],
+["bbu","Precoce localizada","Eritema migrans","Mulher, 42 anos, voltou há 10 dias de caminhadas em floresta nos Estados Unidos; lesão em alvo de 12 cm na coxa, sem sintomas neurológicos nem cardíacos; sem alergia.",
+ "Diagnóstico clínico: no eritema migrans a sorologia pode ser negativa e não é necessária.",
+ [["Doxiciclina por 10 dias",2,"É o tratamento do eritema migrans em adultos não gestantes, e cobre também algumas coinfecções por carrapato."],
+  ["Amoxicilina por 14 dias",1,"É alternativa válida (gestantes e crianças pequenas), mas a doxiciclina é a escolha neste caso."],
+  ["Azitromicina",0,"É menos eficaz que as demais opções: reserve para quando nenhuma outra puder ser usada."],
+  ["Ciprofloxacino",0,"Quinolonas têm pouca atividade clínica contra a Borrelia."]],
+ "Lesão em alvo depois de exposição a carrapato é doença de Lyme: trate sem esperar sorologia, com doxiciclina."],
+["bbu","Cardíaca","Cardite de Lyme","Homem, 39 anos, histórico de eritema migrans há 6 semanas sem tratamento; chega com síncope e bloqueio atrioventricular total no ECG.",
+ "ECG com bloqueio AV total; sorologia em duas etapas positiva.",
+ [["Ceftriaxona intravenosa",2,"Cardite com bloqueio de alto grau pede via venosa, com monitorização cardíaca."],
+  ["Doxiciclina oral",1,"Seria opção em bloqueio leve; no bloqueio total, a via intravenosa é preferida."],
+  ["Azitromicina",0,"Menos eficaz e não é recomendada na doença de Lyme com cardite."],
+  ["Ciprofloxacino",0,"Quinolonas têm pouca atividade clínica contra a Borrelia."]],
+ "Cardite de Lyme com bloqueio atrioventricular: ceftriaxona intravenosa e monitorização do ritmo."],
+["lin","Grave","Síndrome de Weil","Homem, 35 anos, limpou a casa depois de uma enchente; febre, mialgia intensa nas panturrilhas, icterícia, oligúria e creatinina de 3,5 mg/dL.",
+ "Sorologia pendente; o tratamento não deve esperar.",
+ [["Penicilina G cristalina intravenosa",2,"É a referência na leptospirose grave e começa já na suspeita, sem esperar a sorologia."],
+  ["Doxiciclina oral",1,"Resolve a forma leve, mas o paciente grave precisa de via venosa e suporte."],
+  ["Gentamicina",0,"Não é tratamento da leptospirose e agrava a lesão renal."],
+  ["Ciprofloxacino",0,"Não é o tratamento recomendado e não resolve o quadro grave."]],
+ "Na leptospirose grave, comece a penicilina cristalina na suspeita. Hidratação e suporte renal fazem parte do cuidado."],
+["lin","Leve","Leptospirose leve","Mulher, 27 anos, 4 dias de febre, mialgia e olhos vermelhos depois de contato com água de enchente; estável, sem icterícia e sem alteração renal.",
+ "Sem antibiograma: tratamento empírico.",
+ [["Doxiciclina por 5 a 7 dias",2,"Na forma leve, é oral, eficaz e de baixo custo."],
+  ["Amoxicilina",1,"É alternativa em gestantes e crianças; neste caso a doxiciclina é a escolha."],
+  ["Ciprofloxacino",0,"Não é o tratamento recomendado da leptospirose."],
+  ["Gentamicina",0,"Não é tratamento da leptospirose."]],
+ "Febre com mialgia depois de enchente: pense em leptospirose. Doxiciclina por 5 a 7 dias na forma leve."],
+["ric","Febre maculosa","Febre maculosa em adulto","Homem, 28 anos, esteve em área rural com capivaras; 5 dias de febre, cefaleia e mialgia, exantema que começou nos punhos e tornozelos, plaquetas de 60 mil; sorologia pendente.",
+ "Sorologia pendente: só positiva depois de 7 a 10 dias.",
+ [["Doxiciclina imediatamente",2,"Na febre maculosa, atrasar a doxiciclina aumenta muito a letalidade: trata-se na suspeita."],
+  ["Esperar a sorologia antes de tratar",0,"A sorologia é tardia: a espera custa vidas."],
+  ["Ceftriaxona",0,"Não age sobre a Rickettsia, que vive dentro das células."],
+  ["Sulfametoxazol-trimetoprima",0,"Não trata e pode até piorar a doença."]],
+ "Febre, exantema que começa nas extremidades e carrapato: doxiciclina já, sem esperar o exame."],
+["ric","Criança","Febre maculosa em criança","Menino de 6 anos, 4 dias de febre, cefaleia e exantema com petéquias, depois de brincar em área com carrapatos; plaquetopenia.",
+ "Sem exame confirmatório ainda.",
+ [["Doxiciclina",2,"Em febre maculosa, é o tratamento mesmo em crianças: o benefício supera o risco para os dentes."],
+  ["Cloranfenicol",1,"É alternativa em casos selecionados, mas a doxiciclina é mais eficaz e é a escolha."],
+  ["Amoxicilina",0,"Não age sobre a Rickettsia."],
+  ["Gentamicina",0,"Aminoglicosídeos não agem em bactérias intracelulares."]],
+ "Febre maculosa em criança: doxiciclina sem hesitar. A letalidade do atraso é maior que o risco da droga."],
+["nsp","Imunossuprimido","Nocardiose pulmonar","Homem, 55 anos, transplantado renal em uso de prednisona e tacrolimo; pneumonia subaguda com nódulos cavitados; escarro com bacilos filamentosos ramificados, fracamente álcool-ácido resistentes: Nocardia.",
+ "Nocardia identificada; antibiograma em andamento.",
+ [["Sulfametoxazol-trimetoprima",2,"É a base do tratamento; vigie potássio e creatinina, sobretudo com tacrolimo."],
+  ["Amoxicilina",0,"A Nocardia costuma ser resistente a penicilinas."],
+  ["Azitromicina",0,"Não é tratamento da nocardiose."],
+  ["Vancomicina",0,"Não tem atividade clínica útil contra a Nocardia."]],
+ "Imunossuprimido com nódulos pulmonares e filamentos ramificados: pense em Nocardia. SMX-TMP, e descarte abscesso cerebral."],
+["ais","Actinomicose","Actinomicose pélvica","Mulher, 38 anos, DIU há 9 anos, dor pélvica, febre baixa e massa anexial; a biópsia mostra grânulos de enxofre e cultura anaeróbia com Actinomyces israelii.",
+ "Sensível à penicilina.",
+ [["Penicilina G cristalina intravenosa, depois amoxicilina oral por meses",2,"É o tratamento clássico: dose alta e longa, com a retirada do DIU.","Associação"],
+  ["Amoxicilina oral por 14 dias",1,"É ativa, mas o tratamento da actinomicose é longo, de 6 a 12 meses, e começa pela via venosa em doença pélvica."],
+  ["Metronidazol",0,"O Actinomyces é anaeróbio, mas resistente ao metronidazol."],
+  ["Ciprofloxacino",0,"Não é o tratamento recomendado da actinomicose."]],
+ "Grânulos de enxofre e DIU de longa data: Actinomyces. Penicilina por meses e retirada do dispositivo."],
+["mav","HIV avançado","MAC disseminado","Homem, 36 anos, HIV com CD4 de 20, sem tratamento antirretroviral; febre, sudorese, perda de peso e anemia; hemocultura para micobactérias com M. avium.",
+ "M. avium: sensibilidade à claritromicina pendente.",
+ [["Azitromicina + etambutol",2,"Macrolídeo mais etambutol é a base: associar impede a seleção de resistência ao macrolídeo.","Associação"],
+  ["Azitromicina isolada",0,"Monoterapia com macrolídeo seleciona resistência."],
+  ["Isoniazida + pirazinamida",0,"O M. avium é naturalmente resistente a essas drogas da tuberculose.","Associação"],
+  ["Rifampicina + isoniazida",0,"Esquema da tuberculose não trata o MAC; a rifampicina ainda interage com os antirretrovirais.","Associação"]],
+ "MAC disseminado: macrolídeo mais etambutol. Atenção às interações da rifampicina e ao início do antirretroviral."],
+["mab","Resistente","Micobactéria em fibrose cística","Mulher, 24 anos, fibrose cística, tosse e piora funcional; escarro com M. abscessus subsp. abscessus, gene erm(41) funcional.",
+ "erm(41) funcional: resistência induzível ao macrolídeo. Sensível a amicacina e cefoxitina; imipenem intermediário.",
+ [["Amicacina + cefoxitina + tigeciclina, sem contar com o macrolídeo",2,"Com erm(41) funcional, o macrolídeo não é confiável; a combinação usa as drogas ativas por fases.","Associação"],
+  ["Claritromicina + amicacina + cefoxitina",1,"O macrolídeo entra no esquema, mas com erm(41) funcional não se conta com ele como droga ativa.","Associação"],
+  ["Claritromicina isolada",0,"Monoterapia e resistência induzível: falha garantida."],
+  ["Isoniazida + rifampicina",0,"O M. abscessus é intrinsecamente resistente às drogas da tuberculose.","Associação"]],
+ "M. abscessus: o teste de sensibilidade e o erm(41) guiam o esquema, sempre em combinação e com infectologista."],
+["mle","Multibacilar","Hanseníase multibacilar","Homem, 45 anos, manchas claras com perda de sensibilidade, nervo ulnar espessado e baciloscopia positiva.",
+ "Baciloscopia positiva: forma multibacilar.",
+ [["Rifampicina + dapsona + clofazimina por 12 meses",2,"É a poliquimioterapia da forma multibacilar, recomendada pela OMS.","Associação"],
+  ["Rifampicina + dapsona por 6 meses",1,"É o esquema da forma paucibacilar, insuficiente na multibacilar.","Associação"],
+  ["Dapsona isolada",0,"Monoterapia selecionou resistência no passado e é inadequada."],
+  ["Amoxicilina-clavulanato",0,"Não tem papel no tratamento da hanseníase."]],
+ "Hanseníase: poliquimioterapia, nunca uma droga só. Dapsona exige atenção à G6PD; examine os contatos."]
 ].map(a=>({c:a[0],fen:a[1],site:a[2],ctx:a[3],abg:a[4],opts:a[5].map(o=>({n:o[0],s:o[1],w:o[2],sub:o[3]||(DBY[o[0]]?DBY[o[0]].c:'')})),les:a[6]}));
 const PN=8;
 function plColl(){return store('arsenal.plCards')||[]}
@@ -1655,7 +1777,7 @@ function finishMem(){M.done=true;renderMemHud();const s=Math.floor(M.t);const sc
 const LANES=4;let Fseen=[],F=null,FW=0,FH=0,fx=null;
 // retratos dos personagens, carregados uma vez; FOCUS = onde está o rosto (fração da largura e da altura)
 const PIMG={};
-const FOCUS={mtb:[.80,.47],bme:[.5,.33],hin:[.45,.38],pmu:[.55,.3],hpy:[.5,.3],ngo:[.42,.45],cje:[.5,.26],nme:[.42,.5],bpe:[.48,.3],mca:[.5,.36],vch:[.46,.32]};const OLDART=['mtb'];
+const FOCUS={mtb:[0.5,0.27],tpa:[0.5,0.28],lin:[0.55,0.28],ric:[0.45,0.3],mle:[0.52,0.27],mav:[0.47,0.28],mab:[0.47,0.2],bbu:[0.52,0.37],nsp:[0.52,0.35],ais:[0.52,0.36],bme:[.5,.33],hin:[.45,.38],pmu:[.55,.3],hpy:[.5,.3],ngo:[.42,.45],cje:[.5,.26],nme:[.42,.5],bpe:[.48,.3],mca:[.5,.36],vch:[.46,.32]};const OLDART=[];
 function portraitOf(name){const k=ART[name];if(!k)return null;
   if(!PIMG[k]){const im=new Image();im.decoding='async';im.src=PC[k].img;PIMG[k]=im}
   const im=PIMG[k];return im.complete&&im.naturalWidth?im:null}

@@ -352,7 +352,7 @@ h1 .n{color:var(--pink);text-shadow:0 0 28px rgba(255,91,146,.5)}
       <p class="small" id="rankNote"></p>
     </div>
     <div class="modes">
-      <button class="mode" style="--c:var(--amber)" data-go="plan" data-premium="1"><h3>Modo Plantão</h3><p>Casos de UTI com antibiograma. Escolha o antimicrobiano mais estreito que funcione e desbloqueie as 48 cartas de bactérias.</p><kbd>H</kbd></button>
+      <button class="mode" style="--c:var(--amber)" data-go="plan" data-premium="1"><h3>Modo Plantão</h3><p>Casos de UTI com antibiograma. Escolha o antimicrobiano mais estreito que funcione e desbloqueie as 55 cartas de bactérias.</p><kbd>H</kbd></button>
       <button class="mode" style="--c:var(--pink)" data-go="battle" data-premium="1"><h3>Batalha</h3><p>Uma bactéria aparece. Escolha um antimicrobiano ativo. Erros aumentam a pressão de resistência.</p><kbd>B</kbd></button>
       <button class="mode" style="--c:var(--violet)" data-go="quiz" data-premium="1"><h3>Quiz de farmacologia</h3><p>12 perguntas sobre classe, mecanismo, efeitos adversos e "quem sou eu?" pelas curiosidades.</p><kbd>Q</kbd></button>
       <button class="mode" style="--c:var(--amber)" data-go="mem" data-premium="1"><h3>Memória</h3><p>Vire as cartas e forme pares: fármaco e classe, fármaco e alvo, ou bactéria e antimicrobiano ativo.</p><kbd>J</kbd></button>
@@ -721,6 +721,12 @@ const B=[
 ["Clostridium tetani","pos","bacilo","Gram + anaeróbio","Bacilo com esporo terminal · tétano",["Metronidazol", "Penicilina G cristalina"],["Gentamicina", "Amicacina", "Aztreonam", "Polimixina B"],"Aminoglicosídeos dependem de oxigênio para entrar na célula e não agem em anaeróbios. O dano vem da toxina, que o antibiótico não neutraliza: o tratamento inclui imunoglobulina e suporte.","A tetanospasmina é uma das toxinas mais potentes conhecidas. O esporo redondo na ponta lembra uma baqueta de tambor."],
 ["Clostridium botulinum","pos","bacilo","Gram + anaeróbio","Bacilo com esporo subterminal · botulismo",["Penicilina G cristalina", "Metronidazol"],["Gentamicina", "Amicacina", "Aztreonam", "Polimixina B"],"Na doença alimentar e na infantil, o tratamento é antitoxina e suporte, sem antibiótico; o antibiótico entra no botulismo de ferida. Aminoglicosídeos podem piorar o bloqueio neuromuscular.","Por risco de botulismo infantil, não se dá mel a menores de 1 ano."],
 ["Corynebacterium diphtheriae","pos","bacilo","Gram +","Bacilo em clava · difteria",["Penicilina G cristalina", "Eritromicina", "Azitromicina", "Claritromicina"],["Aztreonam", "Polimixina B", "Metronidazol", "Gentamicina"],"O antibiótico erradica o bacilo, mas não neutraliza a toxina: sem antitoxina, o dano continua.","O gene da toxina vem de um bacteriófago: só as cepas infectadas pelo vírus produzem a toxina."]
+,
+["Brucella melitensis","neg","cocobacilo","Gram −","Cocobacilo · brucelose, leite cru e contato com animais",["Doxiciclina", "Rifampicina", "Estreptomicina", "Gentamicina"],["Vancomicina", "Daptomicina", "Amoxicilina", "Cefazolina"],"Intracelular: vancomicina e β-lactâmicos não resolvem. O tratamento combina doxiciclina com rifampicina ou aminoglicosídeo por semanas, porque a monoterapia recai.","Causa a febre ondulante e é uma das infecções de laboratório mais comuns: avise o laboratório ao suspeitar."],
+["Pasteurella multocida","neg","cocobacilo","Gram −","Cocobacilo · mordida e arranhadura de gato e cão",["Amoxicilina-clavulanato", "Penicilina G cristalina", "Ceftriaxona", "Doxiciclina"],["Oxacilina", "Cefalexina", "Clindamicina", "Vancomicina"],"Costuma ser resistente à oxacilina, à cefalexina e à clindamicina, escolhas comuns em infecção de pele; a penicilina e a amoxicilina-clavulanato funcionam.","A celulite aparece em menos de 24 horas depois da mordida, bem mais rápido que a infecção por estafilococo."],
+["Bordetella pertussis","neg","cocobacilo","Gram −","Cocobacilo · coqueluche",["Azitromicina", "Claritromicina", "Eritromicina", "Sulfametoxazol-trimetoprima"],["Amoxicilina", "Cefalexina", "Vancomicina", "Clindamicina"],"Os macrolídeos são a base; β-lactâmicos orais não funcionam bem. Em menores de 2 meses, o SMX-TMP é contraindicado.","Pertussis vem do latim \"tosse intensa\". A vacina na gestação protege o recém-nascido nos primeiros meses de vida."],
+["Moraxella catarrhalis","neg","diplo","Gram −","Diplococo · otite média, sinusite, exacerbação de DPOC",["Amoxicilina-clavulanato", "Cefuroxima", "Azitromicina", "Sulfametoxazol-trimetoprima"],["Penicilina G cristalina", "Ampicilina", "Amoxicilina", "Vancomicina"],"Mais de 90% dos isolados produzem β-lactamase: penicilina, ampicilina e amoxicilina simples falham.","Já foi chamada de Branhamella catarrhalis. É uma das principais causas bacterianas de otite média, ao lado do pneumococo e do H. influenzae."],
+["Vibrio cholerae","neg","curvo","Gram −","Bacilo em vírgula · cólera, diarreia aquosa",["Doxiciclina", "Azitromicina", "Ciprofloxacino", "Sulfametoxazol-trimetoprima"],["Vancomicina", "Daptomicina", "Clindamicina", "Metronidazol"],"O antibiótico é complemento: encurta a diarreia, mas quem salva é a reidratação. Resistência a tetraciclina e SMX-TMP já foi descrita.","A cólera pode levar a perdas de litros de líquido por hora; com reposição adequada, a mortalidade cai para menos de 1%."]
 ];
 const BACS=B.map(a=>({n:a[0],gc:a[1],f:a[2],gl:a[3],h:a[4],ef:a[5].filter(x=>DBY[x]),in:a[6].filter(x=>DBY[x]),r:a[7],k:a[8]})).filter(b=>b.ef.length&&b.in.length>=3);
 
@@ -986,10 +992,23 @@ const PC={
   lmo:{n:"Listeria monocytogenes",nick:"A acrobata da geladeira",img:'cards/listeria.webp',gc:'pos',gl:"Gram +",no:'47'},
 
   cdp:{n:"Corynebacterium diphtheriae",nick:"A de capa e cartola da garganta",img:'cards/corynebacterium.webp',gc:'pos',gl:"Gram +",no:'48'},
+  bme:{n:"Brucella melitensis",nick:"O pepino do leite cru",img:'cards/brucella-melitensis.webp',gc:'neg',gl:"Gram −",no:'49'},
+
+  pmu:{n:"Pasteurella multocida",nick:"A surfista da mordida de gato",img:'cards/pasteurella-multocida.webp',gc:'neg',gl:"Gram −",no:'50'},
+
+  hpy:{n:"Helicobacter pylori",nick:"A espiral que vive no ácido",img:'cards/helicobacter-pylori.webp',gc:'neg',gl:"Gram −",no:'51'},
+
+  cje:{n:"Campylobacter jejuni",nick:"A dançarina do frango mal passado",img:'cards/campylobacter-jejuni.webp',gc:'neg',gl:"Gram −",no:'52'},
+
+  bpe:{n:"Bordetella pertussis",nick:"A que assopra o guincho da tosse",img:'cards/bordetella-pertussis.webp',gc:'neg',gl:"Gram −",no:'53'},
+
+  mca:{n:"Moraxella catarrhalis",nick:"A friorenta de escudo",img:'cards/moraxella-catarrhalis.webp',gc:'neg',gl:"Gram −",no:'54'},
+
+  vch:{n:"Vibrio cholerae",nick:"O remador da água de arroz",img:'cards/vibrio-cholerae.webp',gc:'neg',gl:"Gram −",no:'55'},
   mtb:{n:'Mycobacterium tuberculosis',nick:'A anciã de capa de cera',img:'cards/mycobacterium-tuberculosis.webp',gc:'acid',gl:'BAAR',no:'25'}
 };
 // retrato de cada bactéria da base, pelo nome
-const ART={'Staphylococcus aureus (MSSA)':'sau','Staphylococcus aureus (MRSA)':'sau','Streptococcus pyogenes':'spy','Enterococcus faecium (VRE)':'efm','Clostridioides difficile':'cdi','Clostridium perfringens':'cpe','Bacteroides fragilis':'bfr','Escherichia coli':'eco','Klebsiella pneumoniae':'kpn','Klebsiella pneumoniae KPC':'kpn','Pseudomonas aeruginosa':'pae','Acinetobacter baumannii':'aba','Stenotrophomonas maltophilia':'sma','Proteus mirabilis':'pmi','Serratia marcescens':'srm','Enterobacter cloacae':'ecl','Haemophilus influenzae':'hin','Neisseria gonorrhoeae':'ngo','Neisseria meningitidis':'nme','Mycoplasma pneumoniae':'mpn','Chlamydia trachomatis':'ctr','Legionella pneumophila':'lpn','Mycobacterium tuberculosis':'mtb','Burkholderia cepacia (complexo)':'bce','Staphylococcus epidermidis':'sep','Klebsiella aerogenes':'kae','Citrobacter freundii':'cfr',"Klebsiella oxytoca":"kox","Morganella morganii":"mmo","Providencia stuartii":"pst","Salmonella enterica (não tifoide)":"sen","Salmonella Typhi":"sen","Shigella sonnei":"sso","Yersinia enterocolitica":"yen","Cronobacter sakazakii":"csa","Achromobacter xylosoxidans":"axy","Elizabethkingia meningoseptica":"eme","Ralstonia pickettii":"rpi","Sphingomonas paucimobilis":"spa","Burkholderia pseudomallei":"bps","Chryseobacterium indologenes":"cin","Staphylococcus saprophyticus":"ssa","Enterococcus faecalis":"efa","Streptococcus pneumoniae":"spn","Streptococcus agalactiae":"sag","Streptococcus viridans (grupo)":"svi","Streptococcus gallolyticus":"sga","Clostridium tetani":"cte","Clostridium botulinum":"cbo","Listeria monocytogenes":"lmo","Corynebacterium diphtheriae":"cdp"};
+const ART={'Staphylococcus aureus (MSSA)':'sau','Staphylococcus aureus (MRSA)':'sau','Streptococcus pyogenes':'spy','Enterococcus faecium (VRE)':'efm','Clostridioides difficile':'cdi','Clostridium perfringens':'cpe','Bacteroides fragilis':'bfr','Escherichia coli':'eco','Klebsiella pneumoniae':'kpn','Klebsiella pneumoniae KPC':'kpn','Pseudomonas aeruginosa':'pae','Acinetobacter baumannii':'aba','Stenotrophomonas maltophilia':'sma','Proteus mirabilis':'pmi','Serratia marcescens':'srm','Enterobacter cloacae':'ecl','Haemophilus influenzae':'hin','Neisseria gonorrhoeae':'ngo','Neisseria meningitidis':'nme','Mycoplasma pneumoniae':'mpn','Chlamydia trachomatis':'ctr','Legionella pneumophila':'lpn','Mycobacterium tuberculosis':'mtb','Burkholderia cepacia (complexo)':'bce','Staphylococcus epidermidis':'sep','Klebsiella aerogenes':'kae','Citrobacter freundii':'cfr',"Klebsiella oxytoca":"kox","Morganella morganii":"mmo","Providencia stuartii":"pst","Salmonella enterica (não tifoide)":"sen","Salmonella Typhi":"sen","Shigella sonnei":"sso","Yersinia enterocolitica":"yen","Cronobacter sakazakii":"csa","Achromobacter xylosoxidans":"axy","Elizabethkingia meningoseptica":"eme","Ralstonia pickettii":"rpi","Sphingomonas paucimobilis":"spa","Burkholderia pseudomallei":"bps","Chryseobacterium indologenes":"cin","Staphylococcus saprophyticus":"ssa","Enterococcus faecalis":"efa","Streptococcus pneumoniae":"spn","Streptococcus agalactiae":"sag","Streptococcus viridans (grupo)":"svi","Streptococcus gallolyticus":"sga","Clostridium tetani":"cte","Clostridium botulinum":"cbo","Listeria monocytogenes":"lmo","Corynebacterium diphtheriae":"cdp","Brucella melitensis":"bme","Pasteurella multocida":"pmu","Helicobacter pylori":"hpy","Campylobacter jejuni":"cje","Bordetella pertussis":"bpe","Moraxella catarrhalis":"mca","Vibrio cholerae":"vch"};
 const PCK=Object.keys(PC);
 // [carta, fenótipo, sítio, contexto, antibiograma [[fármaco,resultado]], opções [[fármaco, nota 2|1|0, por quê, classe opcional]], lição]
 // nota 2 = melhor escolha · 1 = funciona, mas não é a ideal · 0 = falha
@@ -1427,7 +1446,70 @@ const PCASES=[
   ["Ceftriaxona",1,"Funciona na maioria, mas sem a vancomicina deixa descoberta a cepa com CIM elevada."],
   ["Azitromicina",0,"Não atinge concentração útil no LCR."],
   ["Gentamicina",0,"Não atinge concentração útil no LCR."]],
- "Meningite pneumocócica: pontos de corte próprios e vancomicina empírica até o antibiograma. A vacina conjugada previne."]
+ "Meningite pneumocócica: pontos de corte próprios e vancomicina empírica até o antibiograma. A vacina conjugada previne."],
+["bme","Intracelular","Brucelose aguda","Homem, 34 anos, veterinário de rebanhos, febre ondulante há 3 semanas, sudorese noturna e dor lombar; hemocultura e sorologia compatíveis com Brucella melitensis.",
+ "Brucella não tem antibiograma de rotina: o tratamento segue protocolo.",
+ [["Doxiciclina + rifampicina",2,"Esquema combinado e prolongado (cerca de 6 semanas) é o padrão: a monoterapia tem alta taxa de recaída.","Associação"],
+  ["Doxiciclina",1,"Ativa, mas em monoterapia a recaída é comum: a combinação é preferida."],
+  ["Amoxicilina",0,"β-lactâmicos têm atividade fraca contra a bactéria intracelular e não são esquema de brucelose."],
+  ["Vancomicina",0,"A bactéria é gram-negativa: a vancomicina não tem atividade."]],
+ "Febre ondulante e leite cru ou rebanho: pense em brucelose. Combine antimicrobianos por semanas e avise o laboratório antes da cultura."],
+["pmu","Sensível à penicilina","Celulite após mordida de gato","Mulher, 45 anos, 8 horas depois de mordida de gato na mão: dor intensa, edema e eritema que avança; sem alergia.",
+ [["Penicilina G cristalina", "S"], ["Amoxicilina-clavulanato", "S"], ["Oxacilina", "R"], ["Cefalexina", "R"], ["Clindamicina", "R"]],
+ [["Amoxicilina-clavulanato",2,"Cobre a Pasteurella, os anaeróbios da boca e o S. aureus: a escolha clássica para mordida de animal."],
+  ["Penicilina G cristalina",1,"Ativa contra Pasteurella, mas não cobre o S. aureus nem os anaeróbios que produzem β-lactamase."],
+  ["Cefalexina",0,"Resistente no antibiograma: o esquema comum de celulite falha na mordida."],
+  ["Clindamicina",0,"Resistente no antibiograma: a Pasteurella não é coberta por ela."]],
+ "Celulite que surge em horas depois de mordida de gato ou cão: lembre da Pasteurella. Cefalexina, oxacilina e clindamicina falham."],
+["hpy","Primeira linha","Úlcera duodenal","Homem, 48 anos, dor epigástrica e úlcera duodenal na endoscopia, teste da urease positivo; nunca usou macrolídeo e não tem alergia.",
+ "Sem antibiograma de rotina; região com baixa resistência à claritromicina.",
+ [["Inibidor de bomba + amoxicilina + claritromicina por 14 dias",2,"Terapia tripla é adequada quando não há uso prévio de macrolídeo e a resistência local à claritromicina é baixa.","Associação"],
+  ["Inibidor de bomba isolado",0,"Cicatriza a úlcera, mas não erradica a bactéria: a úlcera volta.","Gastroproteção"],
+  ["Amoxicilina isolada",0,"Monoterapia não erradica a H. pylori e favorece resistência."],
+  ["Claritromicina isolada",0,"Monoterapia falha e seleciona resistência ao macrolídeo."]],
+ "H. pylori exige combinação: inibidor de bomba mais dois antimicrobianos por 14 dias, escolhidos pela resistência local à claritromicina."],
+["hpy","Resistência à claritromicina","Falha de erradicação","Mulher, 55 anos, com falha prévia de esquema com claritromicina; segue com sintomas e teste respiratório positivo.",
+ "Exposição prévia a macrolídeo: resistência à claritromicina provável.",
+ [["Inibidor de bomba + bismuto + tetraciclina + metronidazol por 14 dias",2,"A quádrupla com bismuto não depende da claritromicina e é a escolha após falha.","Associação"],
+  ["Inibidor de bomba + amoxicilina + levofloxacino",1,"Opção de resgate, mas a resistência a quinolonas cresce: reserve para quando a quádrupla não servir.","Associação"],
+  ["Repetir inibidor de bomba + amoxicilina + claritromicina",0,"Repetir claritromicina depois de falha tende a falhar de novo.","Associação"],
+  ["Azitromicina",0,"Resistência cruzada entre macrolídeos: se a claritromicina falhou, a azitromicina também."]],
+ "Falhou com claritromicina? Troque a classe: quádrupla com bismuto. Repetir o mesmo esquema repete a falha."],
+["cje","Autolimitada","Gastroenterite","Mulher, 29 anos, saudável, diarreia aquosa com um pouco de sangue e febre baixa há 3 dias depois de churrasco de frango; coprocultura com Campylobacter jejuni; hidratada e estável.",
+ [["Azitromicina", "S"], ["Ciprofloxacino", "R"], ["Ampicilina", "R"]],
+ [["Hidratação oral e observação, sem antibiótico",2,"Em imunocompetente com quadro não grave, o antibiótico quase não muda a evolução.","Suporte"],
+  ["Azitromicina",1,"Ativa, mas reservada para quadro grave, prolongado, imunossuprimido ou gestante."],
+  ["Ciprofloxacino",0,"Resistente no antibiograma: a resistência a quinolonas é muito comum."],
+  ["Ampicilina",0,"Resistente no antibiograma."]],
+ "Campylobacter: hidratação primeiro; azitromicina no quadro grave. Quinolona perde por resistência. Lembre da síndrome de Guillain-Barré semanas depois."],
+["bpe","Macrolídeo","Coqueluche em lactente","Lactente de 7 semanas, tosse em acessos com apneia e cianose, linfocitose e PCR positivo para Bordetella pertussis; a mãe tem tosse há 3 semanas.",
+ "PCR positivo; sem antibiograma de rotina.",
+ [["Azitromicina",2,"Macrolídeo é a base do tratamento e a azitromicina é a escolha em lactentes pequenos."],
+  ["Claritromicina",1,"Também é macrolídeo ativo, mas a azitromicina tem posologia mais simples e menos interações."],
+  ["Sulfametoxazol-trimetoprima",0,"Contraindicado em menores de 2 meses pelo risco de kernicterus."],
+  ["Amoxicilina",0,"β-lactâmico oral não funciona bem contra a Bordetella."]],
+ "Coqueluche em lactente: macrolídeo precoce, internação se houver apneia e tratamento dos contatos. SMX-TMP não serve abaixo de 2 meses."],
+["mca","β-lactamase","Otite média aguda","Criança de 3 anos, otite média aguda com febre e otalgia, sem melhora após 72 horas de amoxicilina simples. Timpanocentese com Moraxella catarrhalis.",
+ [["Ampicilina", "R"], ["Penicilina G benzatina", "R"], ["Amoxicilina-clavulanato", "S"], ["Ceftriaxona", "S"]],
+ [["Amoxicilina-clavulanato",2,"O inibidor protege a amoxicilina da β-lactamase da Moraxella."],
+  ["Ceftriaxona",1,"Ativa, mas por via intramuscular: reserve para vômitos ou falha da via oral."],
+  ["Amoxicilina",0,"A β-lactamase a inativa: foi o que a falha mostrou."],
+  ["Penicilina G benzatina",0,"A β-lactamase a inativa, e o nível sérico não é o adequado para otite."]],
+ "Otite que não melhora com amoxicilina: pense em H. influenzae e Moraxella produtores de β-lactamase e troque para amoxicilina-clavulanato."],
+["vch","Cólera","Diarreia aquosa profusa","Homem, 30 anos, diarreia em água de arroz (cerca de 20 evacuações em 8 horas), vômitos, olhos fundos, pulso fino e hipotensão; surto na comunidade sem água tratada; teste rápido positivo para V. cholerae O1.",
+ "Teste rápido positivo; antibiograma em andamento.",
+ [["Reidratação intravenosa imediata",2,"A reposição de líquidos salva a vida; o antibiótico entra depois, como complemento.","Suporte"],
+  ["Sais de reidratação oral isolados",1,"Servem na desidratação leve; este paciente está chocado e precisa de via venosa.","Suporte"],
+  ["Doxiciclina em dose única, sem reidratação",0,"O antibiótico encurta a diarreia, mas sem repor líquidos o paciente evolui para choque.","Antibiótico"],
+  ["Loperamida",0,"Segura o líquido no intestino e não trata a infecção: evitar.","Antidiarreico"]],
+ "Na cólera, reidratação primeiro. O antibiótico é complemento, e a notificação e o saneamento fecham o cuidado."],
+["hin","Meningite","Meningite em criança não vacinada","Menino de 14 meses, sem vacinação, febre, vômitos, rigidez de nuca e fontanela abaulada; LCR turvo com cocobacilos gram-negativos.",
+ "Gram do líquor: cocobacilos gram-negativos. Sensibilidade pendente.",
+ [["Ceftriaxona",2,"Atinge o líquor e age mesmo contra cepas produtoras de β-lactamase."],
+  ["Ampicilina",0,"Parte das cepas produz β-lactamase: não é segura na meningite."],
+  ["Gentamicina",0,"Em monoterapia não atinge concentração útil no líquor."],
+  ["Vancomicina",0,"Não age em gram-negativos."]],
+ "Meningite por Hib: ceftriaxona. A vacina Hib quase eliminou a doença; os contatos podem receber rifampicina."]
 ].map(a=>({c:a[0],fen:a[1],site:a[2],ctx:a[3],abg:a[4],opts:a[5].map(o=>({n:o[0],s:o[1],w:o[2],sub:o[3]||(DBY[o[0]]?DBY[o[0]].c:'')})),les:a[6]}));
 const PN=8;
 function plColl(){return store('arsenal.plCards')||[]}
@@ -1573,7 +1655,7 @@ function finishMem(){M.done=true;renderMemHud();const s=Math.floor(M.t);const sc
 const LANES=4;let Fseen=[],F=null,FW=0,FH=0,fx=null;
 // retratos dos personagens, carregados uma vez; FOCUS = onde está o rosto (fração da largura e da altura)
 const PIMG={};
-const FOCUS={mtb:[.80,.47],ngo:[.42,.42]};const OLDART=['mtb','ngo','hin','nme'];
+const FOCUS={mtb:[.80,.47],bme:[.5,.33],hin:[.45,.38],pmu:[.55,.3],hpy:[.5,.3],ngo:[.42,.45],cje:[.5,.26],nme:[.42,.5],bpe:[.48,.3],mca:[.5,.36],vch:[.46,.32]};const OLDART=['mtb'];
 function portraitOf(name){const k=ART[name];if(!k)return null;
   if(!PIMG[k]){const im=new Image();im.decoding='async';im.src=PC[k].img;PIMG[k]=im}
   const im=PIMG[k];return im.complete&&im.naturalWidth?im:null}
